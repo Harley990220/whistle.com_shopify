@@ -1,0 +1,171 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-tech-spec-product-fit.liquid and it is overriding automatically. You should use theme development tool and sources\sections\custom-tech-spec-product-fit.liquid file to code and save your changes. {% endcomment %}{% if section.settings.visible %}
+
+  {% render 'ea-section-styles', section: section %}
+
+  {% render 'custom-tech-specs-content', section: section %}
+
+  {% endif %}
+
+{% schema %}
+  {
+  "name": "Tech Specs",
+  "class": "tech-specs",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "visible",
+      "label": "Show block",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "ptop",
+      "label": "Top spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom",
+      "label": "Bottom spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "ptop_mob",
+      "label": "Top spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom_mob",
+      "label": "Bottom spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "sectionbg",
+      "label": "Background",
+      "default": "#fff"
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "header",
+      "content": "Icon 1"
+    },
+    {
+      "type": "html",
+      "id": "svg1",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "text1",
+      "label": "Title"
+    },
+    {
+      "type": "header",
+      "content": "Icon 2"
+    },
+    {
+      "type": "html",
+      "id": "svg2",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "text2",
+      "label": "Title"
+    },
+    {
+      "type": "header",
+      "content": "Icon 3"
+    },
+    {
+      "type": "html",
+      "id": "svg3",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "text3",
+      "label": "Title"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "btn_expand_label",
+      "label": "Button Label (expand)"
+    },
+    {
+      "type": "text",
+      "id": "btn_collapse_label",
+      "label": "Button Label (collapse)"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Tech Spec",
+      "type": "tech-spec",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_color",
+          "label": "Is color?",
+          "default": false
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

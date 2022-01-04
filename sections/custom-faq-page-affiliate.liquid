@@ -1,0 +1,140 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-faq-page-affiliate.liquid and it is overriding automatically. You should use theme development tool and sources\sections\custom-faq-page-affiliate.liquid file to code and save your changes. {% endcomment %}{% if section.settings.visible %}
+  
+  {% render 'ea-section-styles', section: section %}
+
+  <div class="section_container">
+    <div class="main_content container" data-animate-block>
+      <div class="title">{{ section.settings.title }}</div>
+      <div class="faq-content" data-accordions-container>
+        {% for block in section.blocks %}
+          <div class="faq-item accordion" data-accordion>
+            <h3 class="faq-item__title accordion__title" data-accordion-button><span>{{ block.settings.title }}</span><i class="icon-plus"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 455 455"><path d="M455 212.5H242.5V0h-30v212.5H0v30h212.5V455h30V242.5H455z"/></svg></i><i class="icon-minus"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 455 455"><path d="M0 212.5h455v30H0z"/></svg></i></h3>
+            <div class="faq-item__content accordion__content" data-accordion-content>{{ block.settings.answer }}</div>
+          </div>
+        {% endfor %}
+        <div class="faq-bottom">
+          <div>More Questions?</div>
+          <div>{% if section.settings.email != blank %}Email Us: <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>{% endif %}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {% for block in section.blocks %}
+          {
+            "@type": "Question",
+            "name": "{{ block.settings.title }}",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "{{ block.settings.answer }}"
+            }  
+          }{% if forloop.first %}{% if section.blocks.size > 1 %},{% endif %}{% else %}{% if forloop.last != true %},{% endif %}{% endif %}
+        {% endfor %}
+      ]
+    }
+  </script>
+
+{% endif %}
+
+{% schema %}
+{ 
+  "name": "FAQ",
+  "class": "section",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "visible",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "ptop",
+      "label": "Top spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom",
+      "label": "Bottom spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "ptop_mob",
+      "label": "Top spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom_mob",
+      "label": "Bottom spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "sectionbg",
+      "label": "Section background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "FAQ",
+      "type": "faq",
+      "settings": [
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Question"
+        },
+        {
+          "id": "answer",
+          "type": "richtext",
+          "label": "Answer"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,93 @@
+{% comment %} ATTENTION!!! This is compiled version of product.fit.liquid and it is overriding automatically. You should use theme development tool and sources\templates\product.fit.liquid file to code and save your changes. {% endcomment %}{% render 'product-plan-header', product_name: 'Whistle Fit' %}
+
+<div class="section__top">
+  <div class="product-main-plan-wrapper">
+    {% section 'ea-product-main-fit' %}
+
+    <div class="plan-wrapper store-front">
+      
+      <div class="hide--mobile">
+        <div data-plan-version="1">
+          {% section 'custom-choose-plan-fit-new' %}
+        </div>
+      </div>
+      
+      <div class="hide--desktop">
+        <div data-plan-version="0">
+          {% section 'custom-choose-plan-fit' %}
+        </div>
+      </div>
+
+    </div>
+    
+  </div>
+  {% section 'custom-icon-list-product-fit' %}
+
+  {% if request.design_mode %}
+
+    {% if settings.layout == 'v1' %}
+      {% section 'custom-faq-page-plan' %}
+    {% elsif settings.layout == 'v2' %}
+      {% section 'custom-faq-page-plan-new' %}
+    {% endif %}
+
+  {% else %}
+    <div class="product-plan-faq" data--hidden>
+      {% if request.path contains '/v2' %}
+        {% section 'custom-faq-page-plan-new' %}
+      {% else %}
+        {% section 'custom-faq-page-plan' %}
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% section 'custom-video-product-fit' %}
+  {% section 'ea-image-text-scroll-product-fit' %}
+  {% section 'custom-banner-tab-product-fit' %}
+</div>
+<div class="section__tech">
+  {% section 'custom-tech-spec-product-fit' %}
+</div>
+<div class="section__bottom">
+  {% section 'custom-image-text-grid-product-fit' %}
+  {% section 'custom-image-video-slider-product-fit' %}
+  {% section 'custom-product-faq-product-fit' %}
+  {% section 'custom-testimonial' %}
+  {% section 'custom-compare-model-product' %}
+  {% section 'custom-related-products' %}
+  {% section 'custom-product-reviews' %}
+</div>
+
+
+<div id="product-stickybar">
+</div>
+
+<script>
+  window.productTemplateLoaded = true;
+  window.localStorage.setItem('product_url', '{{ product.url }}');
+  window.localStorage.setItem('product', 'Whistle Fit');
+
+  window.page = window.localStorage.getItem('product');
+  window.pageUrl = window.localStorage.getItem('product_url');
+
+</script>
+
+{% if product.metafields.loox.num_reviews %}
+<script id="looxSchemaJson" type="application/ld+json">
+{
+	"@context": "http://schema.org",
+	"@type": "Product",
+	"@id": {{ canonical_url | json }},
+	"aggregateRating": {
+		"@type": "AggregateRating",
+		"ratingValue": "{{ product.metafields.loox.avg_rating }}",
+		"reviewCount": "{{ product.metafields.loox.num_reviews }}"
+	},
+	"name": {{ product.title | json }}
+}
+</script>
+{% endif %}
+
+<script>
+  var productTitle = '{{ product.title }}';
+</script>

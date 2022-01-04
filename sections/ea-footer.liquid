@@ -1,0 +1,437 @@
+{% comment %} ATTENTION!!! This is compiled version of ea-footer.liquid and it is overriding automatically. You should use theme development tool and sources\sections\ea-footer.liquid file to code and save your changes. {% endcomment %}<style>
+  .shopify-section.contact-info, .site-footer-container {
+    background: {{ section.settings.sectionbg }} !important;
+  }
+</style>
+
+{% assign set = section.settings %}
+
+<div class="container">
+  <div class="site-footer__top">
+    <div class="row d-flex">
+      <div class="left-side">
+        <div class="d-flex menu-wrapper" data-accordions-container data-accordions-mobile-only="1">
+          
+          {% if section.settings.m_title1 != blank %}
+            <div class="menu-item" >
+              <div class="menu_title" data-accordion-button>
+                {{ section.settings.m_title1 }}
+                <span class="hide--desktop hide--tablet arrow">{% render 'icon' with 'icon-arrow-down' %}</span>
+              </div>
+              <ul data-accordion-content>
+                {% for block in section.blocks %}
+                  {% if block.type == 'menu1' %}
+                    {% if block.settings.title != blank and block.settings.link != blank %}
+                      <li><a href="{{ block.settings.link }}" {% if block.settings.open_new_tab1 %}target="blank"{% endif %}>{{ block.settings.title }}</a></li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+                <li class="hide--mobile"><a class="add-aacc" href="javascript:;" data-acsb-custom-trigger="true">{% render 'icon' with 'icon-accessibility' %}Accessibility</a></li>
+              </ul>
+            </div>
+          {% endif %}
+
+          {% if section.settings.m_title2 != blank %}
+            <div class="menu-item" >
+              <div class="menu_title" data-accordion-button>
+                {{ section.settings.m_title2 }}
+                <span class="hide--desktop hide--tablet arrow">{% render 'icon' with 'icon-arrow-down' %}</span>
+              </div>
+              <ul data-accordion-content>
+                {% for block in section.blocks %}
+                  {% if block.type == 'menu2' %}
+                    {% if block.settings.title != blank and block.settings.link != blank %}
+                      <li><a href="{{ block.settings.link }}" {% if block.settings.open_new_tab2 %}target="blank"{% endif %}>{{ block.settings.title }}</a></li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+                {% comment %}<li><a class="add-aacc" href="javascript:;" data-acsb-custom-trigger="true">{% render 'icon' with 'icon-accessibility' %}Accessibility</a></li>{% endcomment %}
+              </ul>
+            </div>
+          {% endif %}
+
+          {% if section.settings.m_title3 != blank %}
+            <div class="menu-item" >
+              <div class="menu_title" data-accordion-button>
+                {{ section.settings.m_title3 }}
+                <span class="hide--desktop hide--tablet arrow">{% render 'icon' with 'icon-arrow-down' %}</span>
+              </div>
+              <ul data-accordion-content>
+                {% for block in section.blocks %}
+                  {% if block.type == 'menu3' %}
+                    {% if block.settings.title != blank and block.settings.link != blank %}
+                      <li><a href="{{ block.settings.link }}" {% if block.settings.open_new_tab3 %}target="blank"{% endif %}>{{ block.settings.title }}</a></li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          {% if section.settings.m_title4 != blank %}
+            <div class="menu-item" >
+              <div class="menu_title" data-accordion-button>
+                {{ section.settings.m_title4 }}
+                <span class="hide--desktop hide--tablet arrow">{% render 'icon' with 'icon-arrow-down' %}</span>
+              </div>
+              <ul data-accordion-content>
+                {% for block in section.blocks %}
+                  {% if block.type == 'menu4' %}
+                    {% if block.settings.title != blank and block.settings.link != blank %}
+                      <li><a href="{{ block.settings.link }}" {% if block.settings.open_new_tab4 %}target="blank"{% endif %}>{{ block.settings.title }}</a></li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          {% if section.settings.m_title5 != blank %}
+            <div class="menu-item" >
+              <div class="menu_title" data-accordion-button>
+                {{ section.settings.m_title5 }}
+                <span class="hide--desktop hide--tablet arrow">{% render 'icon' with 'icon-arrow-down' %}</span>
+              </div>
+              <ul data-accordion-content>
+                {% for block in section.blocks %}
+                  {% if block.type == 'menu5' %}
+                    {% if block.settings.title != blank and block.settings.link != blank %}
+                      <li><a href="{{ block.settings.link }}" {% if block.settings.open_new_tab5 %}target="blank"{% endif %}>{{ block.settings.title }}</a></li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+        </div>
+      </div>
+      <div class="right-side">
+        {% comment %}
+        
+        
+        {% endcomment %}
+
+        {% capture 'footer_download' %}      
+          <div class="footer_block_download">
+            <div class="footer-social__title footer-block__title">
+              Download
+            </div>
+            <div class="footer-download">
+              {% if section.settings.app_store_link != blank and section.settings.app_store_image != blank %}
+                <a href="{{ section.settings.app_store_link }}" class="no-hover-effect footer-download-link" target="blank">
+                  {% if section.settings.app_store_svg != blank %}
+                    {{ section.settings.app_store_svg }}
+                  {% else %}
+                    {% render 'rimage', image: section.settings.app_store_image %}
+                  {% endif %}
+                </a>
+              {% endif %}          
+              {% if section.settings.google_play_link != blank and section.settings.google_play_image != blank %}
+                <a href="{{ section.settings.google_play_link }}" class="no-hover-effect footer-download-link" target="blank">
+                  {% if section.settings.google_play_svg != blank %}
+                    {{ section.settings.google_play_svg }}
+                  {% else %}
+                    {% render 'rimage', image: section.settings.google_play_image %}
+                  {% endif %}
+                </a>
+              {% endif %}          
+            </div>
+          </div>
+        {% endcapture %}
+
+        {{ footer_download }}
+
+        {% comment %}
+        <div class="hide--tablet">
+          {{ footer_social }}
+          {{ footer_download }}
+          {{ footer_logo_info }}
+        </div>
+        <div class="hide--desktop hide--mobile footer-mixed-block">
+          <div class="col-md-6">
+            {{ footer_logo_info }}
+          </div>
+          <div class="col-md-6">
+            {{ footer_social }}
+            {{ footer_download }}
+          </div>
+        </div>
+        {% endcomment %}
+      </div>
+    </div>
+    <div class="footer_bottom">
+      <div class="footer_bottom-wrapper d-flex">
+        {% capture 'footer_logo_info' %}    
+          <div class="footer_block_logo">
+            <div class="site-footer__logo">
+              <a href="/">{{ section.settings.svglogo }}</a>
+            </div>
+            <div class="site-footer__text">
+              {{ section.settings.info }}
+            </div>      
+          </div>
+        {% endcapture %}
+
+        {% capture 'footer_social' %}      
+          <div class="footer_block_social">
+            <div class="footer-social__links">          
+              <nav class="nav social-links">
+                <ul class="nav__items">
+                  {% if settings.social_instagram_link != blank %}
+                    <li class="nav__item">
+                      <a class="nav__link no-hover-link" target="blank" href="{{ settings.social_instagram_link }}" aria-label="instagram link">
+                        {% render 'icon' with 'icon-social-instagram' %}
+                      </a>
+                    </li>
+                  {% endif %}
+                  {% if settings.social_twitter_link != blank %}
+                    <li class="nav__item">
+                      <a class="nav__link no-hover-link" target="blank" href="{{ settings.social_twitter_link }}" aria-label="twitter link">
+                        {% render 'icon' with 'icon-social-twitter' %}
+                      </a>
+                    </li>
+                  {% endif %}
+                  {% if settings.social_youtube_link != blank %}
+                    <li class="nav__item">
+                      <a class="nav__link no-hover-link" target="blank" href="{{ settings.social_youtube_link }}" aria-label="youtube link">
+                        {% render 'icon' with 'icon-social-youtube' %}
+                      </a>
+                    </li>
+                  {% endif %}     
+
+                  {% if settings.social_facebook_link != blank %}
+                    <li class="nav__item">
+                      <a class="nav__link no-hover-link" target="blank" href="{{ settings.social_facebook_link }}" aria-label="facebook link">
+                        {% render 'icon' with 'icon-social-facebook' %}
+                      </a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </nav>          
+              <div class="footer-social__text">
+                {% comment %}{{ settings.social_link_text }}{% endcomment %}
+                <p>USE <strong>#PetsLoveWhistle</strong></p>
+              </div>
+            </div>      
+          </div>
+        {% endcapture %}
+
+        {{ footer_logo_info }}
+        <div class="hide--desktop hide--tablet">
+          <a class="add-aacc" href="#add-aacc-link">{% render 'icon' with 'icon-accessibility' %}Accessibility</a>
+        </div>
+        {{ footer_social }}
+      </div>
+    </div>
+    {% comment %}<div onclick="Osano.cm.showDrawer('osano-cm-dom-info-dialog-open')" data-cookie-setting>Cookie Settings</div> {% endcomment %}
+  </div>  
+</div>
+
+
+
+{% schema %}
+  {
+  "name": "Footer",
+  "tag": "footer",
+  "class": "site-footer",
+  "settings": [    
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "sectionbg",
+      "label": "Section background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Menu titles"
+    },
+    {
+      "type": "text",
+      "id": "m_title1",
+      "label": "Menu title (First)"
+    },
+    {
+      "type": "text",
+      "id": "m_title2",
+      "label": "Menu title (Second)"
+    },
+    {
+      "type": "text",
+      "id": "m_title3",
+      "label": "Menu title (Third)"
+    },
+    {
+      "type": "text",
+      "id": "m_title4",
+      "label": "Menu title (Forth)"
+    },
+    {
+      "type": "text",
+      "id": "m_title5",
+      "label": "Menu title (Fifth)"
+    },
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "textarea",
+      "id": "svglogo",
+      "label": "Logo vector image",
+      "info": "(preferred)"
+    },
+    {
+      "type": "richtext",
+      "id": "info",
+      "label": "Info"
+    },
+    {
+      "type": "url",
+      "id": "app_store_link",
+      "label": "App Store Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "app_store_image",
+      "label": "App Store Image"
+    },
+    {
+      "type": "html",
+      "id": "app_store_svg",
+      "label": "Svg"
+    },
+    {
+      "type": "url",
+      "id": "google_play_link",
+      "label": "Google Play Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "google_play_image",
+      "label": "Google Play Image"
+    },
+    {
+      "type": "html",
+      "id": "google_play_svg",
+      "label": "Svg"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Menu Item(First)",
+      "type": "menu1",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Menu Title"
+        },
+        {
+          "type": "text",
+          "id": "link",
+          "label": "Menu Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_tab1",
+          "label": "Open new tab?",
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "Menu Item(Second)",
+      "type": "menu2",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Menu Title"
+        },
+        {
+          "type": "text",
+          "id": "link",
+          "label": "Menu Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_tab2",
+          "label": "Open new tab?",
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "Menu Item(Third)",
+      "type": "menu3",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Menu Title"
+        },
+        {
+          "type": "text",
+          "id": "link",
+          "label": "Menu Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_tab3",
+          "label": "Open new tab?",
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "Menu Item(Forth)",
+      "type": "menu4",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Menu Title"
+        },
+        {
+          "type": "text",
+          "id": "link",
+          "label": "Menu Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_tab4",
+          "label": "Open new tab?",
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "Menu Item(Fifth)",
+      "type": "menu5",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Menu Title"
+        },
+        {
+          "type": "text",
+          "id": "link",
+          "label": "Menu Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_tab5",
+          "label": "Open new tab?",
+          "default": true
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

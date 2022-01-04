@@ -1,0 +1,306 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-compare-model-product.liquid and it is overriding automatically. You should use theme development tool and sources\sections\custom-compare-model-product.liquid file to code and save your changes. {% endcomment %}{% if section.settings.visible %}
+
+  {% render 'ea-section-styles', section: section %}
+
+  {% render 'compare-model-content-product', section: section %}
+
+{% endif %}
+
+{% schema %}
+  {
+  "name": "Compare Model",
+  "tag": "section",
+  "class": "compare-model-section section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "visible",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "ptop",
+      "label": "Top spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom",
+      "label": "Bottom spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "ptop_mob",
+      "label": "Top spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom_mob",
+      "label": "Bottom spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "sectionbg",
+      "label": "Section background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    }, 
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "chat_text",
+      "label": "Button Label"
+    },
+    {
+      "type": "header",
+      "content": "Row 1"
+    },
+    {
+      "type": "product",
+      "id": "product1",
+      "label": "Product"
+    },
+    {
+      "type": "image_picker",
+      "id": "image1",
+      "label": "Image"
+    },
+    {
+      "type": "html",
+      "id": "icon1",
+      "label": "Icon"
+    },
+    {
+      "type": "richtext",
+      "id": "text1",
+      "label": "Title"
+    },
+    {
+      "type": "color",
+      "id": "bg1",
+      "label": "Highlight"
+    },
+    {
+      "type": "text",
+      "id": "price1",
+      "label": "Price"
+    },
+    {
+      "type": "header",
+      "content": "Row 2"
+    },
+    {
+      "type": "product",
+      "id": "product2",
+      "label": "Product"
+    },
+    {
+      "type": "image_picker",
+      "id": "image2",
+      "label": "Image"
+    },
+    {
+      "type": "html",
+      "id": "icon2",
+      "label": "Icon"
+    },
+    {
+      "type": "richtext",
+      "id": "text2",
+      "label": "Title"
+    },
+    {
+      "type": "color",
+      "id": "bg2",
+      "label": "Highlight"
+    },
+    {
+      "type": "text",
+      "id": "price2",
+      "label": "Price"
+    },
+    {
+      "type": "header",
+      "content": "Row 3"
+    },
+    {
+      "type": "product",
+      "id": "product3",
+      "label": "Product"
+    },
+    {
+      "type": "image_picker",
+      "id": "image3",
+      "label": "Image"
+    },
+    {
+      "type": "html",
+      "id": "icon3",
+      "label": "Icon"
+    },
+    {
+      "type": "richtext",
+      "id": "text3",
+      "label": "Title"
+    },
+    {
+      "type": "color",
+      "id": "bg3",
+      "label": "Highlight"
+    },
+    {
+      "type": "text",
+      "id": "price3",
+      "label": "Price"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Block",
+      "type": "block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "header",
+          "content": "Row 1"
+        },
+        {
+          "type": "radio",
+          "id": "type1",
+          "label": "Content",
+          "options": [
+            {
+              "value": "true",
+              "label": "True"
+            },
+            {
+              "value": "false",
+              "label": "False"
+            },
+            {
+              "value": "text",
+              "label": "Text"
+            }
+          ],
+          "default": "text",
+          "info": "Type of the content"
+        },
+        {
+          "type": "richtext",
+          "id": "content1",
+          "label": "Content"
+        },
+        {
+          "type": "header",
+          "content": "Row 2"
+        },
+        {
+          "type": "radio",
+          "id": "type2",
+          "label": "Content",
+          "options": [
+            {
+              "value": "true",
+              "label": "True"
+            },
+            {
+              "value": "false",
+              "label": "False"
+            },
+            {
+              "value": "text",
+              "label": "Text"
+            }
+          ],
+          "default": "text",
+          "info": "Type of the content"
+        },
+        {
+          "type": "richtext",
+          "id": "content2",
+          "label": "Content"
+        },
+        {
+          "type": "header",
+          "content": "Row 3"
+        },
+        {
+          "type": "radio",
+          "id": "type3",
+          "label": "Content",
+          "options": [
+            {
+              "value": "true",
+              "label": "True"
+            },
+            {
+              "value": "false",
+              "label": "False"
+            },
+            {
+              "value": "text",
+              "label": "Text"
+            }
+          ],
+          "default": "text",
+          "info": "Type of the content"
+        },
+        {
+          "type": "richtext",
+          "id": "content3",
+          "label": "Content"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

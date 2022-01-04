@@ -1,0 +1,125 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-blog-main.liquid and it is overriding automatically. You should use theme development tool and sources\sections\custom-blog-main.liquid file to code and save your changes. {% endcomment %}{% if section.settings.visible %}
+
+  {% render 'ea-section-styles', section: section %}
+
+  <div class="section_container">
+    <div class="main_content container">
+      <div class="blog-tab-header">
+        <div class="tab-header-wrapper {% unless section.blocks.size > 3 %}mob-flex{% endunless %}" data-blog-header-slider>
+          <div class="tab-header-item active" data-tab="all">
+            {% render 'icon' with 'icon-arrow-down' %}
+            <span>All</span>
+          </div>
+          {% for block in section.blocks %}
+            {% assign blog = blogs[block.settings.blog] %}
+            {% assign title = block.settings.title | default: blog.title %}
+            <div class="tab-header-item" data-tab="{{ title | replace: ' ', '-' | lowercase }}">
+              {% render 'icon' with 'icon-arrow-down' %}
+              <span>{{ title }}</span>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="tab-content-wrapper">
+          {% for block in section.blocks %}
+            {% assign blog = blogs[block.settings.blog] %}
+            {% assign title = block.settings.title | default: blog.title %}
+            {% assign _title = title | replace: ' ', '-' | lowercase %}
+            {% for article in blog.articles %}
+              {% render 'custom-featured-post-cell-second', article: article, type: _title %}
+            {% endfor %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endif %}
+
+
+{% schema %}
+  {
+    "name": "Blog Main",
+    "tag": "section",
+    "class": "blog-main",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "visible",
+        "label": "Show block",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Spacing"
+      },
+      {
+        "type": "range",
+        "id": "ptop",
+        "label": "Top spacing desktop",
+        "min": 0,
+        "unit": "px",
+        "max": 500,
+        "step": 5,
+        "default": 45
+      },
+      {
+        "type": "range",
+        "id": "pbottom",
+        "label": "Bottom spacing desktop",
+        "min": 0,
+        "unit": "px",
+        "max": 500,
+        "step": 5,
+        "default": 45
+      },
+      {
+        "type": "range",
+        "id": "ptop_mob",
+        "label": "Top spacing mobile",
+        "min": 0,
+        "unit": "px",
+        "max": 500,
+        "step": 5,
+        "default": 45
+      },
+      {
+        "type": "range",
+        "id": "pbottom_mob",
+        "label": "Bottom spacing mobile",
+        "min": 0,
+        "unit": "px",
+        "max": 500,
+        "step": 5,
+        "default": 45
+      },
+      {
+        "type": "header",
+        "content": "Background"
+      },
+      {
+        "type": "color",
+        "id": "sectionbg",
+        "label": "Background",
+        "default": "#fff"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "Blog",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "blog",
+            "id": "blog",
+            "label": "Blog"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

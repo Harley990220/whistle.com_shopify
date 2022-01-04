@@ -1,0 +1,142 @@
+{% comment %} ATTENTION!!! This is compiled version of cart-upsell-item.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\cart-upsell-item.liquid file to code and save your changes. {% endcomment %}{% assign u_id = product.selected_or_first_available_variant.id %}
+
+{% assign is_added = false %}
+
+<div class="upsell-product-item {{ class }}">
+  <div class="image_wrapper">
+    {% render 'rimage', image: product.featured_image, size: '100x' %}
+  </div>
+  <div class="info_wrapper">
+    <div class="info">
+      <div class="item_title d-flex">
+        {{ title }}
+        <div class="price_wrapper">
+          <div class="price">
+            {% if product.handle == 'whistle-switch-battery' %}
+              <span class="was-price">{{ product.price | money }}</span>
+              <span class="regular-price">
+                {% assign per = 100 | minus: 30 %}
+                {% assign price = product.price | times: per | divided_by: 100 %}
+                {{ price | money }}
+              </span>
+            {% else %}
+              {% if product.compare_at_price > product.price  %}
+                <span class="was-price">{{ product.compare_at_price | money }}</span>
+              {% endif %}
+              <span class="regular-price">{{ product.price | money }}</span>
+            {% endif %}
+          </div> 
+          {% if product.handle == 'whistle-switch-battery' %}
+            <div class="save_badge">You save 30%</div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="item_desc">{{ desc }}</div>
+    </div>
+
+    {% assign default_added = false %}
+
+    <div class="atc_wrapper">
+
+      {% assign isDefault = false %}
+      {% if product.variants.size == 1 and product.variants[0].title == "Default Title" %}
+        {% assign isDefault = true %}
+      {% endif %}
+
+      {% assign is_color = false %}
+      {% assign color_idx = 1 %}
+      {% if isDefault == false %}
+        {% for option in product.options %}
+          {% if option == 'Color' or option == 'color' or option == 'colour' or option == 'Colour' %}
+            {% assign is_color = true %}
+            {% assign color_idx = forloop.index %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+
+        {% if is_color and is_switch_added %}
+          {% assign color_list = '' %}
+          {% assign opt = 'option' | append: color_idx %}
+          <div class="variant-colors d-flex">
+            {% for variant in product.variants %}
+              {% assign idx = forloop.index %}
+              {% assign color = variant[opt] %}
+              {% assign _color = '|' | append: color | append: '|' %}
+
+              {% unless color contains _color %}
+
+                {% assign is_added = false %}
+
+                {% for item in cart.items %}
+                  {% if variant.id == item.variant_id %}
+                    {% assign is_added = true %}
+                    {% if idx == 1 %}
+                      {% assign default_added = true %}
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+
+                <div class="product-option">
+                  <input type="radio" id="option-color-{{ forloop.index }}-{{ product_idx }}" name="product-upsell-{{ product_idx }}" data-variant-id="{{ variant.id }}" {% if forloop.first %}checked{% endif %} {% if is_added %}data-added="true"{% endif %} data-image="{{ variant.image.src | img_url: '300x' }}">
+                  <label class="product-option__label" for="option-color-{{ forloop.index }}-{{ product_idx }}" class="product-option__label" data-color-name="{{ color | handle }}"></label>
+                </div>
+
+                {% assign color = color | append: _color %}
+
+              {% endunless %}
+
+            {% endfor %}
+          </div>
+        {% else %}
+          {% if product.options.size > 1 %}
+            <select name="" id="cart-upsell-variants">
+              {% for variant in product.variants %}
+                {% assign idx = forloop.index %}
+                {% assign is_added = false %}
+
+                {% for item in cart.items %}
+                  {% if variant.id == item.variant_id %}
+                    {% assign is_added = true %}
+                    {% if idx == 1 %}
+                      {% assign default_added = true %}
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+
+                <option value="{{ variant.id }}" {% if is_added %}data-added="true"{% endif %}>
+                  {% assign isFirst = true %}
+                  {% for option in variant.options %}
+                    {% unless forloop.index == color_idx %}
+                      {% if isFirst == false %}
+                        •
+                      {% endif %}
+                      {{ option }}
+                      {% assign isFirst = false %}
+                    {% endunless %}
+                  {% endfor %}
+                </option>
+              {% endfor %}
+            </select>
+          {% endif %}
+          
+        {% endif %}
+
+      {% endif %}
+
+      <div class="btn_wrapper {% if default_added %}added{% endif %}">
+        <a href="javascript:;" class="btn btn-add m-black-new" data-loader-btn data-cart-upsell-add data-variant-id="{{ u_id }}">
+          <span>Add</span>
+          <div class="loader_wrapper">
+            <div class="loader"></div>
+          </div>
+        </a>
+        <a href="javascript:;" class="btn btn-added m-black-new" data-loader-btn data-cart-upsell-add data-variant-id="{{ u_id }}">
+          <span>Added</span>
+          <div class="loader_wrapper">
+            <div class="loader"></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

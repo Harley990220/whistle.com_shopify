@@ -1,0 +1,31 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-image-with-text-block-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-image-with-text-block-content.liquid file to code and save your changes. {% endcomment %}<div class="section_container">
+  <div class="main_content container" data-animate-block>
+    <div class="main_wrapper">
+      <div class="title hide--desktop hide--tablet">{{ section.settings.title }}</div>
+      <div class="text-block" data-hor-slider data-mobile-only="1" data-arrows="false" data-dots="true" data-dots-default>
+        {% for block in section.blocks %}
+          <div class="block_item d-flex">
+            <div class="icon_wrapper">
+              {% comment %}{% render 'rimage', image: block.settings.image, size: '200x', wrapper_class: 'hide--mobile' %}{% endcomment %}
+              {% render 'rimage', image: block.settings.thumbnail, size: '120x' %}
+            </div>
+            <div class="text_wrapper d-flex">
+              <div class="text">{{ block.settings.text }}</div>
+              <div class="subtitle not-animated">{{ block.settings.subtitle }}</div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      {% render 'swipe-text' %}
+      <div class="image_wrapper hide--mobile hide--tablet">
+        <div class="title hide--mobile">{{ section.settings.title }}</div>
+        {% render 'rimage', image: section.settings.image, size: '600x' %}
+        {% if section.settings.btn_label != blank and section.settings.btn_link != blank %}
+          <div class="btn_wrapper">
+            <a onclick="dataLayer.push({'CTA': '{{ section.settings.btn_link }}'});" href="{{ section.settings.btn_link }}" class="btn m-black-new btn-rounded">{{ section.settings.btn_label }}</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,243 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-form-sweepstakes.liquid and it is overriding automatically. You should use theme development tool and sources\sections\custom-form-sweepstakes.liquid file to code and save your changes. {% endcomment %}{% if section.settings.visible %}
+
+  {% render 'ea-section-styles', section: section %}
+
+  <div class="section_container">
+    <div class="main_content container">
+
+      {% if section.settings.title != blank %}
+        <div class="block_title">{{ section.settings.title }}</div>
+      {% endif %}
+
+      {% if section.settings.text != blank %}
+        <div class="text">{{ section.settings.text }}</div>
+      {% endif %}
+
+      {% if section.blocks.size > 0 %}
+        <div class="icon-block-wrapper d-flex">
+          {% for block in section.blocks %}
+            <div class="block-item">
+              <div class="icon">{{ block.settings.icon }}</div>
+              <div class="text">{{ block.settings.text }}</div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if section.settings.feature_content != blank %}
+        <div class="features" style="background: {{ section.settings.feature_bg }}">
+          {% if section.settings.feature_title != blank %}
+            <div class="feature_title">{{ section.settings.feature_title }}</div>
+          {% endif %}
+          {% if section.settings.feature_content != blank %}
+            <div class="feature_content-list d-flex">
+              {% assign content = section.settings.feature_content | replace: 'p>', 'item>' %}
+              {% assign content = content | split: '<item>' %}
+
+              {% for item in content %}
+                {% unless forloop.first %}
+                  {% assign _item = item | split: '</item>' %}
+
+                  <li>{{ _item[0] }}</li>
+
+                {% endunless %}
+              {% endfor %}
+               
+
+              
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+
+      <div class="form-wrapper">
+        <div class="form_title">{{ section.settings.form_title }}</div>
+        <form name="iterable_optin" action="//links.iterable.com/lists/publicAddSubscriberForm?publicIdString=2706c7ff-af6f-451a-8b8b-a61c1b955ce4" target="_blank" method="POST" class="email">
+
+          <div>
+            <input type="text" name="first_name" onfocus="if(this.value===this.defaultValue){this.value='';}" onblur="if(this.value===''){this.value=this.defaultValue;}" value="First Name*">
+            <input type="text" name="last_name" onfocus="if(this.value===this.defaultValue){this.value='';}" onblur="if(this.value===''){this.value=this.defaultValue;}" value="Last Name*">
+          </div>
+          <div>
+            <input type="text" name="email" onfocus="if(this.value===this.defaultValue){this.value='';}" onblur="if(this.value===''){this.value=this.defaultValue;}" value="Email *">
+            <input type="text" name="phone_number" onfocus="if(this.value===this.defaultValue){this.value='';}" onblur="if(this.value===''){this.value=this.defaultValue;}" value="Phone Number*">
+          </div>
+          <div>
+            <input type="text" name="city" onfocus="if(this.value===this.defaultValue){this.value='';}" onblur="if(this.value===''){this.value=this.defaultValue;}" value="Address">
+          </div>
+          <div>
+            <input type="text" name="address" onfocus="if(this.value===this.defaultValue){this.value='';}" onblur="if(this.value===''){this.value=this.defaultValue;}" value="Apartment, suite, etc, (optional)">
+          </div>
+          <div>
+            <input type="text" name="default_address.city" onfocus="if(this.value===this.defaultValue){this.value='';}" onblur="if(this.value===''){this.value=this.defaultValue;}" value="City">
+            <input type="text" name="default_address.province" onfocus="if(this.value===this.defaultValue){this.value='';}" onblur="if(this.value===''){this.value=this.defaultValue;}" value="State">
+            <input type="text" name="zip_code" onfocus="if(this.value===this.defaultValue){this.value='';}" onblur="if(this.value===''){this.value=this.defaultValue;}" value="Zip code">
+          </div>
+
+          <div class="terms d-flex">
+            <input type="checkbox" id="terms_agree" name="terms" data-agree>
+            <label for="terms_agree" name="terms">I agree with the Terms and service and official sweepstakes rules.</label>
+          </div>
+
+          <input type="submit" value="Enter to win" class="btn m-black-new btn-rounded btn-small" data-sweepstakes-submit data-enable="false">
+
+        </form>
+      </div>
+
+      <span class="warning">You must agree to our terms and service before registering.</span>
+
+      {% if section.settings.footer_title != blank %}
+        <div class="footer_title">{{ section.settings.footer_title }}</div>
+      {% endif %}
+      {% if section.settings.footer_text != blank %}
+        <div class="footer_text">{{ section.settings.footer_text }}</div>
+      {% endif %}
+
+    
+    </div>
+  </div>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Form Section",
+  "tag": "section",
+  "class": "iterable-sweepstakes-form",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "visible",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "ptop",
+      "label": "Top spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom",
+      "label": "Bottom spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "ptop_mob",
+      "label": "Top spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom_mob",
+      "label": "Bottom spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "sectionbg",
+      "label": "Section background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Features"
+    },
+    {
+      "type": "color",
+      "id": "feature_bg",
+      "label": "Background",
+      "default": "#e6eeef"
+    },
+    {
+      "type": "text",
+      "id": "feature_title",
+      "label": "Feature title"
+    },
+    {
+      "type": "richtext",
+      "id": "feature_content",
+      "label": "Content"
+    },
+    {
+      "type": "paragraph",
+      "content": "Form"
+    },
+    {
+      "type": "text",
+      "id": "form_title",
+      "label": "Title",
+      "default": "Want in? Enter faster than your dog responds to “Walk?"
+    },
+    {
+      "type": "text",
+      "id": "footer_title",
+      "label": "Footer Title"
+    },
+    {
+      "type": "richtext",
+      "id": "footer_text",
+      "label": "Footer Text"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Block",
+      "settings": [
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

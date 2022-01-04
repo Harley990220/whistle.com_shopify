@@ -1,0 +1,133 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-regular-cta.liquid and it is overriding automatically. You should use theme development tool and sources\sections\custom-regular-cta.liquid file to code and save your changes. {% endcomment %}{% if section.settings.visible %}
+
+  {% render 'ea-section-styles', section: section %}
+
+  <div class="section_container">
+    <div class="main_content container" data-animate-block style="background: {{ section.settings.contentbg }}">
+      <div class="main_wrapper">
+        {% if section.settings.title != blank %}
+          <div class="title">{{ section.settings.title }}</div>
+        {% endif %}
+
+        {% if section.settings.subtitle != blank %}
+          <div class="subtitle">{{ section.settings.subtitle }}</div>
+        {% endif %}
+
+        {% if section.settings.btn_link != blank and section.settings.btn_label != blank %}
+          <div class="btn_wrapper">
+            <a href="{{ section.settings.btn_link }}" class="btn btn-small m-black-new btn-rounded">{{ section.settings.btn_label }}</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div> 
+{% endif %}
+
+{% schema %}
+{
+  "name": "Text with button",
+  "tag": "section",
+  "class": "regular-cta",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "visible",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "ptop",
+      "label": "Top spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom",
+      "label": "Bottom spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "ptop_mob",
+      "label": "Top spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom_mob",
+      "label": "Bottom spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "sectionbg",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "color",
+      "id": "contentbg",
+      "label": "Content background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Button Label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text with button"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,364 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-cart-table.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-cart-table.liquid file to code and save your changes. {% endcomment %}{% assign set = section.settings %}
+
+{% assign is_plan = false %}
+{% assign is_plan_device = false %}
+{% assign is_plan_fit = false %}
+{% assign is_device_added = false %}
+{% assign is_fit_added = false %}
+{% assign is_switch_added = false %}
+{% assign is_monthly_plan = false %}
+
+{% assign plan_item_explore = '' %}
+{% assign plan_item_fit = '' %}
+{% assign plan_item_monthly = '' %}
+
+{% assign plan_annual = false %}
+{% assign plan_biannual = false %}
+{% assign plan_monthly = false %}
+
+
+{% assign is_whistle_switch_added = false %}
+
+{% assign is_upsell_added = false %}
+{% assign upsell_items = section.blocks | where: "type", "upsell" %}
+
+{% assign upsell_p_handle = all_products[upsell_items.first.settings.product].handle %}
+{% assign upsell_list = '' %}
+{% for block in upsell_items %}
+  {% assign _u_item_handle = all_products[block.settings.product].handle %}
+  {% assign upsell_list = upsell_list | append: '|' | append: _u_item_handle | append: '|' %}
+{% endfor %}
+
+{% if is_switch_added %}
+  {% assign upsell_items = section.blocks | where: "type", "upsell_leash" %}
+{% endif %}
+
+{% assign xx = "CART" %}
+
+<div class="cart-table-top">
+
+  <div class="cart-items">
+
+    {% assign flag_plan_switch = false %}
+    {% assign flag_swith = false %}
+    {% assign flag_leash = false %}
+    {% for item in cart.items %}
+      {% assign tags = item.product.tags %}
+
+      {% if item.product.handle == 'whistle-switch' %}
+        {% assign is_switch_added = true %}
+      {% endif %}
+
+      {% if tags contains 'plan_switch' %}
+        {% assign is_switch_added = true %}
+      {% endif %}
+
+      {% if tags contains 'plan_annual' %}
+        {% assign plan_annual = true %}
+      {% elsif tags contains 'plan_biannual' %}
+        {% assign plan_biannual = true %}
+      {% elsif tags contains 'plan_monthly' %}
+        {% assign plan_monthly = true %}
+      {% endif %}
+
+      {% if item.product.handle == upsell_p_handle %}
+        {% assign is_upsell_added = true %}
+      {% endif %}
+
+    {% endfor %}
+
+    {% for item in cart.items %}
+      {% assign idx = forloop.index %}
+      {% assign tags = item.product.tags %}
+
+      {% if tags contains 'plans' %}
+        {% assign is_plan = true %}
+        {% if tags contains 'plan_device' %}
+          {% assign is_plan_device = true %}
+        {% elsif tags contains 'plan_fit' %}
+          {% assign is_plan_fit = true %}
+        {% endif %}
+      {% endif %}
+      {% if tags contains 'Device' %}
+        {% assign is_device_added = true %}
+      {% elsif tags contains 'Fit' %}
+        {% assign is_fit_added = true %}
+      {% endif %}
+      {% capture cart-line-item %}
+        {% if tags contains 'plans' %}
+          {% render 'cart-gift-plan-item', item: item, product: item.product, section: section, is_added: 'true' %}
+        {% else %}
+          {% assign _id = '' %}
+          {% assign _plan = '' %}
+          {% if item.properties._id %}
+            {% assign _id = item.properties._id %}
+          {% endif %}
+          {% if item.properties._plan %}
+            {% assign _plan = item.properties._plan %}
+          {% endif %}
+          <div class="cart-line-item d-flex" data-qty="{{ item.quantity }}" {% if _id != '' %}data-handle="{{ _plan }}-{{ _id }}"{% endif %} data-cart-item {% if tags contains 'Whistle Go Explore' %}data-type="explore"{% elsif tags contains 'Whistle FIT' %}data-type="fit"{% endif %} data-variant-id="{{ item.variant_id }}" data-qty="{{ item.quantity }}">
+            <div class="image_wrapper">
+              <a {% unless item.properties.accessory %}href="{{ item.url }}"{% endunless %}>
+                <img src="{{ item.image | img_url: '150x' }}">
+              </a>
+            </div>
+            <div class="info_wrapper">
+              <div class="d-flex">
+                <div class="item_info">
+                  <div class="item_title">
+                    <a {% unless item.properties.accessory %}href="{{ item.url }}"{% endunless %}>{{ item.product.title }}</a>
+                  </div>
+                  <div class="item_feature">
+                    {% if tags contains 'Whistle Go Explore' %}
+                      {{ section.settings.feature_explore }}
+                    {% elsif tags contains 'Whistle FIT' %}
+                      {{ section.settings.feature_fit }}
+                    {% endif %}
+                  </div>
+                  <div class="item_variant">
+                    {% unless item.product.has_only_default_variant %}
+                      {% for option in item.options_with_values %}
+                        <li><span>{{ option.name }}:</span> {{ option.value }}</li>
+                      {% endfor %}
+                    {% endunless %}
+                  </div>
+
+                  {% if item.properties.accessory %}
+                    <div class="item_description">
+                      {{ item.product.description }}
+                    </div>
+                  {% endif %}
+
+                  {% assign include_text = '' %}
+                  {% if tags contains 'Whistle Go Explore' %}
+                    {% assign include_text = section.settings.include_explore %}
+                  {% elsif tags contains 'Whistle FIT' %}
+                    {% assign include_text = section.settings.include_fit %}
+                  {% endif %}
+                  {% if include_text != '' %}
+                    {% comment %}
+                    <div class="what_include hide--mobile">
+                      <div data-include-title>What's Included {% render 'icon' with 'icon-arrow-down' %}</div>
+                        <div data-include-content>
+                          {{ include_text }}
+                      </div>
+                    </div>
+                    {% endcomment %}
+                  {% endif %}
+                </div>
+                <div class="item-price-remove">
+                  <div class="item_price">
+
+                    {% assign flag_device = false %}
+                    {% assign flag_fit = false %}
+                    {% assign flag_plan_device = false %}
+                    {% assign flag_plan_fit = false %}
+                  
+                    {% assign flag_switch = false %}
+                    {% assign flag_plan_switch = false %}
+                    {% assign flag_leash = false %}
+                    
+                    {% assign _idx = idx | plus: 1 %}
+                    {% for _item in cart.items %}
+                      {% assign _tags = _item.product.tags %}
+                      {% if forloop.index >= idx and forloop.index <= _idx %}
+                        {% if _tags contains 'plan_device' and _tags contains 'plan_discount' %}
+                          {% assign flag_plan_device = true %}
+                        {% endif %}
+                        {% if _tags contains 'plan_fit' and _tags contains 'plan_discount' %}
+                          {% assign flag_plan_fit = true %}
+                        {% endif %}
+                        {% if _tags contains 'plan_switch' and _tags contains 'plan_discount' %}
+                          {% assign flag_plan_switch = true %}
+                        {% endif %}
+                        {% if _tags contains 'plan_switch' %}
+                          {% assign flag_switch = true %}
+                        {% endif %}
+                        {% if _tags contains 'Device' %}
+                          {% assign flag_device = true %}
+                        {% endif %}
+                        {% if _tags contains 'Fit' %}
+                          {% assign flag_fit = true %}
+                        {% endif %}
+                        {% if _tags contains 'free_leash' %}
+                          {% assign flag_leash = true %}
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                    {% if item.product.handle == 'whistle-switch-battery' and is_switch_added %}
+                      <span class="was-price">{{ item.variant.price | money }}</span>
+                      {% assign d_price = item.variant.price | times: 0.7 | divided_by: 100 | ceil | times: 100 %}
+                      <span class="regular-price">{{ d_price | money }}</span>
+                    {% else %}
+                      {% if flag_device == true and flag_plan_device == true and tags contains 'Device' %}
+                        <span class="was-price">{{ item.variant.price | money }}</span>
+                        <span class="regular-price">{{ item.variant.price | minus: 2000 | money }}</span>
+                        <!-- <div class="save-badge">You Save {{ 2000 | times: 100 | divided_by: item.variant.price }}%</div> -->
+                        <div class="save-badge">You Save {{ 2000 | money }}</div>
+                      {% elsif flag_fit == true and flag_plan_fit == true and tags contains 'Fit' %}
+                        <span class="was-price">{{ item.variant.price | money }}</span>
+                        <span class="regular-price">{{ item.variant.price | minus: 1500 | money }}</span>
+                        <!-- <div class="save-badge">You Save {{ 1500 | times: 100 | divided_by: item.variant.price }}%</div> -->
+                        <div class="save-badge">You Save {{ 1500 | money }}</div>
+                      {% elsif flag_switch == true and flag_plan_switch == true and tags contains 'Switch' %}
+                        <span class="was-price">{{ item.variant.price | money }}</span>
+                        <span class="regular-price">{{ item.variant.price | minus: 2000 | money }}</span>
+                        <!-- <div class="save-badge">You Save {{ 2000 | times: 100 | divided_by: item.variant.price }}%</div> -->
+                        <div class="save-badge">You Save {{ 2000 | money }}</div>
+                      {% elsif is_switch_added == true and flag_leash == true and tags contains 'free_leash' %}
+                        <span class="was-price">{{ item.variant.price | money }}</span>
+                        <span class="regular-price">{{ 0 | money }}</span>
+                      {% else %}
+                        {% if item.variant.compare_at_price > item.variant.price %}
+                          <span class="was-price">{{ item.variant.compare_at_price | money }}</span>
+                        {% endif %}
+                        <span class="regular-price">{{ item.variant.price | money }}</span>
+                      {% endif %}
+                    {% comment %}{% if item.quantity != 0 %} x {{ item.quantity }}{% endif %}{% endcomment %}
+                    {% endif %}
+                    
+                  </div>
+                  {% comment %}
+                  <div class="item_quantity">
+                    <select data-cart-item-qty>
+                      {% for i in (1..5) %}                    
+                        <option value="{{ i }}" {% if i == item.quantity %}selected{% endif %}>{{ i }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  {% endcomment %}
+                  <div class="item_remove">
+                    
+                    <div class="custom-qty-dropdown cart-item-qty">
+                      <div class="selected-option" rv-data-value="item.quantity">Qty: {{ item.quantity }} <span>{% render 'icon' with 'icon-arrow-down' %}</span></div>
+                      <div class="options-list">
+                        <li value="0" rv-class="item.quantity | qtyActive 0">Remove</li>
+                        <li value="1" rv-class="item.quantity | qtyActive 1">1</li>
+                        <li value="2" rv-class="item.quantity | qtyActive 2">2</li>
+                        <li value="3" rv-class="item.quantity | qtyActive 3">3</li>
+                        <li value="4" rv-class="item.quantity | qtyActive 4">4</li>
+                      </div>
+                    </div>
+                    {% comment %}
+                    <a class="cart-remove-link no-hover-link hide--mobile" href="#" data-cart-remove-item data-id="{{ item.variant.id }}">
+                      {% render 'icon' with 'icon-close' %}{{ 'cart.general.remove' | t }}
+                    </a>
+                    <a class="cart-remove-link no-hover-link hide--desktop hide--tablet" href="#" data-cart-remove-item data-id="{{ item.variant.id }}">
+                      {% render 'icon' with 'icon-trash' %}
+                    </a>
+                    {% endcomment %}
+                  </div>
+                  {% comment %}
+                  {% if tags contains 'plan_switch' %}
+                    <div class="swith_paragraph">
+                      Shipping starts July 2021
+                    </div>
+                  {% endif %}
+                  {% endcomment %}
+                </div>
+              </div>
+              {% assign include_text = '' %}
+              {% if tags contains 'Whistle Go Explore' %}
+                {% assign include_text = section.settings.include_explore %}
+              {% elsif tags contains 'Whistle FIT' %}
+                {% assign include_text = section.settings.include_fit %}
+              {% endif %}
+              {% comment %}
+              {% if include_text != '' %}
+                <div class="what_include hide--desktop hide--tablet">
+                  <div data-include-title>What's Included {% render 'icon' with 'icon-arrow-down' %}</div>
+                    <div data-include-content>
+                      {{ include_text }}
+                  </div>
+                </div>
+              {% endif %}
+              {% endcomment %}
+            </div>
+          </div>
+        {% endif %}
+      {% endcapture %}
+
+      {% if tags contains 'plans' %}
+        {% if tags contains 'plan_device' %}
+          {% assign plan_item_explore = cart-line-item %}
+        {% endif %}
+        {% if tags contains 'plan_fit' %}
+          {% assign plan_item_fit = cart-line-item %}
+        {% endif %}
+      {% else %}
+      {% endif %}
+      
+      {{ cart-line-item }}
+
+    {% endfor %}
+
+  </div>
+
+  {% assign plan = '' %}
+  {% if plan_annual %}
+    {% assign plan = 'annual' %}
+  {% elsif plan_biannual %}
+    {% assign plan = 'biannual' %}
+  {% elsif plan_monthly %}
+    {% assign plan = 'monthly' %}
+  {% else %}
+  {% endif %}
+
+  {% unless plan == '' %}
+    <div class="cart-legal">
+      You authorize us to automatically continue your {{ plan }} plan after the conclusion of your free trial and to apply a charge for your plan to the payment method you provided unless you cancel before the end of the free trial. You agree to our <a href="https://learn.whistle.com/legal/end-user-agreement" target="blank">Terms of Service</a> and <a href="https://www.mars.com/privacy" target="blank">Privacy Policy</a>.{% comment %} For more details on how to cancel, click <a href="javascript:;">here</a>.{% endcomment %}
+    </div>
+  {% endunless %}
+
+</div>
+
+  <div class="upsell_wrapper hide--mobile">
+    {% if is_switch_added %}
+      <div class="upsell_title">
+        {{ section.settings.upsell_title_switch }}
+      </div>
+      <div class="upsell_subtitle">{{ section.settings.upsell_subtitle }}</div>
+    {% else %}
+      <div class="upsell_title">
+        {{ section.settings.upsell_title }}
+      </div>
+    {% endif %}
+    <div class="upsell-products-wrapper d-flex {% if is_switch_added %}switch-upsell{% endif %}">
+      
+      {% for i in (1..4) %}
+        {% assign product_handle = 'u_product' | append: i %}
+        {% assign title_handle = 'u_title' | append: i %}
+        {% assign desc_handle = 'u_desc' | append: i %}
+
+        {% assign product_idx = forloop.index %}
+
+        {% if section.settings[product_handle] != blank %}
+        
+          {% assign product = all_products[section.settings[product_handle]] %}
+          {% assign title = section.settings[title_handle] | default: product.title %}
+          {% assign desc = section.settings[desc_handle] | default: product.description %}
+
+          {% assign class="hidden" %}
+
+          {% if is_switch_added %}
+            {% if i == 3 or i == 4 %}
+              {% assign class="d-flex" %}
+            {% endif %}
+          {% else %}
+            {% if i == 1 or i == 2 %}
+              {% assign class="d-flex" %}
+            {% endif %}
+          {% endif %}
+
+          {% render 'cart-upsell-item', product: product, class: class, title: title, desc: desc, is_switch_added: is_switch_added, product_idx: product_idx %}
+
+        {% endif %}
+
+      {% endfor %}
+
+    </div>
+  </div>
+
+  {% unless is_plan %}
+    <a href="{{ section.settings.continueurl }}" class="link no-hover-link" data--hidden data-menu-link data-device="{% if is_device_added %}true{% endif %}">{{ section.settings.continuetitle }}</a>
+  {% endunless %}

@@ -1,0 +1,103 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-product-reviews.liquid and it is overriding automatically. You should use theme development tool and sources\sections\custom-product-reviews.liquid file to code and save your changes. {% endcomment %}
+{% render 'ea-section-styles', section: section %}
+
+<div class="section-container">
+  <div class="main_content container">
+    <div 
+      class="yotpo yotpo-main-widget" 
+      data-product-id="{{ product.id }}" 
+      data-name="{{ product.title | escape }}" 
+      data-url="{{ shop.url }}{{ product.url }}" 
+      data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}" 
+      data-price="{{ variant.price | money_without_currency }}"
+      data-currency="{{ shop.currency }}" data-description="{{ product.description | escape }}">
+      {%- assign yotpo_offload_content = shop.metafields.yotpo.yotpo_offload_content %}
+      {%- assign time_now = 'now' | date: '%s' %}
+      {%- assign yotpo_live_time = shop.metafields.yotpo.yotpo_live | date: '%s' %}
+      {%- assign diff_seconds_from_live = time_now | minus: yotpo_live_time %}
+      {%- assign yotpo_main_widget_last_updated = product.metafields.yotpo.main_widget_update_time | date: '%s' %}
+      {%- assign diff_seconds_from_last_main_widget_update = time_now | minus: yotpo_main_widget_last_updated %}
+      {%- if yotpo_live_time and diff_seconds_from_live < 86400 or yotpo_main_widget_last_updated and diff_seconds_from_last_main_widget_update < 86400 -%}
+        {%- assign yotpo_main_widget_obsolete = false %}
+      {%- else %}
+        {%- assign yotpo_main_widget_obsolete = true %}
+      {%- endif %}
+      {%- if yotpo_offload_content == 'yes' and yotpo_main_widget_obsolete != true -%}
+        {%- for field in product.metafields.yotpo_reviews -%}
+          {{ field | last }}
+        {%- endfor -%}
+      {%- endif %}
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Product reviews",
+  "class": "product-reviews",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "visible",
+      "label": "Show block",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "ptop",
+      "label": "Top spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom",
+      "label": "Bottom spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "ptop_mob",
+      "label": "Top spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom_mob",
+      "label": "Bottom spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "sectionbg",
+      "label": "Background",
+      "default": "#fff"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,472 @@
+{% comment %} ATTENTION!!! This is compiled version of checkout.scss.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\checkout.scss.liquid file to code and save your changes. {% endcomment %}<style>
+
+[data-gift-recipient-form] {
+  display: none;
+}
+
+.sidebar [data-gift-recipient-form] {
+  display: none !important;
+}
+
+.page--thank-you [data-gift-recipient-form] {
+  display: block;
+}
+
+.gift-recipient-form {
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+.gift-recipient-form .title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.gift-recipient-form .form-wrapper {
+  display: none;
+}
+
+.gift-recipient-form .form-toggle {
+  cursor: pointer;
+  color: #026937;
+  font-size: 15px;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  padding-left: 24px;
+}
+
+.btn--subdued {
+  background-color: transparent;
+  border-color: #b3b3b380;
+  color: #FFF !important;
+  font-weight: normal;
+}
+
+.os-header__hanging-icon {
+  margin-right: 0.75em;
+  stroke: #038848;
+}
+
+.gift-recipient-form .form-toggle svg {
+  width: 14px;
+  height: auto;
+  margin-left: 2px;
+  transform: translateY(2px);
+}
+
+.gift-recipient-form .form-toggle svg path {
+  fill: #81bc00;
+}
+
+.gift-recipient-form form {
+  margin-top: 5px;
+}
+
+.gift-recipient-form form .title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.gift-recipient-form form .subtitle {
+  font-size: 14px;
+}
+
+.gift-recipient-form form input {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  box-sizing: border-box;
+  height: 40px;
+  width: 100%;
+  padding-left: 10px;
+}
+
+.gift-recipient-form form textarea {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  box-sizing: border-box;
+  height: 90px;
+  width: 100%;
+  padding: 10px;
+}
+
+.gift-recipient-form form input:focus, .gift-recipient-form form textarea:focus {
+  border-color: #81bc00;
+  outline: none;
+}
+
+.gift-recipient-form form .form-field {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.gift-recipient-form form .form-field.col-2 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.gift-recipient-form form .form-field.col-2 input {
+  width: calc(50% - 5px);
+}
+
+@media (max-width: 640px) {
+  .gift-recipient-form form .form-field.col-2 {
+    flex-direction: column;
+  } 
+
+  .gift-recipient-form form .form-field.col-2 input {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .gift-recipient-form form .form-field.col-2 input:first-child {
+    margin-top: 0px;
+  }
+}
+
+@media (min-width: 740px) {
+  .main__content {
+    padding-bottom: 80px;
+  }
+}
+
+
+.gift-recipient-form form .form-action button {
+  background: #014550;
+  border: 2px solid #014550;
+  border-radius: 100px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: -5px;
+  margin-bottom: 15px;
+  width: 100%;
+  height: 48px;
+  text-align: center;
+  transition: all .3s ease;
+}
+
+.gift-recipient-form form .form-action button:hover {
+  background: #FFF;
+  color: #014550;
+}
+
+[data-legal-steps] {
+  opacity: 0;
+}
+
+.legal_step {
+  border-bottom: 1px solid #e6e6e6;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+  // max-width: 78.5714285714em;
+  // width: 90%;
+  // transform: translateY(calc(-100% - 70px));
+}
+
+[data-step="payment_method"] form[data-payment-form] .legal_step {
+  border-bottom: none;
+  margin-bottom: -1em;
+  margin-top: 2em;
+  padding-bottom: 0;
+}
+
+.legal_step label {
+  display: block;
+  // width: 52%;
+  // padding-right: 6%;
+  // cursor: pointer;
+}
+
+@media (max-width: 989px) {
+  .legal_step label {
+    width: 100%;
+    padding-right: unset;
+  }
+}
+
+
+button.disabled {
+  cursor: not-allowed;
+  opacity: .6;
+}
+
+ol.breadcrumb {
+  margin-bottom: 45px;
+  margin-right: -20px;
+  padding-left: 15px;
+}
+
+ol.breadcrumb li {
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start !important;
+  font-size: 14px;
+  font-weight: 500;
+  min-width: fit-content;
+  position: relative;
+}
+
+ol.breadcrumb li a {
+  color: #707070;
+}
+
+ol.breadcrumb li a, ol.breadcrumb li span {
+  transform: translateX(-50%);
+}
+
+ol.breadcrumb li.activated a, ol.breadcrumb li.current {
+  color: #000;
+}
+
+ol.breadcrumb li.activated a:hover {
+  color: #5677ef;
+}
+
+ol.breadcrumb li:last-child {
+  flex: 0;
+}
+
+ol.breadcrumb li::after {
+  content: '';
+  display: block;
+  background: #707070;
+  width: calc(100% - 32px);
+  height: 1px;
+  position: absolute;
+  bottom: 11px;
+  left: 16px;
+}
+
+ol.breadcrumb li.activated::after {
+  background: #000;
+}
+
+ol.breadcrumb li:last-child::after {
+  display: none !important;
+}
+
+ol.breadcrumb li span[data-step] {
+  border: 1px solid #707070;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-top: 8px;
+  position: relative;
+}
+
+ol.breadcrumb li.activated span[data-step] svg {
+  display: block;
+  fill: #FFF;
+  width: 12px;
+  height: auto;
+}
+
+ol.breadcrumb li.activated span[data-step], ol.breadcrumb li.current span[data-step] {
+  border: 1px solid #000;
+  color: #000;
+}
+
+ol.breadcrumb li.activated span[data-step] {
+  // background-image: linear-gradient(to left, #6dbf00 72%, #8fde00);
+  background: #038848;
+  border: transparent;
+  font-size: 0px;
+}
+
+ol.breadcrumb li svg {
+  display: none;
+}
+
+.sticky-header {
+  background: #323335;
+  color: #FFF;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 9;
+}
+
+.sticky-header-wrapper {
+  // max-width: 78.5714285714em;
+  // margin-left: auto;
+  // margin-right: auto;
+}
+.sticky-header-wrapper .wrap {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0 calc(5% + 5px);
+}
+
+.sticky-header-wrapper .wrap::before, .sticky-header-wrapper .wrap::after {
+  display: none !important;
+}
+
+.page--no-banner .main, .page--no-banner .sidebar {
+  padding-top: 6em;
+}
+
+@media (max-width: 767px) {
+  .sticky-header-wrapper .logo svg {
+    width: 100px;
+    height: auto;
+  }
+  .sticky-header-wrapper .wrap {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  .sticky-header-wrapper .wrap > div:last-child {
+    font-size: 14px;
+    max-width: 45%;
+  }
+  
+  .page--no-banner .main, .page--no-banner .sidebar {
+    padding-top: 3em;
+  }
+}
+
+@media (min-width: 768px) {
+  button.step__footer__continue-btn {
+    font-size: 19px;
+    padding: 1em 4em;
+  }
+}
+
+[data-shipping-feature] {
+  opacity: 0;
+}
+
+.shipping-features {
+  border-top: 1px solid #ccc;
+  margin-top: 45px;
+  padding-top: 30px;
+}
+
+.shipping-features .feature-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.shipping-features .feature_title {
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 3px;
+}
+
+.shipping-features .shipping-feature {
+  text-align: center;
+}
+
+.shipping-features svg {
+  height: 32px;
+  
+}
+
+.shipping-features svg path {
+  fill: #038848;
+}
+
+@media (min-width: 768px) {
+  #order-summary h2 {
+    clip: unset;
+    width: auto;
+    height: auto;
+    font-size: 19px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    overflow: unset;
+    position: relative;
+  }
+
+  .main {
+    width: 50%;
+    padding-right: 4%;
+  }
+
+  .sidebar {
+    width: 42%;
+    padding-left: 4%;
+  }
+
+}
+
+@media (max-width: 767px) {
+  .order-summary__sections .shipping-features {
+    padding-bottom: 30px;
+  }
+}
+
+.main__footer {
+  border-top: none;
+  padding-top: unset;
+}
+
+h2.section__title {
+  font-size: 19px;
+  font-weight: bold;
+}
+
+form.edit_checkout .notice.notice--error.default-background,
+.section.section--payment-method .notice.notice--error.default-background {
+  display: none !important;
+}
+
+[data-checkout-total-shipping-target="0"] {
+  opacity: 0;
+}
+
+[data--hidden] {
+  display: none !important;
+}
+
+.btn {
+  background: #038848;
+} 
+.btn:hover {
+  background: #026937;
+}
+
+.main__content a, .main__footer a {
+  color: #038848;
+}
+
+[data-osp-continue-button] {
+  color: #FFF !important;
+}
+
+.main__content a:hover, .main__footer a:hover {
+  color: #5677ef;
+}
+
+.step__sections .section__header h2.section__title + p.layout-flex__item {
+  display: none;
+}
+
+.btn {
+  background: #014550;  
+  border: 2px solid #014550;
+  border-radius: 100px;
+  transition: all .3s ease;
+}
+
+.btn:hover {
+  background: #FFF !important;
+  color: #014550;
+}
+.btn:hover * {
+  color: #014550;
+}
+
+</style>

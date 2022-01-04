@@ -1,0 +1,19 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-instagram-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-instagram-content.liquid file to code and save your changes. {% endcomment %}<div class="section_container">
+  <div class="main_content">
+    <div class="title not-animated">{{ section.settings.title }}</div>
+    <div class="subtitle not-animated">{{ section.settings.subtitle }}</div>
+    <div class="instagram-slider">
+      {% for block in section.blocks %}
+        {% if block.settings.image != blank %}
+          <div class="slider-item insta-slider-item">
+            <div class="image_wrapper">{% render 'rimage', image: block.settings.image, size: '300x' %}</div>
+            <div class="text_wrapper">
+              <div class="item_title">{{ block.settings.title }}</div>
+              <div class="item_text">{{ block.settings.text }}</div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>

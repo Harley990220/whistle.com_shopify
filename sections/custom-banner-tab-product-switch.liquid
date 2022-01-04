@@ -1,0 +1,333 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-banner-tab-product-switch.liquid and it is overriding automatically. You should use theme development tool and sources\sections\custom-banner-tab-product-switch.liquid file to code and save your changes. {% endcomment %}{% if section.settings.visible %}
+
+  {% render 'ea-section-styles', section: section %}
+
+  {% render 'custom-banner-tab-content' %}
+
+{% endif %}
+
+{% schema %}
+  {
+  "name": "Banner tab",
+  "tag": "section",
+  "class": "banner-tab",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "visible",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "ptop",
+      "label": "Top spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom",
+      "label": "Bottom spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "ptop_mob",
+      "label": "Top spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom_mob",
+      "label": "Bottom spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "sectionbg",
+      "label": "Section background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "header",
+      "content": "See specs button"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Button Label",
+      "default": "See All Features & Specs"
+    },
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color",
+      "id": "header_bg",
+      "label": "Tab header background",
+      "default": "#f7f4f0"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Block",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Tab Header"
+        },
+        {
+          "type": "text",
+          "id": "tab_header",
+          "label": "Title"
+        },
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "html",
+          "id": "icon_active",
+          "label": "Icon (active)"
+        },
+        {
+          "type": "header",
+          "content": "Tab Content (banner)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mob_image",
+          "label": "Image (Mobile)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "subtitle",
+          "label": "Sub title"
+        },
+        {
+          "type": "header",
+          "content": "Content position"
+        },
+        {
+          "type": "select",
+          "id": "content_pos",
+          "options": [
+            {
+              "label": "Top Left",
+              "value": "top left"
+            },
+            {
+              "label": "Top Center",
+              "value": "top center"
+            },
+            {
+              "label": "Top Right",
+              "value": "top right"
+            },
+            {
+              "label": "Middle Left",
+              "value": "middle left"
+            },
+            {
+              "label": "Middle Center",
+              "value": "middle center"
+            },
+            {
+              "label": "Middle Right",
+              "value": "middle right"
+            },
+            {
+              "label": "Bottom Left",
+              "value": "bottom left"
+            },
+            {
+              "label": "Bottom Center",
+              "value": "bottom center"
+            },
+            {
+              "label": "Bottom Right",
+              "value": "bottom right"
+            }
+          ],
+          "default": "middle center",
+          "label": "Desktop"
+        },
+        {
+          "type": "select",
+          "id": "content_pos_mob",
+          "options": [
+            {
+              "label": "Top Left",
+              "value": "top left"
+            },
+            {
+              "label": "Top Center",
+              "value": "top center"
+            },
+            {
+              "label": "Top Right",
+              "value": "top right"
+            },
+            {
+              "label": "Middle Left",
+              "value": "middle left"
+            },
+            {
+              "label": "Middle Center",
+              "value": "middle center"
+            },
+            {
+              "label": "Middle Right",
+              "value": "middle right"
+            },
+            {
+              "label": "Bottom Left",
+              "value": "bottom left"
+            },
+            {
+              "label": "Bottom Center",
+              "value": "bottom center"
+            },
+            {
+              "label": "Bottom Right",
+              "value": "bottom right"
+            }
+          ],
+          "default": "middle center",
+          "label": "Mobile"
+        },
+        {
+          "type": "header",
+          "content": "Text alignment"
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "options": [
+            {
+              "label": "Left",
+              "value": "left"
+            },
+            {
+              "label": "Center",
+              "value": "center"
+            },
+            {
+              "label": "Right",
+              "value": "right"
+            }
+          ],
+          "default": "center",
+          "label": "Desktop"
+        },
+        {
+          "type": "select",
+          "id": "text_align_mob",
+          "options": [
+            {
+              "label": "Left",
+              "value": "left"
+            },
+            {
+              "label": "Center",
+              "value": "center"
+            },
+            {
+              "label": "Right",
+              "value": "right"
+            }
+          ],
+          "default": "center",
+          "label": "Mobile"
+        },
+        {
+          "type": "header",
+          "content": "Color"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "mob_color",
+          "label": "Color (Mobile)",
+          "default": "#000000"
+        },
+        {
+          "type": "paragraph",
+          "content": "Overlay"
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Overlay",
+          "default": "#FFF"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0,
+          "max": 100,
+          "default": 50,
+          "unit": "%",
+          "label": "Opacity"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

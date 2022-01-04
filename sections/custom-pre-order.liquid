@@ -1,0 +1,159 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-pre-order.liquid and it is overriding automatically. You should use theme development tool and sources\sections\custom-pre-order.liquid file to code and save your changes. {% endcomment %}{% if section.settings.visible %}
+
+  {% render 'ea-section-styles', section: section %}
+
+  <div class="section_cotnainer">
+    <div class="main_content container">
+
+      <div class="main_wrapper">
+        {% assign percent = section.settings.percent | plus: 0 %}
+        {% assign limit = section.settings.limit | plus: 0 %}
+
+        {% assign min = percent %}
+        {% assign max = 100 %}
+        {% assign diff = max | minus: min %}
+        {% assign r_percent = "now" | date: "%N" | modulo: diff | plus: min %}
+
+        {% assign order_num = limit | times: r_percent | divided_by: 100 | round %}
+
+        {% if section.settings.title != blank %}
+          <div class="section_title">{{ section.settings.title }} {{ order_num }} / {{ limit }} units left</div>
+        {% endif %}
+
+        <div class="pre-order-block">
+          <div class="d-flex block-title">
+            <div>{{ section.settings.subtitle1 }}</div>
+            <div>{{ order_num | append: ' ' }} {{ section.settings.subtitle2 }}</div>
+          </div>
+          <div class="block-text">
+            {{ section.settings.text }}
+          </div>
+          <div class="progress d-flex">
+            <div class="progress-bar">
+              <span style="width:calc({{ r_percent }}% + 2px);"></span>
+            </div>
+            🔥
+          </div>
+          <div class="progress-label d-flex">
+            <span>{{ r_percent }}%</span>
+            <span>100%</span>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Pre order",
+  "tag": "section",
+  "class": "pre-order",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "visible",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "ptop",
+      "label": "Top spacing",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom",
+      "label": "Bottom spacing",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "ptop_mob",
+      "label": "Top spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom_mob",
+      "label": "Bottom spacing",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "sectionbg",
+      "label": "Section background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "subtitle1",
+      "label": "Subtitle 1"
+    },
+    {
+      "type": "text",
+      "id": "subtitle2",
+      "label": "Subtitle 2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "text",
+      "id": "limit",
+      "label": "Limit",
+      "default": "1000"
+    },
+    {
+      "type": "range",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "id": "percent",
+      "label": "Minimum value",
+      "default": 20
+    }
+  ]
+}
+{% endschema %}

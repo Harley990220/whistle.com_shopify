@@ -1,0 +1,45 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-icon-list-content-second.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-icon-list-content-second.liquid file to code and save your changes. {% endcomment %}<div class="section_container">
+  <div class="main_content container">
+    <div class="hide--mobile list-slider desktop">
+      <div class="main_wrapper d-flex icon-list-wrapper">
+        {% for block in section.blocks %}
+          <div class="list-item">
+            <div class="icon_wrapper">
+              {{ block.settings.icon }}
+            </div>
+            <div class="text_wrapper">
+              <div class="icon_title">{{ block.settings.title }}</div>
+              <div class="icon_text">{{ block.settings.text }}</div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="hide--desktop hide--tablet list-slider mobile">
+      <div class="m-scroll">
+        <div class="m-scroll__title">
+          <div>
+            {% capture content %}
+              <div class="group d-flex">
+                {% for block in section.blocks %}
+                  <div class="list-item">
+                    <div class="icon_wrapper">
+                      {{ block.settings.icon }}
+                    </div>
+                    <div class="text_wrapper">
+                      <div class="icon_title">{{ block.settings.title }}</div>
+                      <div class="icon_text">{{ block.settings.text }}</div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endcapture %}
+            {{ content }}
+            {{ content }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

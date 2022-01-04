@@ -1,0 +1,26 @@
+{% comment %} ATTENTION!!! This is compiled version of cart-error-popup.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\cart-error-popup.liquid file to code and save your changes. {% endcomment %}
+<div class="popup is-hidden" data-popup="cart-err-popup">
+  <div class="popup-window">
+    <button class="close" data-popup-close>{% render 'icon' with 'icon-close' %}</button>
+    <div class="popup-content">
+      <div class="img_wrapper">{% render 'rimage', image: settings.popup_img, size: '480x' %}</div>
+      <!-- <div class="text_wrapper">
+        <div class="popup_title">{{ settings.msg_title }}</div>
+        <div class="popup_text">{{ settings.msg_content }}</div>
+      </div> -->
+      <div class="text_wrapper explore-fit fit-explore" data--hidden>
+        <div class="popup_title">{{ settings.msg_title }}</div>
+        <div class="popup_text">Unfortunately, Whistle Go Explore and Whistle FIT must be purchased separately.</div>
+      </div>
+      <div class="text_wrapper explore-switch switch-explore" data--hidden>
+        <div class="popup_title">{{ settings.msg_title }}</div>
+        <div class="popup_text">Unfortunately, Whistle Go Explore and Whistle Switch must be purchased separately.</div>
+      </div>
+      <div class="text_wrapper fit-switch switch-fit" data--hidden>
+        <div class="popup_title">{{ settings.msg_title }}</div>
+        <div class="popup_text">Unfortunately, Whistle Switch and Whistle FIT must be purchased separately.</div>
+      </div>
+    </div>
+  </div>
+  <div class="popup-bg" data-popup-close></div>
+</div>

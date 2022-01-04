@@ -1,0 +1,54 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-product-faq-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-product-faq-content.liquid file to code and save your changes. {% endcomment %}<div class="section-container">
+  <div class="main_content container">
+    <div class="block-wrap d-flex" data-animate-block>
+      {% if section.settings.image != blank %}
+        <div class="image-wrap hide--mobile">
+          <img alt="img alt" src="{{ section.settings.image | img_url: '1200x' }}" data-image-animation>
+        </div>
+      {% endif %}
+      <div class="text-wrap {% if section.settings.image == blank %}full-content{% endif %}">
+          <div class="title">{{ section.settings.title }}</div>
+          <div data-accordions-container>
+              {% for block in section.blocks %}
+                  <div class="faq-item accordion" data-accordion>
+                      <h3 class="faq-item__title accordion__title" data-accordion-button>
+                          <span>{{ block.settings.title }}</span>
+                          <i class="icon-plus">
+                            {% render 'icon' with 'accordion-arrow-closed' %}
+                          </i>
+                          <i class="icon-minus">
+                            {% render 'icon' with 'accordion-arrow-opened' %}
+                          </i>
+                      </h3>
+                      <div class="faq-item__content accordion__content" data-accordion-content>{{ block.settings.text }}</div>
+                  </div>
+              {% endfor %}
+          </div>
+          <div class="text-footer">
+              <span>{{ section.settings.info }}</span>
+              <a href="{% if section.settings.btn_link != blank %}{{ section.settings.btn_link }}{% else %}javascript:;{% endif %}">{{ section.settings.btn_label }}</a>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage_{{ section.id }}",
+    "mainEntity": [
+      {% for block in section.blocks %}
+        {
+          "@type": "Question",
+          "name": "{{ block.settings.title }}",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "{{ block.settings.text }}"
+          }  
+        }{% if forloop.first %}{% if section.blocks.size > 1 %},{% endif %}{% else %}{% if forloop.last != true %},{% endif %}{% endif %}
+      {% endfor %}
+    ]
+  }
+  </script>

@@ -1,0 +1,57 @@
+{% comment %} ATTENTION!!! This is compiled version of theme.liquid and it is overriding automatically. You should use theme development tool and sources\layout\theme.liquid file to code and save your changes. {% endcomment %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    {% comment %}{{ content_for_header }}{% endcomment %}
+    {% if template contains "index" or template contains "product" or template contains "collection" or page.url contains "pages" or blog.url contains "blogs" %}
+      {{ content_for_header | replace: 'src="//cdn.shopify.com/shopifycloud/', 'data-src="//cdn.shopify.com/shopifycloud/' | replace: 'DOMContentLoaded', 'StartPreviewBarLoading' }} {% else %} {{ content_for_header | replace: '339680363989897', '' }}
+    {% endif %}
+    {% include 'ea-head' %}
+  </head>
+
+  <body class="template-{{ template.name }} template-{{ template.name }}-{{ template.suffix }} template-page-{{ page.handle }} animations-on {% if template == 'product' %}product-page--{{ product.handle }}{% endif %}">
+    
+    <!-- Google Tag Manager (noscript) -->
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WD6RWQ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    {% render 'ea-header' %}
+    {% section 'ea-megamenu--complex' %}
+    {% section 'ea-megamenu--complex1' %}
+    {% section 'ea-megamenu--complex2' %}
+    {% section 'custom-color-option' %}
+   
+
+    {{ content_for_layout }}
+
+    {% section 'custom-contact' %}
+    <div class="site-footer-container" data-site-footer>
+      {% section 'custom-compare-model' %}
+      {% section 'custom-sms-popup' %}
+      {% section 'ea-newsletter' %}
+      {% section 'ea-footer' %}
+    </div>
+
+    
+    {% include 'criteo-tracking' %}
+
+    {% comment %}
+      {% render 'product-quick-view-popup' %}
+      {% include 'subscription-theme-footer' %}
+    {% endcomment %}
+    <script>
+      var _page = "{{ request.page_type }}";
+      if(_page == 'index') {
+        localStorage.setItem('link', 'index');
+      }
+    </script>
+    {% include 'ea-end' %}  
+
+    {% include 'support-chat' %}
+
+    {% render 'cart-error-popup' %}
+
+  </body>
+</html>

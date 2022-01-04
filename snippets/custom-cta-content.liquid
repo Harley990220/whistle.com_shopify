@@ -1,0 +1,18 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-cta-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-cta-content.liquid file to code and save your changes. {% endcomment %}<div class="section_container">
+  <div class="main_content container" data-animate-block>
+    <div class="cta_wrapper">
+      {% if section.settings.pretitle != blank %}
+        <div class="pretitle">{{ section.settings.pretitle }}</div>
+      {% endif %}
+      {% if section.settings.title != blank %}
+        <div class="title">{{ section.settings.title }}</div>
+      {% endif %}
+      {% if section.settings.content != blank %}
+        <div class="subtitle">{{ section.settings.content }}</div>
+      {% endif %}
+      {% if section.settings.btn_link != blank and section.settings.btn_label != blank %}
+        <div class="btn_wrapper"><a href="{{ section.settings.btn_link }}" class="btn m-black-new">{{ section.settings.btn_label }}</a></div>
+      {% endif %}
+    </div>
+  </div>
+</div>

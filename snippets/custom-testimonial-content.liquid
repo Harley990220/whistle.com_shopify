@@ -1,0 +1,38 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-testimonial-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-testimonial-content.liquid file to code and save your changes. {% endcomment %}<div class="section_container">
+  <div class="main_content">
+    <div class="main_wrapper" data-animate-block>
+      <div class="section_header">
+        {% comment %}<div class="section_icon">{% render 'icon' with 'icon-review-star' %}</div>{% endcomment %}
+        <div class="title">{{ section.settings.title }}</div>
+      </div>
+      <div class="testimonial-slider slider-dots-default" data-vwidth-slider>
+        {% for block in section.blocks %}
+          <div class="testimonial-item {{ block.type }}-item">
+            <div class="item_top">
+              <div class="wrapper">
+                {% if block.type == 'image' %}
+                  {% render 'rimage', image: block.settings.image, size: '600x' %}
+                {% elsif block.type == 'text' %}
+                  <div class="review_star">{% render 'icon' with 'icon-review-star' %}</div>
+                  <div class="text">{{ block.settings.text }}</div>
+                  <div class="author">{{ block.settings.title }}</div>
+                {% endif %}
+              </div>
+            </div>
+            {% if block.type == 'image' %}
+              <div class="item_bottom">
+                {% if block.type == 'image' %}
+                  <div class="icon_wrapper">{% render 'rimage', image: block.settings.icon, size: '100x' %}</div>
+                  <div class="author">{{ block.settings.title }}</div>
+                {% elsif block.type == 'text' %}
+                  <!-- <div class="item_title">{{ block.settings.title }}</div> -->
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+      {% render 'swipe-text' %}
+    </div>
+  </div>
+</div>

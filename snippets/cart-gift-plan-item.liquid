@@ -1,0 +1,146 @@
+{% comment %} ATTENTION!!! This is compiled version of cart-gift-plan-item.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\cart-gift-plan-item.liquid file to code and save your changes. {% endcomment %}{% assign tags = product.tags %}
+{% assign _id = '' %}
+{% assign _plan = '' %}
+{% if item.properties._id %}
+  {% assign _id = item.properties._id %}
+{% endif %}
+{% if item.properties._plan %}
+  {% assign _plan = item.properties._plan %}
+{% endif %}
+<div data-qty="{{ item.quantity }}" {% if _id != '' %}data-handle="{{ _plan }}-{{ _id }}"{% endif %} class="cart-line-item d-flex {% if is_added == 'false' %}plan-draft{% endif %} plan-item {% unless is_added == 'false' %}{% if tags contains 'plan_device' %}plan-explore{% elsif tags contains 'plan_fit' %}plan-fit{% else %}plan-monthly{% endif %}{% endunless %}" data-cart-item data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+  <div class="image_wrapper">
+    <a href="{{ product.url }}">
+      <img src="{{ product.featured_image | img_url: '150x' }}" alt="">
+      {% comment %}
+      {% if tags contains 'Gift_explore' or tags contains 'Gift_fit' %}
+        <img src="{{ section.settings.image_plan | img_url: '150x' }}">
+      {% endif %}
+      {% endcomment %}
+    </a>
+  </div>
+  <div class="info_wrapper">
+    <div class="d-flex">
+      <div class="item_info">
+        <div class="item_title">
+          <div>{{ product.title }}</div>
+        </div>
+        <div class="item_feature plan_popup" data-index="1">
+          <div class="paragraph" style="position: relative;"> 
+            <div class="content content-list">
+              {% assign content = section.settings.popup_plan %}
+              {% if tags contains 'plan_fit' %}
+                {% assign content = section.settings.popup_plan_fit %}
+              {% elsif tags contains 'plan_switch' %}
+                {% assign content = section.settings.popup_plan_switch %}
+              {% endif %}
+              {% assign content = content | replace: 'p>', 'item>' %}
+              {% assign _content = content | split: '<item>' %}
+              {% for item in _content %}
+                {% unless forloop.first %}
+                  {% assign _item = item | split: '</item>' %}
+                  <div>
+                    {% render 'icon' with 'icon-true' %}
+                    {{ _item[0] }}
+                  </div>
+                {% endunless %}
+              {% endfor %}
+            </div>
+            {% comment %}
+            <div class="popup-content">
+              <div data-popup-bg></div>
+              <div class="popup-header">
+                {% if tags contains 'plan_device' %}
+                  {{ section.settings.popup_plan_title }}
+                {% elsif tags contains 'plan_fit' %}
+                  {{ section.settings.popup_plan_title_fit }}
+                {% elsif tags contains 'plan_switch' %}
+                  {{ section.settings.popup_plan_title_switch }}
+                {% endif %}
+              </div>
+              
+            </div>
+            <span class="popup-trigger">
+              {% if tags contains 'plan_device' %}
+                {{ section.settings.popup_plan_title }}
+              {% elsif tags contains 'plan_fit' %}
+                {{ section.settings.popup_plan_title_fit }}
+              {% elsif tags contains 'plan_switch' %}
+                {{ section.settings.popup_plan_title_switch }}
+              {% endif %}
+            </span>
+            {% endcomment %}
+          </div>
+        </div>
+      </div>
+      <div class="item-price-remove">
+        {% assign variant = '' %}
+        {% if is_added == 'true' %}
+          {% assign variant = item.variant %}
+        {% else %}
+          {% assign variant = product.selected_or_first_available_variant %}
+        {% endif %}
+        <div class="item_price">
+          {% if tags contains 'free_discount' %}
+              <strong><span class="was-price">{{ variant.price | money }}</span>
+              {% comment %}{{ 0 | money }}{% endcomment %}{% if item.quantity > 0 %}<span class="line-item-qty"> x {{ item.quantity }}</span>{% endif %}</strong>
+            {% else %}
+            {% if variant.compare_at_price > variant.price %}
+              <span class="was-price">{{ variant.compare_at_price | money }}</span>
+            {% endif %}
+            {{ variant.price | money }}{% if item.quantity > 0 %}<span class="line-item-qty"> x {{ item.quantity }}</span>{% endif %}
+          {% endif %}
+        </div>
+        <div class="item_remove" data--hidden {% if is_added == 'false' %}data--hidden{% endif %}>
+          <a class="cart-remove-link no-hover-link" href="#" data-cart-remove-item data-id="{{ variant.id }}">
+            {% render 'icon' with 'icon-close' %}{{ 'cart.general.remove' | t }}
+          </a>
+        </div>
+        {% unless tags contains 'no_free' %}
+          {% if section.settings.include_text != blank %}
+            <div class="paragraph">
+              {{ section.settings.include_text }}
+            </div>
+          {% elsif tags contains 'plan_fit' %}
+            {% if section.settings.include_text_fit != blank %}
+              <div class="paragraph">
+                {{ section.settings.include_text_fit }}
+              </div>
+            {% endif %}
+          {% endif %}
+        {% endunless %}
+      </div>
+    </div>
+    <div class="add_to_order d-flex">
+      {% comment %}
+      <div class="plan_popup plan_reason_popup" data-index="2">
+        <div class="popup_title">
+          {% if tags contains 'plan_device' %}
+            {{ section.settings.popup_reason_title }}
+          {% elsif tags contains 'plan_fit' %}
+            {{ section.settings.popup_reason_title_fit }}
+          {% elsif tags contains 'plan_switch' %}
+            {{ section.settings.popup_reason_title_switch }}
+          {% endif %}
+          {% render 'icon' with 'icon-arrow-down' %}
+        </div>
+        <div class="popup_content">
+          {% if tags contains 'plan_device' %}
+            {{ section.settings.popup_reason }}
+          {% elsif tags contains 'plan_fit' %}
+            {{ section.settings.popup_reason_fit }}
+          {% elsif tags contains 'plan_switch' %}
+            {{ section.settings.popup_reason_switch }}
+          {% endif %}
+        </div>
+      </div>
+      {% endcomment %}
+      {% if is_added == 'false' %}
+        <div class="product_atc_form" data-atc-product-item data-ajax-form data-id="{{ product.selected_or_first_available_variant.id }}">
+          <div class="btn_wrapper d-flex">
+            <button class="btn" data-ajax-atc-btn>Add to order {% render 'icon' with 'icon-arrow-right' %}</button>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

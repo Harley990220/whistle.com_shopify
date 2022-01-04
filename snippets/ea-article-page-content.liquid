@@ -1,0 +1,135 @@
+{% comment %} ATTENTION!!! This is compiled version of ea-article-page-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\ea-article-page-content.liquid file to code and save your changes. {% endcomment %}{% assign set = section.settings %}
+<style>
+  #shopify-section-{{ section.id }} {
+    padding: {{ set.ptop }}px 0 {{ set.pbottom }}px;
+  }
+  #shopify-section-{{ section.id }} .article-header__text {
+    background-color: {{ set.sectionbg }};
+  }
+  .article__sidebar {
+    background-color: {{ set.sidebarbg }};
+  }
+  @media (max-width: 989px) {
+    #shopify-section-{{ section.id }} {
+      padding: {{ set.ptop_mob }}px 0 {{ set.pbottom_mob }}px;
+    }
+  }
+</style>
+<div class="container">
+  <div class="article_top">
+    <div class="article_title h1">{{ article.title }}</div>
+    <div class="article_meta">
+      {% comment %}
+      <div class="meta_item">
+        <span>By: </span> <span> {{ article.author }}</span>
+      </div>
+      {% endcomment %}
+      <div class="meta_item">
+        <span>Read Time: </span><span>{% render 'ea-blog__read-time', article: article %}</span>
+      </div>
+      <div class="meta_item">
+        <span>Date: </span><span>{{ article.published_at | date: "%b %d, %Y" }}</span>
+      </div>
+    </div>
+    {% if set.showSocial %}
+      <div class="article__share">
+        <nav class="nav social-links">
+          <ul class="nav__items">
+            
+            <li class="nav__item">
+              <a class="nav__link" href="//www.facebook.com/sharer.php?u={{ shop.url | append: article.url }}" style="background: #3b5998">
+                {% render 'icon' with 'social-facebook' %}
+                <span>Facebook</span>
+              </a>
+            </li>
+            
+            <li class="nav__item">
+              <a class="nav__link" href="//pinterest.com/pin/create/button/?url={{ shop.url | append: article.url }}&amp;media={{ article.image | img_url: '1024x1024' }}&amp;description={{ article.excerpt | url_param_escape }}" style="background: #00aced">
+                {% render 'icon' with 'social-pinterest' %}
+                <span>Pinterest</span>
+              </a>
+            </li>
+
+            <li class="nav__item">
+              <a class="nav__link" href="//twitter.com/share?text={{ article.title | url_param_escape }}&amp;url={{ shop.url | append: article.url }}" style="background: #cb2027">
+                {% render 'icon' with 'social-twitter' %}
+                <span>Twitter</span>
+              </a>
+            </li>
+            {% comment %}
+            {% for block in section.blocks %}
+              <li class="nav__item">
+                <a class="nav__link" href="{{ block.settings.url }}" style="background: {{ block.settings.bg_color }}">
+                  {{ block.settings.icon }}
+                  <span>{{ block.settings.title }}</span>
+                </a>
+              </li>
+            {% endfor %}
+            {% endcomment %}
+          </ul>
+        </nav>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="article_breadcrumb">
+    <div class="hide--mobile">
+      <span>The Whislte Blog</span>{% render 'icon' with 'icon-direc-right' %}<span><a href="{{ blog.url }}">back to {{ blog.title }}</a></span>{% render 'icon' with 'icon-direc-right' %}<span>{{ article.title }}</span>
+    </div>
+    <div class="hide--desktop hide--tablet">
+      <span><a href="{{ blog.url }}">Go back to blog {% render 'icon' with 'return_back' %}</a></span>  
+    </div>
+  </div>
+
+  <div class="article-header">
+    {% if article.image %}
+      <div class="article-header__image"><img src="{{ article.image | img_url: '1600x' }}" alt="{{ article.image.alt }}"></div>
+    {% endif %}
+    {% comment %}
+    <div class="article-header__text">
+      {% if article.tags[0] != blank %}
+        <h4 class="pretitle h6 m-accent not-animated">{{ article.tags[0] }}</h4>
+      {% endif %}
+      <h1 class="title not-animated m-black">{{ article.title }}</h1>
+      {% comment %}
+      <div class="article-header__meta">
+        <span>{{ article.published_at | date: "%B %d, %Y" }}</span>
+      </div>
+      {% endcomment %}
+    </div>
+    {% endcomment %}
+  </div>
+
+  <article class="article">
+    <div class="article__container">
+      <div class="article__content-wrap">
+        <div class="article__content rte">{{ article.content }}</div>
+        <div class="article__content-bottom">
+          {% comment %}
+          <nav class="pagination {% if paginate.previous and paginate.next %}paginate--both{% endif %}" role="navigation" aria-label="pagination">
+            <a href="{{ blog.url }}" class="pagination-previous btn m-icon-only"><i class="icon-arrow-left"></i> BACK TO BLOG</a>
+          </nav>
+          {% endcomment %}
+          {% if article.metafields.product.product != blank %}
+            <div class="article_upsell">
+              <label>Products Used</label>
+              <div class="upsell_products">
+                {% for _product in article.metafields.product.product %}
+                  {% assign product = all_products[_product] %}
+                  <div class="upsell_product_item">
+                    <a href="{{ product.url }}">
+                      <div class="img_wrapper"><img src="{{ product.featured_image | img_url: '200x' }}" class="main_{% if product.featured_image.aspect_ratio >= 1 %}width{% else %}height{% endif %}"></div>
+                      <div class="product_title">{{ product.title }}</div>
+                    </a>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      {% comment %} end article content {% endcomment %}
+    </div>
+  </article>
+
+</div>

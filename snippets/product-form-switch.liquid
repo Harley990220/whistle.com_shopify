@@ -1,0 +1,587 @@
+{% comment %} ATTENTION!!! This is compiled version of product-form-switch.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\product-form-switch.liquid file to code and save your changes. {% endcomment %}{% comment %} ATTENTION!!! This is compiled version of product-form-switch.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\product-form-switch.liquid file to code and save your changes. {% endcomment %}{% assign set = section.settings %}
+{% assign isDefault = false %}
+{% if product.variants.size == 1 and product.variants[0].title == "Default Title" %}
+  {% assign isDefault = true %}
+{% endif %}
+
+{% comment %}Recharge settings{% endcomment %}
+{% assign subscription_product = product.metafields.subscriptions %}
+{% assign subscription_id = subscription_product.subscription_id %}
+{% assign discount_percent = subscription_product.discount_percentage | round: 2 %}
+{% assign discount_floor = subscription_product.discount_percentage | floor %}
+{% if discount_percent == discount_floor %}
+  {% assign discount_percent = discount_floor %}
+{% endif %}
+{% if subscription_id != blank %}
+  {% assign isRecharge = true %}
+{% endif %}
+
+<form data-type="switch" id="addToCartForm" class="product-form {% if isRecharge %}m-recharge{% endif %}" action="/cart/add" method="post" enctype="multipart/form-data" data-productid="{{product.id}}" data-product-form data-variantid="{{ current_variant.id }}" data-discountid="{{ current_variant.metafields.subscriptions.discount_variant_id }}">
+
+  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-selected-variant-id>
+  <span class="preorder-badge">NEW 🔥</span>
+  <h1 class="title not-animated">{{ product.title }}</h1>
+  {% if section.settings.feature %}<div class="product_feature">{{ section.settings.feature }}</div>{% endif %}
+  <div class="product-review-rating">{% render 'product-review-rating', product: product %}</div>
+  <div class="d-flex price-type-wrapper {% if section.settings.d_mode %}inline{% endif %}">
+    {% unless isRecharge %}
+      <div data-price-wrapper class="product-price">
+        <s data-price-compare class="was-price"></s>
+        <span data-price class="product-price">
+          {{ current_variant.price | money }}
+        </span>
+      </div>
+    {% endunless %}
+    {% assign p_type = section.settings.plan_type %}
+    {% assign p_m_type = section.settings.plan_type_mob | default: p_type %}
+    {% if p_type != blank %}
+      <div class="plan_type hide--mobile">{{ p_type }}</div>
+      <div class="plan_type hide--desktop hide--tablet">{{ p_m_type }}</div>
+    {% endif %}
+  </div>
+
+  {% comment %} All variants js selector {% endcomment %}
+  <select class="no-js" data-all-variants name="all-variants">
+    {% for variant in product.variants %}
+      {% assign discount_price = variant.metafields.subscriptions.discount_variant_price | replace: '.', '' %}
+      {% assign discount_amount = variant.price | minus: discount_price %}
+
+      {% assign isAvailable = true %}
+      {% if variant.inventory_quantity <= 5 %}
+        {% if variant.inventory_policy != 'continue' %}
+            {% assign isAvailable = false %}
+        {% endif %}
+      {% endif %}
+
+      <option value="{{ variant.id }}" 
+        data-variant-price="{{ variant.price }}" 
+        data-variant-compare-price="{{ variant.compare_at_price }}"
+        data-variant-image="{{ variant.image.src | img_url: '200x' }}"
+        data-available="{{ isAvailable }}"
+        data-inventory-policy="{{ variant.inventory_policy }}"
+        data-inventory-quantity="{{ variant.inventory_quantity }}"
+        data-option1="{{ variant.option1 | default: '_BLANK_' }}" 
+        data-option2="{{ variant.option2 | default: '_BLANK_' }}" 
+        data-option3="{{ variant.option3 | default: '_BLANK_' }}"
+        data-subscription-id="{{ subscription_id }}" 
+        data-discount-variant-id="{{ variant.metafields.subscriptions.discount_variant_id }}" 
+        data-discount-variant-price="{{ discount_price }}"
+        data-discount-amount="{{ discount_amount }}"
+        data-discount-percent="{{ discount_percent }}%"
+        data-product-handle="{{ product.handle }}"
+        {% if current_variant == variant %}selected{% endif %} >
+        {{ variant.title }}
+      </option>
+    {% endfor %}
+  </select> <!-- / data-all-variants -->
+  
+
+  {% comment %} Options {% endcomment %}
+  
+
+  {% comment %}
+  <div class="pre-order-price">
+    <div class="text">
+      <div class="price_title">{{ section.settings.price_title }}</div>
+      <div class="price_popup">
+        <a href="jaavscript:;" data-popup-open="coupon">Plus 20% off Wisdom Panel DNA Test {% render 'icon' with 'icon-info-coupon' %}</a>
+      </div>
+      <div class="price_subtitle">{{ section.settings.price_subtitle }}</div>
+    </div>
+    <div class="price" data-price></div>
+  </div>
+  {% endcomment %}
+
+  {% unless isDefault %}
+    <div class="product-options-wrapper">
+      {% render 'product-options-switch', current_variant: current_variant, idx: 1 %}
+    </div>
+  {% endunless %}
+
+  {% assign len = 0 %}
+  {% for i in (1..3) %}
+    {% assign p_handle = 'o_item_product' | append: i %}
+    {% if section.settings[p_handle] != blank %}
+      {% assign len = len | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+  {% comment %}
+  <div class="free-order-items">
+    <div class="free-order-title">{{ section.settings.free_order_title }}</div>
+    <div class="free-order-badge" data--hidden>Please choose your free leash</div>
+    <div class="free-order-items-wrapper column-{{ len }}">
+      {% for i in (1..3) %}
+        {% assign p_handle = 'o_item_product' | append: i %}
+        {% assign img_handle = 'o_item_img' | append: i %}
+        {% assign f_product = all_products[section.settings[p_handle]] %}
+
+        {% if f_product != blank %}
+          <div class="free-order-item {% if forloop.first %}{% endif %}" data-id="{{ f_product.selected_or_first_available_variant.id }}" data-handle="{{ f_product.handle }}">
+            <div class="wrapper">
+              <div class="image_wrapper">
+                {% assign img = section.settings[img_handle] | default: f_product.featured_image %}
+                {% render 'rimage', image: img, size: '300x' %}
+              </div>
+              <div class="item_title">{{ f_product.title }}</div>
+              <div class="item_price">
+                <span class="was-price">{{ f_product.selected_or_first_available_variant.price | money }}</span>
+                <span class="price">{{ 0 | money }}</span>
+                {% comment %}
+                {% if f_product.selected_or_first_available_variant.compare_at_price > f_product.selected_or_first_available_variant.price %}
+                  <span class="was-price">{{ f_product.selected_or_first_available_variant.compare_at_price | money }}</span>
+                {% endif %}
+                <span class="price">{{ f_product.selected_or_first_available_variant.price | money }}</span>
+                {% endcomment %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="include_free">
+      <input type="checkbox" id="include_free">
+      <label for="include_free">No thanks, I don't want a free leash</label>
+    </div>
+  </div>
+  {% endcomment %}
+
+  {% comment %}
+  <div class="coupon-item">
+    <div class="item-wrapper d-flex">
+      <div class="text">
+        <div class="heading">{{ section.settings.cop_title }}</div>
+        <div class="item_subtitle hide--mobile">{{ section.settings.cop_subtitle }}</div> 
+      </div>
+      <div class="coupon-popup-wrapper">
+        <div class="discount_text hide--mobile">{{ section.settings.cop_discount_text }}</div>
+        <div class="coupon-popup">
+        </div>
+        <div class="item_subtitle hide--desktop">{{ section.settings.cop_subtitle }}</div> 
+      </div>
+    </div>
+  </div>
+  {% endcomment %}
+  {%- comment -%} Recharge {%- endcomment -%}
+  {% if isRecharge %}
+    <div class="recharge" data-recharge-container>
+      <input id="subscription_id" type="hidden" name="properties[subscription_id]"
+        value="{{ subscription_id }}"
+        data-product-property="subscription_id">
+      <div class="recharge__block recharge__block--subscribe is-active" data-rc-type="subscribe">
+
+        {%- comment -%} Recharge period swatch {%- endcomment -%}
+        <div class="recharge__freq product-options">
+          <div class="product-options__title">Deliver Every:</div>
+          <div class="product-options__list">
+
+            {% assign counter = 0 %}
+            {% if product.metafields.recharge.monthly != blank %}
+              {% assign monthlyProductUrl = all_products[product.metafields.recharge.monthly].url %}
+              {% assign currentProduct = 'yearly' %}
+              {% assign counter = counter | plus: 1 %}
+            {% endif %}
+            
+            {% if product.metafields.recharge.yearly != blank %}
+              {% assign yearlyProductUrl = all_products[product.metafields.recharge.yearly].url %}
+              {% assign currentProduct = 'monthly' %}
+              {% assign counter = counter | plus: 1 %}
+            {% endif %}
+            {% if counter == 0 %}<!-- Error: no recharge period metafields setted up -->{% endif %}
+            {% if counter > 1 %}<!-- Error: both recharge period metafields setted up -->{% endif %}
+
+            <a href="{{ monthlyProductUrl | default: product.url }}" class="product-option m-half no-hover-link {% if currentProduct == 'monthly' %}is-checked{% endif %}">
+              <div class="product-option__label">
+                <div class="product-option__text">Monthly</div>
+              </div>
+            </a>
+            <a href="{{ yearlyProductUrl | default: product.url }}" class="product-option m-half no-hover-link {% if currentProduct == 'yearly' %}is-checked{% endif %}">
+              <div class="product-option__label">
+                <div class="product-option__accent">Save 20% Yearly Plan</div>
+                <div class="product-option__text">Yearly</div>
+              </div>
+            </a>
+            
+            {% assign shipping_interval_unit_type = subscription_product.shipping_interval_unit_type | default: 'Days' %}
+            {% assign shipping_interval_frequency = subscription_product.shipping_interval_frequency | split: ',' | default: 30 %}
+            <input id="shipping_interval_unit_type" type="hidden" name="properties[shipping_interval_unit_type]"
+              value="{{ shipping_interval_unit_type }}"
+              data-product-property="shipping_interval_unit_type">
+            {% for freq in shipping_interval_frequency %}
+                <input id="shipping_interval_frequency" type="hidden" name="properties[shipping_interval_frequency]"
+                  value="{{ freq }}"
+                  data-product-property="shipping_interval_frequency">
+            {% endfor %}
+          </div>
+
+        </div> <!-- / .recharge__freq -->
+      </div> <!-- /.recharge__block--subscribe -->
+
+    </div> <!-- / .recharge -->
+  {% endif %}
+
+  <div class="d-flex product-add-to-cart">
+    {% unless isRecharge %}
+      <div data--hidden>
+        <div class="product-options__title">Quantity:</div>
+        {% render 'qty-selector', type: 'product' %}
+      </div>
+    {% endunless %}
+    {% comment %}<button type="submit" name="add" class="btn btn--primary add-to-cart {% if isRecharge %}m-recharge{% endif %}" data-add-to-cart></button>{% endcomment %}
+  </div>
+  {% if section.settings.plan_title != blank %}
+    <div class="plan_popup" data-index="1">
+      <div class="popup-trigger">
+        {% render 'icon' with 'icon-info' %} {{ section.settings.plan_title }}
+      </div>
+      <div class="popup-content">
+        <div data-popup-bg></div>
+        <div class="popup-header">{{ section.settings.plan_title }}</div>
+        <div class="content {% if section.settings.is_plan_list %}content-list{% endif %}">
+          {% assign content = section.settings.plan_text %}
+          {% if section.settings.is_plan_list %}
+            {% assign content = content | replace: 'p>', 'item>' %}
+            {% assign _content = content | split: '<item>' %}
+            {% for item in _content %}
+              {% unless forloop.first %}
+                {% assign _item = item | split: '</item>' %}
+                <div>
+                  {% render 'icon' with 'icon-true' %}
+                  {{ _item[0] }}
+                </div>
+              {% endunless %}
+            {% endfor %}
+          {% else %}
+            {{ content }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if section.settings.upsell_pos == 'top' %}
+    {% render 'product-upsells', section: section %}
+  {% endif %}
+
+  {% if section.settings.bis_badge != blank %}
+    <div class="bis-badge">{{ section.settings.bis_badge }}</div>
+  {% endif %}
+  {% if product.available %}
+    <div class="choose-plan">
+      <a onclick="dataLayer.push({'ATC': '{{ product.handle }}', 'Link': 'Choose Your Plan'});" href="#" class="d-flex btn m-black-new" data-choose-plan data-loader-btn>
+        <span>Choose your plan</span> {% render 'icon' with 'icon-arrow-right' %}
+        <div class="loader_wrapper">
+          <div class="loader"></div>
+        </div>
+      </a>
+    </div>
+  {% else %}
+    <div data-bis-btn>
+      <button class="btn m-green" data-bis-trigger>Email me when available</button>
+    </div>
+  {% endif %}
+  
+  {% if section.settings.upsell_pos == 'bottom' %}
+    {% render 'product-upsells', section: section %}
+  {% endif %}
+  
+  <div class="hide--desktop">
+    {% render 'product-shipping-features' %}
+  </div> 
+
+
+  {% comment %}
+
+  <div class="protection-plan">
+
+    {% if section.settings.prot_desc_title != blank %}
+      <div class="protection-plan__title">{{ section.settings.prot_desc_title }}</div>
+    {% endif %}
+    {% if section.settings.prot_desc_text != blank %}
+      <div class="protection-plan__desc">{{ section.settings.prot_desc_text }}</div>
+    {% endif %}
+
+    <div data-accordions-container>
+      <div data-accordion-button class="is-open">{{ section.settings.prot_btn_label }} <span class="icon">{% render 'icon' with 'icon-arrow-down' %}</span></div>
+      <div data-accordion-content>
+        <div id="clydeWrap" class="clydeWrap"></div>
+      </div>
+    </div>
+
+  </div>
+
+  {% endcomment %}
+
+  {% comment %}
+  <div class="btn_wrapper">
+    <button data-btn-preorder>{{ current_variant.price | money }} — Pre-order</button>
+    <button data--hidden="true" onclick="dataLayer.push({'ATC': '{{ product.handle }}', 'Link': 'Choose Your Plan'});" data-pdp-atc-preorder data-loader-btn>
+      <span data-price></span><span> — </span><span class="label"></span>
+      <div class="loader_wrapper">
+        <div class="loader"></div>
+      </div>
+    </button>
+  </div>
+  {% endcomment %}
+
+  {% comment %}
+  <div class="hide--desktop">
+    {% render 'pre-order-progress' %}
+  </div>
+  {% endcomment %}
+
+  {% if isRecharge %}
+    <div class="membership-info" data-popup-open="membership">
+      <div>
+        <i class="icon-info2"></i>
+        <span class="btn m-underline">Learn more</span> 
+        <span>about our membership</span>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if section.blocks.size > 0 %}
+    <div class="product-feature-tabs">
+      <div class="tab-header-wrapper d-flex">
+        {% if product.description != blank %}
+          <div class="feature-tab-header active" data-target="desc">Info</div>
+        {% endif %}
+        {% for block in section.blocks %}
+          {% if block.type == 'block' %}
+            <div class="feature-tab-header {% if forloop.first and product.description == blank %}active{% endif %}" {% if forloop.last %}data-feature="true"{% endif %} data-target="{{ block.settings.title | handle }}">{{ block.settings.title }}</div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="tab-content-wrapper">
+        {% if product.description != blank %}
+          <div class="feature-tab-content active" data-handle="desc">
+            {{ product.description }}
+          </div>
+        {% endif %}
+        {% for block in section.blocks %}
+          {% if block.type == 'block' %}
+            <div class="feature-tab-content {% if forloop.first and product.description == blank %}active{% endif %} {% if block.settings.is_list %}content-list{% endif %}" data-handle="{{ block.settings.title | handle }}">
+              {% assign content = block.settings.text %}
+              {% if block.settings.is_list %}
+                {% assign content = content | replace: 'p>', 'li>' %}
+              {% endif %}
+            {{ content }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+</form>
+
+<div class="product-stickybar" data-product-stickybar data--hidden>
+  <div class="container">
+    <div class="wrapper d-flex">
+      <div class="sticky_info d-flex">
+        <div class="image_wrapper hide--mobile"><img src="{{ product.featured_image | img_url: '100x' }}"></div>
+        <div class="info_wrapper">
+          {% comment %}<div class="sticky_plan_type hide--tablet hide--desktop">{{ section.settings.plan_type }}</div>{% endcomment %}
+          <div class="sticky_title">{{ product.title }}</div>
+          <div class="sticky_feature">{{ section.settings.feature }}</div>
+          <div class="sticky_options" data--hidden>{% unless isDefault %}{% render 'product-options-switch'. current_variant: current_variant, idx: 2 %}{% endunless %}</div>
+        </div>
+      </div>
+      <div class="sticky_cta">
+        <div class="hide--mobile">
+          {% if section.settings.plan_title != blank %}
+            <div class="plan_popup" data-index="2">
+              <div class="popup-trigger">
+                {% render 'icon' with 'icon-info' %} {{ section.settings.plan_title }}
+              </div>
+              <div class="popup-content">
+                <div data-popup-bg></div>
+                <div class="popup-header">{{ section.settings.plan_title }}</div>
+                <div class="content {% if section.settings.is_plan_list %}content-list{% endif %}">
+                  {% assign content = section.settings.plan_text %}
+                  {% if section.settings.is_plan_list %}
+                    {% assign content = content | replace: 'p>', 'item>' %}
+                    {% assign _content = content | split: '<item>' %}
+                    {% for item in _content %}
+                      {% unless forloop.first %}
+                        {% assign _item = item | split: '</item>' %}
+                        <div>
+                          {% render 'icon' with 'icon-true' %}
+                          {{ _item[0] }}
+                        </div>
+                      {% endunless %}
+                    {% endfor %}
+                  {% else %}
+                    {{ content }}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+          <div class="return_tech">
+            <button>Go back {% render 'icon' with 'icon-back' %}</button>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="sticky_price">
+            {% if section.settings.plan_type != blank %}
+              <span data-sticky-plan-text class="hide--mobile">{{ section.settings.plan_type }}</span>
+            {% endif %}
+            <span data-sticky-compare-price>{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+            <span data-sticky-price>{{ product.selected_or_first_available_variant.price | money }}</span>
+          </div>
+          <div class="cta_wrapper">
+            <a href="javascript:;" class="btn m-black-new" data-choose-plan>
+              <span class="hide--mobile hide--tablet">Buy now </span>
+              <span class="hide--desktop">Buy now </span>
+              {% render 'icon' with 'icon-arrow-right' %}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% if section.settings.size_chart_img != blank %}
+
+<div class="popup is-hidden" data-popup="size-chart">
+  <div class="popup-window">
+    <button class="close" data-popup-close>{% render 'icon' with 'icon-close' %}</button>
+    <div class="popup-content">
+      {% render 'rimage', image: section.settings.size_chart_img, size: '600x' %}
+    </div>
+  </div>
+  <div class="popup-bg" data-popup-close></div>
+</div>
+
+{% endif %}
+
+{% comment %}
+<div class="popup is-hidden" data-popup="size-guide">
+  <div class="popup-window">
+    <button class="close" data-popup-close>{% render 'icon' with 'icon-close' %}</button>
+    <div class="popup-content">
+      <div class="size_guide-wrapper">
+        <div class="size_guide_title">{{ section.settings.title }}</div>
+        <div class="size_guide_wrapper d-flex">
+          {% for block in section.blocks %}
+            {% if block.type == 'size' %}
+              <div class="size_guide_item">
+                <div class="image_wrapper">{% render 'rimage', image: block.settings.image, size: '120x' %}</div>
+                <div class="content_wrapper">
+                  <div class="item_title">{{ block.settings.title }}</div>
+                  <div class="item_content">{{ block.settings.content }}</div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popup-bg" data-popup-close></div>
+</div>
+{% endcomment %}
+
+
+
+<div class="size-guide" data-size-guide>
+  <div class="size-guide-wrapper">
+    <div class="size-guide-header d-flex">
+      <div class="size-guide-close" data-size-guide-toggle>
+        {% render 'icon' with 'icon-close' %}
+        <div>CLOSE</div>
+      </div>
+      {% if section.settings.sg_title != blank %}
+        <div class="size-guide-title">{{ section.settings.sg_title }}</div>
+      {% endif %}
+      <a href="/cart" class="btn m-black-new btn-rounded">
+        {% render 'icon' with 'icon-cart' %}
+        <span data-cart-count>{{ cart.item_count }}</span>
+      </a>
+      {% comment %}
+      <div class="cart-count" data-minicart-toggle>
+        {% render 'icon' with 'icon-cart' %}
+        <span data-cart-count>{{ cart.item_count }}</span>
+      </div>
+      {% endcomment %}
+    </div>
+    <div class="size-guide-video">
+      {% if section.settings.v_title != blank %}
+        <div class="size-guide-vtitle">{{ section.settings.v_title }}</div>
+      {% endif %}
+      {% if section.settings.v_subtitle != blank %}
+        <div class="size-guide-vsubtitle">{{ section.settings.v_subtitle }}</div>
+      {% endif %}
+      {% if section.settings.video_url != blank and section.settings.btn_label != blank %}
+        <div class="btn_wrapper">
+          <a href="javascript:;" data-popup-open="size-guide-video" data-size-guide-toggle>{{ section.settings.btn_label }} {% render 'icon' with 'icon-video-play' %}</a>
+        </div>
+      {% endif %}
+    </div>
+    <div class="size_guide_item-wrapper">
+      {% for block in section.blocks %}
+        {% if block.type == 'size' %}
+          <div class="size_guide_item d-flex">
+            <div class="image_wrapper">{% render 'rimage', image: block.settings.image, size: '150x' %}</div>
+            <div class="content_wrapper">
+              <div class="item_title">{{ block.settings.title }}</div>
+              <div class="item_content">{{ block.settings.content }}</div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="body-bg"></div>
+</div>
+
+
+<div class="popup is-hidden" data-popup="size-guide-video">
+  <div class="popup-window">
+    <button class="close" data-popup-close><span>CLOSE</span>{% render 'icon' with 'icon-close' %}</button>
+    <div class="popup-content">
+      <div class="video-label">{{ section.settings.video_label }}</div>
+
+      {% assign video_url = section.settings.video_url %}
+      {% assign type = 'video' %}
+      {% if video_url contains 'youtube' or video_url contains 'vimeo' %}
+        {% assign type = 'external_video' %}
+      {% endif %}
+      <div class="video_wrapper" data-video-wrapper data-type="{{ type }}" {% if autoplay %}data-scroll-play{% endif %}>
+        {% if type == 'video' %}
+          <video class="section-video_video" muted playsinline><source src="{{ video_url }}" type="video/mp4"></video>
+        {% elsif type == 'external_video' %}
+          <div class='embed-container'>
+            {% assign video_url = video_url | replace: 'vimeo.com', 'player.vimeo.com/video' | replace: 'watch?v=', 'embed/' %}
+            <iframe title="{{ title | strip_html }}" class="lazyload" src='{{ video_url }}' frameborder='0' allow="autoplay" allowautoplay allowfullscreen></iframe>
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+  <div class="popup-bg" data-popup-close></div>
+</div>
+
+
+{% if section.settings.cop_popup_img != blank %}
+
+<div class="popup is-hidden" data-popup="coupon">
+  <div class="popup-window">
+    <button class="close" data-popup-close>{% render 'icon' with 'icon-close' %}</button>
+    <div class="popup-content">
+      {% if section.settings.popup_link != blank %}
+        <a href="{{ section.settings.popup_link }}" target="_blank">
+      {% endif %}
+      {% render 'rimage', image: section.settings.cop_popup_img, size: '840x' %}
+      {% if section.settings.popup_link != blank %}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="popup-bg" data-popup-close></div>
+</div>
+
+{% endif %}

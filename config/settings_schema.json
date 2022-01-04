@@ -1,0 +1,402 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Goats Theme",
+    "theme_version": "1.0.0",
+    "theme_author": "Binaery",
+    "theme_documentation_url": "https:\/\/binaery.com",
+    "theme_support_url": "https:\/\/binaery.com"
+  },
+  {
+    "name": "Shop Button",
+    "settings": [
+      {
+        "type": "text",
+        "id": "shop_btn_title",
+        "label": "Title",
+        "default": "SHOP"
+      },
+      {
+        "type": "url",
+        "id": "shop_btn_link",
+        "label": "Link"
+      }
+    ]
+  },
+  {
+    "name": "Meta Image",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "og_image_fallback",
+        "label": "Meta Image",
+        "info": "600x600 image recommended" 
+      }
+    ]
+  },
+  {
+    "name": "Logo",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "logosvg",
+        "label": "SVG Logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      }
+    ]
+  },
+  {
+    "name": "Sticky Newsletter",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_s_n",
+        "label": "Enable"
+      },
+      {
+        "type": "text",
+        "id": "s_n_title",
+        "label": "Title",
+        "default": "Enter your title"
+      },
+      {
+        "type": "header",
+        "content": "Form"
+      },
+      {
+        "type": "text",
+        "id": "s_n_placeholder",
+        "label": "Placeholder",
+        "default": "Enter your email"
+      },
+      {
+        "type": "text",
+        "id": "s_n_btn_label",
+        "label": "Button Label",
+        "default": "JOIN"
+      }
+    ]
+  },
+  {
+    "name": "Product",
+    "settings": [
+      {
+        "type": "header",
+        "content": "A/B layouts"
+      },
+      {
+        "type": "select",
+        "id": "layout",
+        "options": [
+          {
+            "label": "Default",
+            "value": "v1"
+          },
+          {
+            "label": "New Version(v2)",
+            "value": "v2"
+          }
+        ],
+        "label": "Layout",
+        "default": "v1"
+      },
+      {
+        "type": "header",
+        "content": "Shipping"
+      },
+      {
+        "type": "paragraph",
+        "content": "Item 1"
+      },
+      {
+        "type": "html",
+        "id": "shipping_icon1",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "shipping_title1",
+        "label": "Title"
+      },
+      {
+        "type": "paragraph",
+        "content": "Item 2"
+      },
+      {
+        "type": "html",
+        "id": "shipping_icon2",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "shipping_title2",
+        "label": "Title"
+      },
+      {
+        "type": "paragraph",
+        "content": "Item 3"
+      },
+      {
+        "type": "html",
+        "id": "shipping_icon3",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "shipping_title3",
+        "label": "Title"
+      },
+      {
+        "type": "paragraph",
+        "content": "Item 4"
+      },
+      {
+        "type": "html",
+        "id": "shipping_icon4",
+        "label": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "shipping_title4",
+        "label": "Title"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Error Popup"
+      },
+      {
+        "type": "image_picker",
+        "id": "popup_img",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "msg_title",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "msg_content",
+        "label": "Content"
+      }
+    ]
+  },
+  {
+    "name": "Minicart",
+    "settings": [
+      {
+        "type": "text",
+        "id": "mc_title",
+        "label": "Title",
+        "default": "SHOPPING CART"
+      },
+      {
+        "type": "header",
+        "content": "Upsell Items"
+      },
+      {
+        "type": "text",
+        "id": "upsell_title",
+        "label": "Title",
+        "default": "Anything Else?"
+      },
+      {
+        "type": "text",
+        "id": "upsell_badge",
+        "label": "Badge",
+        "default": "LIMITED TIME"
+      },
+      {
+        "type": "paragraph",
+        "content": "Twist & Go collar"
+      },
+      {
+        "type": "product",
+        "id": "mc_upsell_item1",
+        "label": "Product"
+      },
+      {
+        "type": "richtext",
+        "id": "mc_upsell_item_desc1",
+        "label": "Description"
+      },
+      {
+        "type": "paragraph",
+        "content": "Leash & Accessory"
+      },
+      {
+        "type": "product",
+        "id": "mc_upsell_item2",
+        "label": "Product"
+      },
+      {
+        "type": "richtext",
+        "id": "mc_upsell_item_desc2",
+        "label": "Description"
+      },
+      {
+        "type": "header",
+        "content": "Popup"
+      },
+      {
+        "type": "paragraph",
+        "content": "Popup(explore)"
+      },
+      {
+        "type": "richtext",
+        "id": "popup_content_explore",
+        "label": "Content"
+      },
+      {
+        "type": "checkbox",
+        "id": "is_popup_explore_list",
+        "label": "Make content list",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "Popup(fit)"
+      },
+      {
+        "type": "richtext",
+        "id": "popup_content_fit",
+        "label": "Content"
+      },
+      {
+        "type": "checkbox",
+        "id": "is_popup_fit_list",
+        "label": "Make content list",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Empty Cart"
+      },
+      {
+        "type": "text",
+        "id": "mc_empty_title",
+        "label": "Title",
+        "default": "Your Cart Is Empty"
+      },
+      {
+        "type": "richtext",
+        "id": "mc_empty_subtitle",
+        "label": "Subtitle"
+      },
+      {
+        "type": "header",
+        "content": "Empty cart menu"
+      },
+      {
+        "type": "paragraph",
+        "content": "Menu 1"
+      },
+      {
+        "type": "text",
+        "id": "mc_menu_title1",
+        "label": "Title"
+      },
+      {
+        "type": "url",
+        "id": "mc_menu_link1",
+        "label": "Menu"
+      },
+      {
+        "type": "paragraph",
+        "content": "Menu 2"
+      },
+      {
+        "type": "text",
+        "id": "mc_menu_title2",
+        "label": "Title"
+      },
+      {
+        "type": "url",
+        "id": "mc_menu_link2",
+        "label": "Menu"
+      },
+      {
+        "type": "paragraph",
+        "content": "Menu 3"
+      },
+      {
+        "type": "text",
+        "id": "mc_menu_title3",
+        "label": "Title"
+      },
+      {
+        "type": "url",
+        "id": "mc_menu_link3",
+        "label": "Menu"
+      },
+      {
+        "type": "paragraph",
+        "content": "Menu 4"
+      },
+      {
+        "type": "text",
+        "id": "mc_menu_title4",
+        "label": "Title"
+      },
+      {
+        "type": "url",
+        "id": "mc_menu_link4",
+        "label": "Menu"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Sharing links"
+      },
+      {
+        "type": "url",
+        "id": "social_instagram_link",
+        "label": "Instagram link"
+      },
+      {
+        "type": "url",
+        "id": "social_twitter_link",
+        "label": "Twitter link"
+      },
+      {
+        "type": "url",
+        "id": "social_youtube_link",
+        "label": "Youtube link"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook_link",
+        "label": "Facebook link"
+      },
+      {
+        "type": "url",
+        "id": "social_linkedin_link",
+        "label": "Linkedin link"
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32 x 32px"
+      }
+    ]
+  }
+]

@@ -1,0 +1,147 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-icon-card-block.liquid and it is overriding automatically. You should use theme development tool and sources\sections\custom-icon-card-block.liquid file to code and save your changes. {% endcomment %}{% if section.settings.visible %}
+
+  {% render 'ea-section-styles', section: section %}
+
+  <div class="section_container">
+    <div class="main_content container">
+
+      <div class="content_wrapper d-flex">
+
+        {% for block in section.blocks %}
+          <div class="icon-card-item {% if forloop.index > 9 %}hidden--item{% endif %}">
+            <div class="item_wrapper">
+              <div class="image_wrapper" style="width: {{ block.settings.img_width }}%;">
+                <img src="{{ block.settings.image | img_url: '200x' }}">
+              </div>
+              <div class="text">{{ block.settings.content }}</div>
+              <div class="btn_wrapper">
+                <a href="{{ block.settings.btn_link }}">{{ block.settings.btn_label }}</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+
+        {% if section.blocks.size > 9 %}
+          <div class="hide--desktop btn_more">
+            <span class="text_more">SEE ALL PRESS</span>
+            <span class="text_less">SEE LESS</span>
+            {% render 'icon' with 'arrow-down' %}
+          </div>
+        {% endif %}
+
+      </div>
+
+    </div>
+  </div>
+
+{% endif %}
+
+
+{% schema %}
+{
+  "name": "Icon card block",
+  "class": "icon-card-block",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "visible",
+      "label": "Show block",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "ptop",
+      "label": "Top spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom",
+      "label": "Bottom spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "ptop_mob",
+      "label": "Top spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom_mob",
+      "label": "Bottom spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "sectionbg",
+      "label": "Background",
+      "default": "#fff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "range",
+          "id": "img_width",
+          "min": 10,
+          "max": 100,
+          "default": 70,
+          "step": 1,
+          "unit": "%",
+          "label": "Image width"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        },
+        {
+          "type": "text",
+          "id": "btn_label",
+          "label": "Button Label",
+          "default": "READ MORE +"
+        },
+        {
+          "type": "url",
+          "id": "btn_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

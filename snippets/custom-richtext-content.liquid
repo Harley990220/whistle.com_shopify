@@ -1,0 +1,12 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-richtext-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-richtext-content.liquid file to code and save your changes. {% endcomment %}<div class="section_container">
+  <div class="main_content container" data-animate-block>
+    <div class="main_wrapper">
+      {% if section.settings.title != blank %}
+        <div class="title">{{ section.settings.title }}</div>
+      {% endif %}
+      {% if section.settings.text != blank %}
+        <div class="subtitle">{{ section.settings.text }}</div>
+      {% endif %}
+    </div>
+  </div>
+</div>

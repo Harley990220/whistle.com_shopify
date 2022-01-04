@@ -1,0 +1,36 @@
+{% comment %} ATTENTION!!! This is compiled version of product-item-regular.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\product-item-regular.liquid file to code and save your changes. {% endcomment %}<div class="product-item" data-atc-product-item>
+  <div class="image_warpper">
+    <a href="{{ product.url }}">
+      {% render 'rimage', image: product.featured_image %}
+    </a>
+  </div>
+  <div class="info_wrapper">
+    <div class="info">
+      <div class="product_title">{{ product.title }}</div>
+      {% if feature != blank %}
+        <div class="product_feature">{{ feature }}</div>
+      {% endif %}
+    </div>
+    <div class="product_atc_form" data-ajax-form data-id="{{ product.selected_or_first_available_variant.id }}">
+      {% if product.options.size > 0 %}
+        <select id="product-variant-selector" data-item-variant-selector>
+          {% for variant in product.variants %}
+            <option value="{{ variant.id }}">
+              {% assign option1 = variant.option1 %}
+              {% assign option2 = variant.option2 %}
+                {{ option1 }}{% if option2 != blank %} • {{ option2 }}{% endif %}
+            </option>
+          {% endfor %}
+        </select>
+      {% endif %}
+      <div class="btn_wrapper d-flex">
+        {% assign isAvailable = true %}
+        {% if product.selected_or_first_available_variant.inventory_quantity <= 5 %}
+          {% assign isAvailable = false %}
+        {% endif %}
+        <button class="btn m-black-new" data-ajax-atc-btn {% unless isAvailable %}disabled{% endunless %}><span class="hide--mobile">{% if isAvailable %}Add to Bag{% else %}Sold Out{% endif %}</span><span class="hide--desktop">{% if isAvailable %}Add{% else %}Sold Out{% endif %}</span></button>
+        <div class="product_price">{{ product.price | money }}</div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,140 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-choose-plan-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-choose-plan-content.liquid file to code and save your changes. {% endcomment %}<div class="section_container">
+  <div class="main_content container" data-animate-block>
+    <div class="btn-back-wrapper">
+      <div class="choose-plan-back d-flex">{% render 'icon' with 'icon-direc-left' %} BACK</div>
+    </div>
+    <div class="main_wrapper">
+      <div class="section_header">
+        {% if section.settings.title != blank %}
+          <div class="title">{{ section.settings.title }}</div>
+        {% endif %}
+        {% if section.settings.subtitle != blank %}
+          <div class="subtitle">{{ section.settings.subtitle }}</div>
+        {% endif %}
+        {% if section.settings.text != blank %}
+          <div class="text">{{ section.settings.text }}</div>
+        {% endif %}
+        {% if section.settings.btn_label1 != blank %}
+          <div class="btn_wrapper hide--mobile">
+            <button data-scroll-btn data-target="#shopify-section-custom-richtext">{{ section.settings.btn_label1 }} {% render 'icon' with 'icon-caret-down' %}</button>
+          </div>
+        {% endif %}
+      </div>
+      <div class="plan_items d-flex">
+        {% for block in section.blocks %}
+          {% assign _product = block.settings.product %}
+          {% if _product != blank %}
+            {% assign product = all_products[_product] %}
+            <div class="plan-item">
+              <div class="item_wrapper {% if block.settings.is_best_seller %}featured-plan{% endif %}">
+                {% if block.settings.is_best_seller %}
+                  <div class="badge d-flex">
+                    <span class="badge">Best Seller</span>
+                    <span class="icon">{% render 'icon' with 'icon-best-seller' %}</span>
+                  </div>
+                {% endif %}
+                {% if block.settings.title != blank %}
+                  <div class="item_title">{{ block.settings.title }}</div>
+                {% endif %}
+                {% if block.settings.subtitle != blank %}
+                  <div class="item_subtitle">{{ block.settings.subtitle }}</div>
+                {% endif %}
+                <div class="item_bottom d-flex">
+                  <div>
+                    {% if block.settings.price != blank %}
+                      <div class="item_price">{{ block.settings.price }}</div>
+                    {% endif %}
+                    {% if block.settings.desc != blank %}
+                      <div class="item_desc">{{ block.settings.desc }}</div>
+                    {% endif %}
+                    {% if block.settings.text != blank %}
+                      <div class="item_text">{{ block.settings.text }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="icon_wrapper">
+                  {% render 'rimage', image: block.settings.icon %}
+                </div>
+              </div>
+              <div data-atc-product-item data-ajax-form data-id="{{ product.selected_or_first_available_variant.id }}" data-plan-name="{{ block.settings.title | handle }}" data-plan-item="true" data-plan-type="{% if product.tags contains 'plan_device' %}explore{% elsif product.tags contains 'plan_switch' %}switch{% elsif product.tags contains 'plan_fit' %}fit{% endif %}">
+                <button onclick="dataLayer.push({'ChoosePlan': '{{ product.handle }}'});" class="d-flex m-black-new" data-ajax-atc-btn data-plan-validate="true" data-loader-btn>
+                  <span>Select{% comment %} {% render 'icon' with 'icon-caret-down' %}{% endcomment %}</span>
+                  <div class="loader_wrapper">
+                    <div class="loader"></div>
+                  </div>
+                </button>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      
+      {% if template contains 'product' %}
+      <div>
+        <a href="javascript:;" data-single-atc>I already have a plan <div class="arrow-right"></div></a> 
+      </div>
+      {% endif %}
+
+      <div class="plan-feature-wrapper hide--desktop hide--tablet">
+
+        <div class="plan-feature__features">
+
+          {% if section.settings.choose_plan_title != blank and section.settings.choose_plan_list != blank %}
+            <div class="feature__why-choose">
+              <div class="feature_title">{{ section.settings.choose_plan_title }}</div>
+              <div class="feature_content">
+                {% assign content = section.settings.choose_plan_list %}
+                {% assign content = content | replace: 'p>', 'li>' %}
+                {% assign _content = content | split: '<li>' %}
+                {% for item in _content %}
+                  {% unless forloop.first %}
+                    {% assign _item = item | split: '</li>' %}
+                    <div class="content_list_item">
+                      <span class="icon">{% render 'icon' with 'icon-plus' %}</span>
+                      <span class="text">{{ _item[0] }}</span>
+                    </div>
+                  {% endunless %}
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if section.settings.easy_cancel_title != blank and section.settings.easy_cancel_list != blank %}
+            <div class="feature__easy-cancel">
+              <div class="feature_title">{{ section.settings.easy_cancel_title }}</div>
+              <div class="feature_content">
+                {% assign content = section.settings.easy_cancel_list %}
+                {% assign content = content | replace: 'p>', 'li>' %}
+                {% assign _content = content | split: '<li>' %}
+                {% for item in _content %}
+                  {% unless forloop.first %}
+                    {% assign _item = item | split: '</li>' %}
+                    <div class="content_list_item">
+                      <span class="icon">{% render 'icon' with 'icon-circle-dot' %}</span>
+                      <span class="text">{{ _item[0] }}</span>
+                    </div>
+                  {% endunless %}
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+
+        </div>
+      </div>
+
+      {% if section.settings.chat_us_text != blank or section.settings.chat_us_btn != blank %}
+        <div class="plan--footer d-flex">
+          <div class="plan_footer-chat d-flex">
+            <div class="icon">{% render 'icon' with 'icon-chat-plan' %}</div>
+            <div class="chat_label">
+              <label>{{ section.settings.chat_us_text }}</label>
+              <a href="javascript:openChat()">{{ section.settings.chat_us_btn }}</a>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+
+    </div>
+  </div>
+</div>

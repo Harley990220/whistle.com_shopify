@@ -1,0 +1,70 @@
+{% comment %} ATTENTION!!! This is compiled version of collection-product-item.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\collection-product-item.liquid file to code and save your changes. {% endcomment %}<div class="product-item" data-atc-product-item>
+  {% assign img = product.featured_image %}
+  {% assign second_img = img %}
+  <div class="image_warpper" data-img="{{ img | img_url: '300x' }}">
+    <a href="{{ product.url }}">
+      {% if hover %}
+        {% assign second_img = product.images[1] | default: img %}
+      {% endif %}
+      {% render 'rimage-second', image: img, wrapper_class: 'img' %}
+      <div class="second_img">
+        <img src="{{ second_img | img_url: '540x' }}">
+        <!-- {% render 'rimage-second', image: second_img %} -->
+      </div>
+      {% if product.metafields.global.type != blank %}
+        <span class="product_badge">{{ product.metafields.global.type }}</span>
+      {% endif %}
+    </a>
+  </div>
+  <div class="info_wrapper">
+    <div class="info">
+      <div class="product_title d-flex">
+        {{ product.title }}
+        {% if product.options.size == 1 and product.options[0] == 'Color' and product.options_by_name['Color'].values.size > 1 %}
+          <div class="product-color-variants d-flex">
+            {% assign colors = '' %}
+            {% for variant in product.variants %}
+              {% assign color = variant.option1 %}
+              {% unless colors contains color %}
+                {% assign colors = colors | append: '||' | append: color %}
+                <div class="color-variant-item {% if forloop.first %}active{% endif %}" data-color-name="{{ color | handle }}" data-id="{{ variant.id }}" data-variant-color></div>
+              {% endunless %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      {% if feature != blank %}
+        <div class="product_feature">{{ feature }}</div>
+      {% endif %}
+    </div>
+    <div class="product_atc_form" data-ajax-form data-id="{{ product.selected_or_first_available_variant.id }}" {% if product.tags contains 'accessory' %}data-type="accessory"{% endif %}>
+      {% if product.options.size > 1 %}
+        <select id="product-variant-selector" data-item-variant-selector>
+          {% for variant in product.variants %}
+            <option value="{{ variant.id }}">
+              {% assign option1 = variant.option2 %}
+              {% assign option2 = variant.option3 %}
+                {{ option1 }}{% if option2 %} • {{ option2 }}{% endif %}
+            </option>
+          {% endfor %}
+        </select>
+      {% else %}
+        
+      {% endif %}
+      <div class="btn_wrapper d-flex">
+        {% assign isAvailable = true %}
+        {% assign available_variant = product.selected_or_first_available_variant %}
+        {% if available_variant.inventory_quantity <= 5 %}
+          {% assign isAvailable = false %}
+        {% endif %}
+
+        {% if available_variant.inventory_policy == 'continue' %}
+          {% assign isAvailable = true %}
+        {% endif %}
+
+        <button class="btn m-black-new" data-ajax-atc-btn {% unless isAvailable %}disabled{% endunless %}><span class="hide--mobile hide--tablet">{% if isAvailable %}Add to Bag{% else %}Sold Out{% endif %}</span><span class="hide--desktop">{% if isAvailable %}Add{% else %}Sold Out{% endif %}</span></button>
+        <div class="product_price">{{ product.price | money }}</div>
+      </div>
+    </div>
+  </div>
+</div>

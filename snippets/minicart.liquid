@@ -1,0 +1,276 @@
+{% comment %} ATTENTION!!! This is compiled version of minicart.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\minicart.liquid file to code and save your changes. {% endcomment %}<aside data-minicart class="minicart">
+  <div class="minicart-wrapper" rv-data-count="cart.item_count">
+
+    <div class="minicart__header">
+      <button class="minicart__close btn m-icon-only d-flex" aria-label="minicart toggle" data-minicart-toggle>
+        {% render 'icon' with 'icon-close' %}
+        CLOSE
+      </button>
+      <span class="minicart_title">SHOPPING CART</span>
+      <span class="minicart_cart-count">{% render 'icon' with 'icon-cart' %} <span data-item-count>{ cart.item_count }</span></span>
+    </div>
+    <div class="minicart-main" rv-if="cart.item_count | isItem" rv-data-upsell="cart | isUpsell">
+      <div class="minicart__items">
+        <div class="minicart__item" rv-each-item="cart.items" rv-data-handle="item | itemHandle" rv-data-id="item.id" rv-data-idx="$index" rv-data-qty="item.quantity" rv-data-type="item.properties.type">
+          <a rv-href="item | convert item.original_handle" class="minicart__item-image-wrapper no-hover-link">
+            <img class="minicart__item-image lazyload" rv-src="item.image" rv-alt="item.image.alt">
+          </a>
+          <div class="minicart__item-info">
+            <h5 class="minicart__item-title">
+              <a rv-href="item | convert item.original_handle">{ item.product_title }</a>
+              <!-- <div class="item_feature" rv-if="item | isSubscription"> -->
+              <div class="item_feature">
+                <span rv-if="item | featureText '3789449429040'">
+                  GPS • HEALTH • FITNESS • NIGHT LIGHT
+                </span>
+                <span rv-if="item | featureText '4416951386160'">
+                  HEALTH • FITNESS
+                </span>
+              </div>
+            </h5>
+
+            <div class="minicart__item-desc" rv-if="item.properties.accessory">
+              { item.product_description }
+            </div>
+            {% comment %}
+            <ul>
+              <li>{ item.properties.type }</li>
+              <li>{ item.properties._id }</li>
+              <li>{ item.properties.device }</li>
+              <li>{ item.properties._plan }</li>
+            <ul>
+            {% endcomment %}
+
+            <div class="minicart__item-options" rv-if="item.variant_options.0 | isDefaultTitle">
+              <span class="minicart_variant"><strong>Color: </strong>{ item.variant_options.0 }</span>
+              <span class="minicart_variant" rv-if="item.variant_options.1"><strong>Size: </strong>{ item.variant_options.1 }</span>
+            </div>
+            <div rv-if="item | isSubscriptionFreeItem">
+              <div class="plan_popup" data-minicart-popup data-index="2">
+                
+                <div class="popup-trigger" data--hidden rv-if="item | unlessItemFit" data-minicart-popup-trigger>
+                  {% render 'icon' with 'icon-info' %} Whistle 360º Plan
+                </div>
+
+                <div class="fit-popup-content {% if settings.is_popup_fit_list %}content-list{% endif %}" rv-if="item | isItemFit">
+                  {% assign content = settings.popup_content_fit %}
+                  {% if settings.is_popup_fit_list %}
+                    {% assign content = content | replace: 'p>', 'item>' %}
+                    {% assign _content = content | split: '<item>' %}
+                    {% for item in _content %}
+                      {% unless forloop.first %}
+                        {% assign _item = item | split: '</item>' %}
+                        <div>
+                          {% render 'icon' with 'icon-true' %}
+                          {{ _item[0] }}
+                        </div>
+                      {% endunless %}
+                    {% endfor %}
+                  {% else %}
+                    {{ content }}
+                  {% endif %}
+                </div>
+
+                <div class="fit-popup-content {% if settings.is_popup_explore_list %}content-list{% endif %}" rv-if="item | isItemExplore">
+                  {% assign content = settings.popup_content_explore %}
+                  {% if settings.is_popup_explore_list %}
+                    {% assign content = content | replace: 'p>', 'item>' %}
+                    {% assign _content = content | split: '<item>' %}
+                    {% for item in _content %}
+                      {% unless forloop.first %}
+                        {% assign _item = item | split: '</item>' %}
+                        <div>
+                          {% render 'icon' with 'icon-true' %}
+                          {{ _item[0] }}
+                        </div>
+                      {% endunless %}
+                    {% endfor %}
+                  {% else %}
+                    {{ content }}
+                  {% endif %}
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="minicart__item-price-remove">
+            <div class="minicart__item-price">
+
+              <div rv-if="item | isSubscription">
+                <span class="was-price" rv-if="item | isSubscriptionDiscount">{ item.original_price | formatMoney }</span>
+                <span class="regular-price">{ item | discountPrice item.original_price | formatMoney }</span>
+                <!-- x { item.quantity } -->
+                <div class="badge-save" rv-if="item | isSubscriptionDiscount">You save { item | savePrice item.original_price }%</div>
+              </div>
+
+              <div rv-if="item | isSubscriptionPlanItem" class="subscription_item_price">
+                <div class="price_wrapper">
+                  <span class="was-price">{ item.original_price | formatMoney }</span>
+                  <span class="regular-price">{ 0 | formatMoney }</span>
+                </div>
+                <!-- x { item.quantity } -->
+                <div class="badge-afterpay" rv-if="item | isMonthly">BILLS AFTER 30 DAYS</div>
+              </div>
+
+              <div rv-if="item | isSubscriptionPlanMonthlyItem" class="subscription_item_price">
+                <div class="price_wrapper">
+                  <span class="regular-price">{ item.original_price | formatMoney }</span>
+                </div>
+              </div>
+
+              <div rv-if="item | isDefault">
+                <span class="regular-price">{ item.original_price | formatMoney }</span>
+                <!-- x { item.quantity } -->
+              </div>
+            </div>
+
+            <div class="custom-qty-dropdown minicart-qty">
+              <div class="selected-option" rv-data-value="item.quantity">Qty: { item.quantity } <span>{% render 'icon' with 'icon-arrow-down' %}</span></div>
+              <div class="options-list">
+                <li value="0" rv-class="item.quantity | qtyActive 0">Remove</li>
+                <li value="1" rv-class="item.quantity | qtyActive 1">1</li>
+                <li value="2" rv-class="item.quantity | qtyActive 2">2</li>
+                <li value="3" rv-class="item.quantity | qtyActive 3">3</li>
+                <li value="4" rv-class="item.quantity | qtyActive 4">4</li>
+              </div>
+            </div>
+            <!-- <button class="btn m-underline" data-remove-from-cart rv-data-line="$index">Remove</button> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="minicart-upsell">
+        <div class="upsell-header d-flex">{{ settings.upsell_title }} {% if settings.upsell_badge != blank %}<span class="upsell-badge">{{ settings.upsell_badge }}</span>{% endif %}</div>
+        <div class="upsell-wrapper">
+          {% assign upsellItem = all_products[settings.mc_upsell_item1] %}
+          <div class="upsell-item" rv-if="cart | isDevice" data-id="{{ upsellItem.selected_or_first_available_variant.id }}">
+            <div class="upsell-item-wrapper d-flex">
+              <div class="upsell-item-image-wrapper">{% render 'rimage', image: upsellItem.featured_image, size: '150x' %}</div>
+              <div class="upsell-item-info-wrapper">
+                <div class="upsell-item-title">
+                  {{ upsellItem.title }}
+                  <div class="hide--desktop hide--tablet upsell-price-mob">{{ upsellItem.selected_or_first_available_variant.price | money }}</div>
+                </div>
+                <div class="upsell-item-desc">{{ settings.mc_upsell_item_desc1 | default: upsellItem.description }}</div>
+              </div>
+              <div class="upsell-item-price-wrapper">
+                {% assign u_variant = upsellItem.selected_or_first_available_variant %}
+                {% assign comparePrice = u_variant.compare_at_price %}
+                {% assign price = u_variant.price %}
+                {% if comparePrice > price %}
+                  <span class="was-price hide--mobile">{{ comparePrice | money }}</span>
+                {% endif %}
+                <span class="regular-price hide--mobile">{{ price | money }}</span>
+                {% if comparePrice > price %}
+                  <div class="hide--mobile">You Save {{ comparePrice | minus: price | divided_by: comparePrice | times: 100 }}%</div>
+                {% endif %}
+                <div class="upsell-btn-wrapper">
+                  <button class="btn-upsell-atc">Add</button>
+                  <button class="btn-added">Added</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {% assign upsellItem = all_products[settings.mc_upsell_item2] %}
+          
+          <div class="upsell-item" rv-if="cart | isSwitch" data-id="{{ upsellItem.selected_or_first_available_variant.id }}">
+            <div class="upsell-item-wrapper d-flex">
+              <div class="upsell-item-image-wrapper">{% render 'rimage', image: upsellItem.featured_image, size: '150x' %}</div>
+              <div class="upsell-item-info-wrapper">
+                <div class="upsell-item-title">
+                  {{ upsellItem.title }}
+                  <div class="hide--desktop hide--tablet upsell-price-mob">{{ upsellItem.selected_or_first_available_variant.price | money }}</div>
+                </div>
+                <div class="upsell-item-desc">{{ settings.mc_upsell_item_desc2 | default: upsellItem.description }}</div>
+              </div>
+              <div class="upsell-item-price-wrapper">
+                {% assign u_variant = upsellItem.selected_or_first_available_variant %}
+                {% assign comparePrice = u_variant.compare_at_price %}
+                {% assign price = u_variant.price %}
+                {% if comparePrice > price %}
+                  <span class="was-price hide--mobile">{{ comparePrice | money }}</span>
+                {% endif %}
+                <span class="regular-price hide--mobile">{{ price | money }}</span>
+                {% if comparePrice > price %}
+                  <div class="hide--mobile">You Save {{ comparePrice | minus: price | divided_by: comparePrice | times: 100 }}%</div>
+                {% endif %}
+                <div class="upsell-btn-wrapper">
+                  <button class="btn-upsell-atc">Add</button>
+                  <button class="btn-added">Added</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="cart-legal" rv-if="cart | isPlan">
+        You authorize us to automatically continue your { cart | planName } plan after the conclusion of your free trial and to apply a charge for your plan to the payment method you provided unless you cancel before the end of the free trial. You agree to our <a href="https://learn.whistle.com/legal/end-user-agreement" target="blank">Terms of Service</a> and <a href="https://www.mars.com/privacy" target="blank">Privacy Policy</a>.
+      </div>
+
+      <div class="minicart__footer" rv-if="cart.total_price">
+        <div class="minicart__subtotal">
+          <span>Cart Total: </span>
+          { cart.total_price | formatMoney }
+        </div>
+        <div class="minicart__buttons">
+          <a rv-on-click="setRedirect" href="/cart" class="btn add-to-cart m-primary btn-minicart-checkout" data-loader-btn>
+            <span>CHECKOUT</span>
+            <div class="loader_wrapper">
+              <div class="loader"></div>
+            </div>
+          </a>
+        </div>
+        <div class="minicart__footer-info">Taxes are calculated during checkout</div>
+        <div class="shipping-features">
+          <div class="feature-wrapper d-flex">
+            <div class="shipping-feature">
+              <div class="icon_wrapper">{% render 'icon' with 'icon-ship__info1' %}</div>
+              <div class="feature_title">FREE RETURN</div>
+            </div>
+            <div class="shipping-feature">
+              <div class="icon_wrapper">{% render 'icon' with 'icon-ship__info2' %}</div>
+              <div class="feature_title">1-YEAR WARRANTY</div>
+            </div>
+            <div class="shipping-feature">
+              <div class="icon_wrapper">{% render 'icon' with 'icon-ship__info3' %}</div>
+              <div class="feature_title">90 DAYS RISK FREE</div>
+            </div>
+            <div class="shipping-feature">
+              <div class="icon_wrapper">{% render 'icon' with 'icon-ship__info4' %}</div>
+              <div class="feature_title">FREE SHIPPING</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="minicart-empty" rv-if="cart.item_count | isEmpty">
+      <div class="minicart-empty-header">
+        {% if settings.mc_empty_title != blank %}
+          <div class="minicart-empty-title">{{ settings.mc_empty_title }}</div>
+        {% endif %}
+        {% if settings.mc_empty_subtitle != blank %}
+          <div class="minicart-empty-subtitle">{{ settings.mc_empty_subtitle }}</div>
+        {% endif %}
+      </div>
+      <div class="minicart-menu">
+        {% for i in (1..4) %}
+          {% assign t_key = 'mc_menu_title' | append: i %}
+          {% assign l_key = 'mc_menu_link' | append: i %}
+          {% if settings[t_key] != blank and settings[l_key] != empty %}
+            <div class="minicart-menu-item">
+              <a href="{{ settings[l_key] }}">{{ settings[t_key] }}</a>
+            </div>
+          {%  endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+  </div> 
+</aside>
+<div class="minicart-bg" data-minicart-toggle></div>
+<script>
+  var myshopify_domain='{{ shop.permanent_domain }}';
+</script>

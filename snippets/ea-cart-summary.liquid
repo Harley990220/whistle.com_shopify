@@ -1,0 +1,186 @@
+{% comment %} ATTENTION!!! This is compiled version of ea-cart-summary.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\ea-cart-summary.liquid file to code and save your changes. {% endcomment %}{% assign set = section.settings %}
+
+<<<<<<< HEAD
+
+=======
+>>>>>>> b123cd9b77afd44dbb607ba9a0b5f3d0e1273b3d
+{% assign _total = 0 %}
+
+{% assign total_discount = 0 %}
+
+{% assign total_plan = 0 %}
+{% assign total_plan_num = 0 %}
+
+{% assign total_monthly_price = 0 %}
+
+{% assign plan_annual = false %}
+{% assign plan_biannual = false %}
+{% assign plan_monthly = false %}
+
+{% assign annual_price = 0 %}
+{% assign biannual_price = 0 %}
+{% assign monthly_price = 0 %}
+
+
+{% assign t_plan = '' %}
+{% assign _p = 0 %}
+{% assign _d = 0 %}
+
+{% for item in cart.items %}
+
+  {% assign tags = item.product.tags %}
+
+  {% if tags contains 'plans' %}
+    {% assign total_plan_num = total_plan_num | plus: item.quantity %}
+    {% if tags contains 'free_discount' %}
+      {% assign _p = item.variant.price | times: item.quantity %}
+      {% assign total_plan = total_plan | plus: _p %}
+    {% endif %}
+  {% else %}
+    {% assign _p = item.variant.price | times: item.quantity %}
+    {% assign _total = _total | plus: _p %}
+    {% comment %}
+    {% if tags contains 'Device' %}
+      {% assign _total = _total | plus: 2000 %}
+    {% elsif tags contains 'Fit' %}
+      {% assign _total = _total | plus: 1500 %}
+    {% endif %}
+    {% endcomment %}
+  {% endif %}
+
+
+  {% if tags contains 'plan_annual' %}
+    {% assign plan_annual = true %}
+    {% assign annual_price = item.variant.price %}
+    {% assign total_discount = total_discount | plus: _d %}
+  {% elsif tags contains 'plan_biannual' %}
+    {% assign plan_biannual = true %}
+    {% assign biannual_price = item.variant.price %}
+    {% assign total_discount = total_discount | plus: _d %}
+  {% elsif tags contains 'plan_monthly' %}
+    {% assign plan_monthly = true %}
+    {% assign monthly_price = item.variant.price | times: item.quantity %}
+    {% assign _m = item.variant.price | times: item.quantity %}
+    {% assign total_monthly_price = total_monthly_price | plus: _m %}
+  {% else %}
+  {% endif %}
+
+  
+  {% if tags contains 'Device' %}
+    {% assign _d = 2000 | times: item.quantity %}
+  {% elsif tags contains 'Fit' %}
+    {% assign _d = 1500 | times: item.quantity %}
+  {% else %}
+    {% assign _d = 0 %}
+  {% endif %}
+
+{% endfor %}
+
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> b123cd9b77afd44dbb607ba9a0b5f3d0e1273b3d
+<div class="cart-summary">
+  <div class="order-summary-box">
+    <div class="order-summary-box__prices">
+      <div class="summary_title">Summary</div>
+      <div class="summary_infos">
+        <div class="summary_info total_price">
+          <label>Product Total ({{ cart.item_count | minus: total_plan_num }})</label>
+          <div>
+            {% if total_discount > 0 %}
+              <span class="was-price">{{ _total | money }}</span>
+            {% endif %}
+            <span class="regular-price">{{ cart.total_price | minus: total_monthly_price | money }}</span>
+          </div>
+        </div>
+        <div class="summary_info plan_total">
+          <label>
+            Plan{% if total_plan_num > 0 %} ({{ total_plan_num }}){% endif %}
+          </label>
+        </div>
+        <div class="plan_info">
+          {% if plan_biannual or plan_annual %}
+            <div class="plan_year d-flex">
+              <label>
+                Whistle Explore {% if plan_biannual %}2{% else %}1{% endif %}-YEAR PLAN
+                <div class="sub_info">Only {% if plan_biannual %}{{ biannual_price | money }} / biannual{% elsif plan_annual %}{{ annual_price | money }} / annual{% endif %} after 1 month trial</div>
+              </label>
+              <div class="free">
+                {% if plan_biannual %}
+                  {{ biannual_price | money }}
+                {% elsif plan_annual %}
+                  {{ annual_price | money }}
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+          {% if plan_monthly %}
+            <div class="plan_month d-flex">
+              <label>
+                Whistle Explore MONTHLY Plan
+                {% if section.settings.monthly_subtitle != blank %}<div class="sub_info">{{ section.settings.monthly_subtitle }}</div>{% endif %}
+              </label>
+              <div class="">
+                {{ monthly_price | money }}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+        <div class="summary_info free_shipping">
+          <label>Free Shipping</label>
+          <div>Always</div>
+        </div>
+        <div class="summary_info tax">
+          <label>Tax (Calculated In Checkout)</label>
+          <div>—</div>
+        </div>
+      </div>
+      <div class="summary_prices">
+        {% comment %}
+        <div class="summary_info total_saving">
+          <label>Savings</label>
+          <div>{{ _total | minus: cart.total_price | money }}</div>
+        </div>
+        {% endcomment %}
+        <div class="summary_info subtotal">
+          <label>Estimated Total</label>
+          <div>{{ cart.total_price | money }}</div>
+        </div>
+      </div>
+      {% if plan_biannual or plan_annual %}
+        <div class="summary_info info_text">Nice! Your <b>{% if plan_biannual %}2-Year Plan{% elsif plan_annual %}1-Year Plan{% endif %}</b> Discount applies to this month. Future annually total will be <b>{% if plan_biannual %}{{ biannual_price | money }}{% elsif plan_annual %}{{ annual_price | money }}{% endif %}</b>.</div>
+      {% endif %}
+    </div>
+
+    <div class="align-items-start justify-content-end btn-checkout">
+      <div>
+        <button class="btn m-black-new" data-cart-page-checkout data-checkout-btn type="submit" name="checkout" data-loader-btn>
+          <span>Proceed to checkout</span>
+          <div class="loader_wrapper">
+            <div class="loader"></div>
+          </div>
+        </button>
+      </div>
+      <div class="label">{% render 'icon' with 'icon-lock' %}{{ section.settings.summary_text }}</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="sticky-checkout visible hide--desktop hide--tablet">
+  <div class="sticky-summary d-flex">
+    <label>Cart Total</label>
+    <div>
+      {% if _total > cart.total_price %}<span class="was-price">{{ _total | money }}</span>{% endif %}
+      <span class="regular-price">{{ cart.total_price | money }}</span>
+    </div>
+  </div>
+  <button class="btn m-black-new" data-cart-page-checkout data-checkout-btn type="submit" name="checkout" data-loader-btn>
+    <span>PROCEED TO CHECKOUT</span>
+    <div class="loader_wrapper">
+      <div class="loader"></div>
+    </div>
+  </button>
+</div>

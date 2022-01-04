@@ -1,0 +1,21 @@
+{% comment %} ATTENTION!!! This is compiled version of product-video-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\product-video-content.liquid file to code and save your changes. {% endcomment %}<div class="section_container">
+  <div class="main_content container">
+    <div class="main_wrapper">
+      {% if section.settings.title != blank %}
+        <div class="h1 title not-animated">{{ section.settings.title }}</div>
+      {% endif %}
+      {% if section.settings.subtitle != blank %}
+        <div class="subtitle not-animated">{{ section.settings.subtitle }}</div>
+      {% endif %}
+      {% if section.settings.video_url != blank %}
+        <div class="embed_container">
+          <div class="video_wrapper">
+            {% assign video_url = section.settings.video_url %}
+            {% assign video_url = video_url | replace: 'vimeo.com', 'player.vimeo.com/video' | replace: 'watch?v=', 'embed/' %}
+            <iframe title="Video" src="{{ video_url }}" frameborder="0"></iframe>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

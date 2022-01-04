@@ -1,0 +1,51 @@
+{% comment %} ATTENTION!!! This is compiled version of product-images.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\product-images.liquid file to code and save your changes. {% endcomment %}<div class="product-images {% if product.images.size > 1 %}is-multiple{% endif %} ">
+  <div class="slider product-slider slider-arrow-default" data-ps data-length="{{ product.images.size }}">
+    {% for image in product.images %}
+      {% if section.settings.zoom_image %}
+        <a data-fancybox="images" href="{{ image.src | img_url: '2000x' }}" id="imageZoom" data-zoom-image="{{ image.src | img_url: '2000x' }}">
+      {% endif %}
+          <div class="main_img_wrapper">
+            <img src="{{ image.src | img_url: '1000x' }}" data-variant="{% for variant in image.variants %}{{ variant.id }},{% endfor %}" data-index="{{ forloop.index0 }}" alt="{{ image.alt | escape }}" {% if image.alt == 'Feature' or image.alt == 'feature' %}data-feature="true" data-index="{{ forloop.index0 }}"{% endif %}>
+          </div>
+      {% if section.settings.zoom_image %}
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="slider product-thumb-slider slider-arrow-default" data-thumb-ps data-length="{{ product.images.size }}">
+    {% for image in product.images %}
+      <div class="thumb_wrapper">
+        <img src="{{ image.src | img_url: '1000x' }}" data-variant="{% for variant in image.variants %}{{ variant.id }},{% endfor %}" data-index="{{ forloop.index0 }}" alt="{{ image.alt | escape }}" {% if image.alt == 'Feature' or image.alt == 'feature' %}data-feature="true" data-index="{{ forloop.index0 }}"{% endif %}>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div data-slider-count></div>
+  {% if section.settings.info != blank %}
+    <div class="info_badge hide--mobile">
+      {{ section.settings.info }}
+    </div>
+  {% endif %}
+
+  {% if template.suffix == 'explore' or template.suffix == 'fit' or template.suffix == 'switch' %}
+
+  {% if section.settings.show_icon and section.settings.icon != blank %}
+    <div class="badge_wrapper">{{ section.settings.icon }}</div>
+  {% endif %}
+
+  {% endif %}
+
+</div>
+
+{% if template.suffix == 'switch' %}
+  {% comment %}
+  <div class="hide--mobile">
+    {% render 'pre-order-progress' %}
+  </div>
+  {% endcomment %}
+{% endif %}
+
+<div class="hide--mobile">
+  {% render 'product-shipping-features' %}
+</div>

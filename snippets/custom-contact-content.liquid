@@ -1,0 +1,36 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-contact-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-contact-content.liquid file to code and save your changes. {% endcomment %}<div class="section-container">
+  <div class="main_content container">
+    <div class="main_wrapper d-flex">
+      <div class="contact-info-wrapper">
+        {% if section.settings.title != blank %}
+          <div class="title not-animated">{{ section.settings.title }}</div>
+        {% endif %}
+        {% if section.settings.subtitle != blank %}
+          <div class="subtitle not-animated">{{ section.settings.subtitle }}</div>
+        {% endif %}
+        <div class="contact-infos d-flex">
+          {% if section.settings.phone_title != blank and section.settings.phone_num != blank %}
+            <div class="contact-phone d-flex">
+              <div class="icon">{% render 'icon' with 'icon-call' %}</div>
+              <div class="contact-title"><a href="tel:{{ section.settings.phone_num }}">{{ section.settings.phone_title }}</a></div>
+            </div>
+          {% endif %}
+          {% if section.settings.chat_title != blank %}
+            <div class="contact-chat d-flex">
+              <div class="icon">{% render 'icon' with 'icon-chat' %}</div>
+              <div class="contact-title"><a href="javascript:openChat()">{{ section.settings.chat_title }}</a></div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="icon-blocks-wrapper d-flex">
+        {% for block in section.blocks %}
+          <div class="icon-block-item d-flex">
+            <div class="block-item_icon">{{ block.settings.icon }}</div>
+            <div class="block-item_title">{{ block.settings.title }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>

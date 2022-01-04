@@ -1,0 +1,157 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-review-carousel-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-review-carousel-content.liquid file to code and save your changes. {% endcomment %}<div class="section_container">
+  <div class="main_content" data-animate-block>
+    <div class="section_header">
+      <div class="title">{{ section.settings.title }}</div>
+      <div class="subtitle">{{ section.settings.subtitle }}</div>
+    </div>
+    <div class="review--carousel">
+      <div data-review-slider data-dots-default>
+        {% for block in section.blocks %}
+          <div data-fancybox="review" class="review-item" data-src="#popup-content-{{ forloop.index }}">
+            <div class="item_wrapper" id="fancy-{{ forloop.index }}">
+              {% comment %}<a data-fancybox data-fancybox-group="review" data-src="#fancy-{{ forloop.index }}" href="javascript:;" ></a>{% endcomment %}
+              <div class="image_wrapper {% if block.settings.icon_type == 'youtube' and block.settings.video_url != blank %}video_cover{% endif %}">
+                {% render 'rimage', image: block.settings.image, size: '1200x' %}
+                {% if block.settings.icon_type == 'youtube' and block.settings.video_url != blank %}
+                  <span class="btn_video">{% render 'icon' with 'play-video' %}</span>
+                  {% assign video_url = block.settings.video_url | replace: 'vimeo.com', 'player.vimeo.com/video' | replace: 'watch?v=', 'embed/' %}
+                  <div class="embed_container" data--hidden>
+                    <div class="video_container">
+                      <iframe title="Review" class="lazyload" src='{{ video_url | append : '?rel=0&loop=1&title=0&byline=0&portrait=0&sidedock=0' }}' frameborder='0' allowfullscreen></iframe>
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+              <div class="content_wrapper">
+                <div class="info_wrapper d-flex">
+                  <div class="thumb_wrapper">
+                    {% render 'rimage', image: block.settings.thumb_icon, size: '100x' %}
+                  </div>
+                  <div class="review_title">
+                    {{ block.settings.title }}
+                  </div>
+                  <div class="icon_wrapper">
+                    {% if block.settings.icon_type == 'logo' %}
+                      {% render 'icon' with 'icon-logo' %}
+                    {% elsif block.settings.icon_type == 'insta' %}
+                      {% render 'icon' with 'icon-instagram' %}
+                    {% elsif block.settings.icon_type == 'youtube' %}
+                      {% render 'icon' with 'icon-youtube' %}
+                    {% endif %}
+                  </div>
+                </div>
+                {% if block.settings.review_star != blank %}
+                  <div class="review_star">
+                    {{ block.settings.review_star }}
+                  </div>
+                {% endif %}
+                <div class="review_text xxx {{ block.settings.review_content.size }}" style="">
+                  {% assign len = 120 %}
+                  {% if block.settings.review_star != blank %}{% assign len = 80 %}{% endif %}
+                  {% assign content = block.settings.review_content | strip_html %}
+                  {{ content | truncate: len, '...' }} {% if content.size > len %}<span class="btn_read_more">Read more</span>{% endif %}
+                </div>
+                {% if block.settings.product != blank %}
+                  <div class="btn_wrapper">
+                    <a onclick="dataLayer.push({'review': '{{ all_products[block.settings.product].title }}'});" href="{{ all_products[block.settings.product].url }}" class="btn m-black-new product_link">{{ block.settings.btn_label }}</a>
+                  </div>
+                {% endif %}
+              </div>
+              {% comment %}<span class="btn_read_more {% if block.settings.review_star != blank %}spacing{% endif %}">... <span>Read more</span></span>{% endcomment %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      {% render 'swipe-text' %}
+      <div data--hidden>
+        {% for block in section.blocks %}
+          <div id="popup-content-{{ forloop.index }}">
+            <div class="review-item">
+              <div class="item_wrapper">
+                {% comment %}<a data-fancybox data-fancybox-group="review" data-src="#fancy-{{ forloop.index }}" href="javascript:;" ></a>{% endcomment %}
+                <div class="image_wrapper {% if block.settings.icon_type == 'youtube' and block.settings.video_url != blank %}video_cover{% endif %}">
+                  {% render 'rimage', image: block.settings.image, size: '1200x' %}
+                  {% if block.settings.icon_type == 'youtube' and block.settings.video_url != blank %}
+                    <span class="btn_video">{% render 'icon' with 'play-video' %}</span>
+                    {% assign video_url = block.settings.video_url | replace: 'vimeo.com', 'player.vimeo.com/video' | replace: 'watch?v=', 'embed/' %}
+                    <div class="embed_container" data--hidden>
+                      <div class="video_container">
+                        <iframe title="Review" class="lazyload" src='{{ video_url | append : '?rel=0&loop=1&title=0&byline=0&portrait=0&sidedock=0' }}' frameborder='0' allowfullscreen></iframe>
+                      </div>
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="content_wrapper">
+                  <div class="info_wrapper d-flex">
+                    <div class="thumb_wrapper">
+                      {% comment %}<img src="{{ block.settings.thumb_icon | img_url: '100x' }}">{% endcomment %}
+                      {% render 'rimage', image: block.settings.thumb_icon, size: '100x' %}
+                    </div>
+                    <div class="review_title">
+                      {{ block.settings.title }}
+                    </div>
+                    <div class="icon_wrapper">
+                      {% if block.settings.icon_type == 'logo' %}
+                        {% render 'icon' with 'icon-logo' %}
+                      {% elsif block.settings.icon_type == 'insta' %}
+                        {% render 'icon' with 'icon-instagram' %}
+                      {% elsif block.settings.icon_type == 'youtube' %}
+                        {% render 'icon' with 'icon-youtube' %}
+                      {% endif %}
+                    </div>
+                  </div>
+                  {% if block.settings.review_star != blank %}
+                    <div class="review_star">
+                      {{ block.settings.review_star }}
+                    </div>
+                  {% endif %}
+                  <div class="review_text" style="">
+                    {{ block.settings.review_content }}
+                  </div>
+                  {% if block.settings.product != blank %}
+                    <div class="btn_wrapper">
+                      <a onclick="dataLayer.push({'review': '{{ all_products[block.settings.product].title }}'});" href="{{ all_products[block.settings.product].url }}" class="btn m-black-new product_link">{{ block.settings.btn_label }}</a>
+                    </div>
+                  {% endif %}
+                </div>
+                {% comment %}<span class="btn_read_more {% if block.settings.review_star != blank %}spacing{% endif %}">... <span>Read more</span></span>{% endcomment %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="slider-controls">
+        <div class="slick slick-prev" data-hor-slider-prev>{% render 'icon' with 'slider-arrow-prev' %}</div>
+        <div class="slick slick-next" data-hor-slider-next>{% render 'icon' with 'slider-arrow-next' %}</div>
+      </div>
+    </div>
+    {% if section.settings.btn_label != blank %}
+      <div class="button_wrapper">
+        <a href="javascript:;" data-popup-open="review-popup" class="btn m-green">{{ section.settings.btn_label }}</a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="review-fancybox-container"></div>
+
+
+<div class="popup is-hidden" data-popup="review-popup">
+  <div class="popup-window">
+    <button class="close" data-popup-close>{% render 'icon' with 'icon-close' %}</button>
+    <div class="popup-content">
+      <div class="popup_title">
+        Our happy pet parents
+      </div>
+      {% comment %}
+      <script type="text/javascript">
+        document.addEventListener('StartAsyncLoading',function(event){
+          (function e(){var e=document.createElement("script");e.type="text/javascript",e.async=!0, e.src="//staticw2.yotpo.com/QbyU9U2DghNaYSxmwO9ZtKDcKu250oobXVL9K99o/widget.js";var t=document.getElementsByTagName("script")[0]; t.parentNode.insertBefore(e,t)})(); 
+        })
+      </script>
+      {% endcomment %}
+      <div id='yotpo-testimonials-custom-tab'></div>
+    </div>
+  </div>
+  <div class="popup-bg" data-popup-close></div>
+</div>

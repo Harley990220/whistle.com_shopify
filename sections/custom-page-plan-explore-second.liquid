@@ -1,0 +1,187 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-page-plan-explore-second.liquid and it is overriding automatically. You should use theme development tool and sources\sections\custom-page-plan-explore-second.liquid file to code and save your changes. {% endcomment %}{% if section.settings.visible %}
+
+  {% render 'ea-section-styles', section: section %}
+
+  {% render 'custom-choose-plan-content', section: section %}
+
+{% endif %}
+
+{% schema %}
+  {
+  "name": "Choose Plan (Mobile)",
+  "tag": "section",
+  "class": "choose-plan",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "visible",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "ptop",
+      "label": "Top spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom",
+      "label": "Bottom spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "ptop_mob",
+      "label": "Top spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom_mob",
+      "label": "Bottom spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "sectionbg",
+      "label": "Section background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Sub title"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Why choose a plan"
+    },
+    {
+      "type": "text",
+      "id": "choose_plan_title",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "choose_plan_list",
+      "label": "Content"
+    },
+    {
+      "type": "header",
+      "content": "Easy cancellation"
+    },
+    {
+      "type": "text",
+      "id": "easy_cancel_title",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "easy_cancel_list",
+      "label": "Content"
+    },
+    {
+      "type": "header",
+      "content": "Chat Us"
+    },
+    {
+      "type": "text",
+      "id": "chat_us_text",
+      "label": "Text"
+    },
+    {
+      "type": "text",
+      "id": "chat_us_btn",
+      "label": "Button Label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Block",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_best_seller",
+          "label": "Is best seller?"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "subtitle",
+          "label": "Sub title"
+        },
+        {
+          "type": "richtext",
+          "id": "price",
+          "label": "Price"
+        },
+        {
+          "type": "richtext",
+          "id": "desc",
+          "label": "Description"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

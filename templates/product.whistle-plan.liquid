@@ -1,0 +1,36 @@
+{% comment %} ATTENTION!!! This is compiled version of product.whistle-plan.liquid and it is overriding automatically. You should use theme development tool and sources\templates\product.whistle-plan.liquid file to code and save your changes. {% endcomment %}{% comment %} {% section 'ea-ordering' %} {% endcomment %}
+
+
+{% section 'ea-product-main' %}
+{% section 'custom-size-guide' %}
+{% section 'custom-logo-list' %}
+{% section 'custom-testimonial-product-regular' %}
+{% section 'custom-related-products-regular' %}
+{% comment %}
+{% section 'ea-reviews' %}
+{% section 'ea-related-products' %}
+{% endcomment %}
+
+
+<script>
+  window.productTemplateLoaded = true;
+</script>
+
+
+{% if product.metafields.loox.num_reviews %}
+<script id="looxSchemaJson" type="application/ld+json">
+{
+	"@context": "http://schema.org",
+	"@type": "Product",
+	"@id": {{ canonical_url | json }},
+	"aggregateRating": {
+		"@type": "AggregateRating",
+		"ratingValue": "{{ product.metafields.loox.avg_rating }}",
+		"reviewCount": "{{ product.metafields.loox.num_reviews }}"
+	},
+	"name": {{ product.title | json }}
+}
+</script>
+{% endif %}
+
+

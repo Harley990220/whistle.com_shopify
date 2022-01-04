@@ -1,0 +1,92 @@
+{% comment %} ATTENTION!!! This is compiled version of checkout.js.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\checkout.js.liquid file to code and save your changes. {% endcomment %}{% comment %} ATTENTION!!! This is compiled version of checkout.js.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\checkout.js.liquid file to code and save your changes. {% endcomment %}
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+<script>
+  $(document).ready(function(){
+    $('.step__sections .thank-you__additional-content + .section .content-box:first-child').append($("[data-gift-recipient-form]").html());
+
+    $(document).on('click', '.gift-recipient-form .form-toggle', function(){
+      // window.dataLayer.push({'checkout', 'Gift-recipient'});
+      $(".gift-recipient-form .form-header").css('display', 'none');
+      $(".gift-recipient-form .form-wrapper").slideDown();
+    })
+
+    $(".main__content").css('padding-bottom', $(".legal_step").height() + 60 + 'px');
+
+    // $("button#continue_button").attr('disabled', 'disabled').addClass('disabled');
+
+    // $(document).on('click', '.legal_step input', function(){
+    //   if($(this).prop('checked') == true) {
+    //     $("button#continue_button").removeAttr('disabled').removeClass('disabled');
+    //   }
+    //   else {
+    //     $("button#continue_button").attr('disabled', 'disabled').addClass('disabled');
+    //   }
+    // })
+
+    // $(document).on('click', '.legal_step label', function(){
+    //   $(this).closest('.legal_step input').click();
+    // })
+
+    var is_active = true;
+    $("ol.breadcrumb li").each(function(idx){
+      var $this = $(this);
+      $this.append('<span data-step>' + (idx + 1) + '<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="78.369px" height="78.369px" viewBox="0 0 78.369 78.369" style="enable-background:new 0 0 78.369 78.369;" xml:space="preserve"><g><path d=" M78.049,19.015L29.458,67.606c-0.428,0.428-1.121,0.428-1.548,0L0.32,40.015c-0.427-0.426-0.427-1.119,0-1.547l6.704-6.704 c0.428-0.427,1.121-0.427,1.548,0l20.113,20.112l41.113-41.113c0.429-0.427,1.12-0.427,1.548,0l6.703,6.704 C78.477,17.894,78.477,18.586,78.049,19.015z"/></g></svg></span>')
+      if($this.attr('aria-current') == 'step') {
+        is_active = false;
+        $this.addClass('current');
+      }
+      else {
+        if(is_active) {
+          $this.addClass('activated');
+        }
+        else {
+          // $this.addClass('')
+        }
+      }
+    })
+
+    var $payForm = $('[data-step="payment_method"] form[data-payment-form]');
+    console.log("XXX", $payForm.length);
+    if($payForm.length > 0) {
+      $('[data-legal-steps]').find('.regular-label').attr('data--hidden', 'true');
+      $('[data-legal-steps]').find('.pay-label').removeAttr('data--hidden');
+
+      $payForm.append($('[data-legal-steps]').html());
+    }
+    else {
+      $(".main__footer").prepend($('[data-legal-steps]').html());
+    }
+    $("[data-legal-steps]").remove();
+
+    var $parent = $('button.step__footer__continue-btn').closest('.step__footer').parent();
+    var $parent1 = $('.order-summary__sections');
+    if($parent.length > 0 || $parent1.length > 0) {
+      if($parent.length > 0) {
+        $parent.append($('[data-shipping-feature]').html());
+      }
+      if($parent1.length > 0) {
+        $parent1.append($('[data-shipping-feature]').html());
+      }
+      $('[data-shipping-feature]').remove();
+    }
+
+
+    $(document).on('click', 'ol.breadcrumb li:first-child a', function(e) {
+      // e.preventDefault();
+      // localStorage.setItem('cart_state', 'open');
+      // document.location.href = '/collections/all';
+    })
+
+    setTimeout(function() {
+    	$('[data-checkout-total-shipping-target="0"]').text("Free").css('opacity', 1);
+	  }, 300)
+  
+  
+    $(document).on('change', '[name="checkout[shipping_rate][id]"]', function(){
+      $('[data-checkout-total-shipping-target="0"]').text("Free");
+    })
+
+
+  })
+</script>

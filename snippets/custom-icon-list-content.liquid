@@ -1,0 +1,35 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-icon-list-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-icon-list-content.liquid file to code and save your changes. {% endcomment %}<div class="section_container">
+  <div class="main_content container">
+    <!-- <div class="main_wrapper icon-list-wrapper" data-hor-slider data-slides-to-show-mob="2" data-dots="true" data-arrows="false" data-mobile-only="1" data-dots-slim> -->
+
+    {% comment %}
+    {% if section.settings.btn_label != blank %}
+      <div class="btn_wrapper hide--desktop">
+        <a href="javascript:;" data-single-atc>{{ section.settings.btn_label }} {% render 'icon' with 'icon-caret-down' %}</a>
+      </div>
+    {% endif %}
+    {% endcomment %}
+  
+    <div class="main_wrapper icon-list-wrapper slider-dots-default {% if section.blocks.size < 5 %}center-align{% endif %}">
+      {% for block in section.blocks %}
+        <div class="list-item">
+          <div class="icon_wrapper">
+            {{ block.settings.icon }}
+          </div>
+          <div class="text_wrapper">
+            <div class="icon_title">{{ block.settings.title }}</div>
+            <div class="icon_text">{{ block.settings.text }}</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% comment %}
+  {% if section.settings.btn_label != blank %}
+    <div class="btn_wrapper hide--mobile">
+      <a href="javascript:;" data-single-atc>{{ section.settings.btn_label }} {% render 'icon' with 'icon-caret-down' %}</a>
+    </div>
+  {% endif %}
+  {% endcomment %}
+</div>

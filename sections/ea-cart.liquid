@@ -1,0 +1,540 @@
+{% comment %} ATTENTION!!! This is compiled version of ea-cart.liquid and it is overriding automatically. You should use theme development tool and sources\sections\ea-cart.liquid file to code and save your changes. {% endcomment %}{% render 'ea-section-styles', section: section %}
+{% assign set = section.settings %}
+
+{% render 'ea-section-foreground-image', section: section %}
+
+<div class="cart-wrapper" data-cart-page data-items-count="{{ cart.item_count }}">
+  
+  {% if cart.item_count > 0 %}
+    {% if set.title %}
+      <div class="container"><h1 class="title h2 ta-center">{{ set.title }}</h1></div>
+    {% endif %}
+
+    <form action="/cart" method="post" class="container d-flex" novalidate data-cart-page-form>
+      <div class="cart-table-wrapper">{% render 'custom-cart-table', section: section %}</div>
+      <div class="cart-summary-wrapper">
+        {% render 'ea-cart-summary', section: section %}
+
+        <div class="" data-guarantee-wrapper="">
+      
+          <div class="guarantee_item d-flex" data-animation-delay-1="" data-fade-animation="">
+            <div class="icon_wrapper">{% render 'icon' with 'icon-cart-easy-cancel' %}</div>
+            <div class="text_wrapper">
+              <div class="item_title">Free, easy cancellation</div>
+              <div class="item_content"><p>Cancel anytime—no strings attached, ever.</p></div>
+            </div>
+          </div>
+        
+          <div class="guarantee_item d-flex" data-animation-delay-2="" data-fade-animation="">
+            <div class="icon_wrapper">{% render 'icon' with 'icon-cart-guarantee' %}</div>
+            <div class="text_wrapper">
+              <div class="item_title">30-day money back guarantee</div>
+              <div class="item_content"><p>Don’t love it within your first month? It’s on us.</p></div>
+            </div>
+          </div>
+        
+          <div class="guarantee_item d-flex" data-animation-delay-3="" data-fade-animation="">
+            <div class="icon_wrapper">{% render 'icon' with 'icon-cart-free-shipping' %}</div>
+            <div class="text_wrapper">
+              <div class="item_title">Free shipping, always</div>
+              <div class="item_content"><p>Anywhere inside U.S. free of charge.</p></div>
+            </div>
+          </div>
+        
+        </div>
+
+      </div>
+    </form>
+
+        
+    {% assign is_upsell_added = false %}
+    {% assign upsell_items = section.blocks | where: "type", "upsell" %}
+
+    {% assign upsell_p_handle = all_products[upsell_items.first.settings.product].handle %}
+
+    {% if is_switch_added %}
+      {% assign upsell_items = section.blocks | where: "type", "upsell_leash" %}
+    {% endif %}
+
+    {% assign is_switch_added = false %}
+    {% for item in cart.items %}
+      {% if item.product.handle == 'whistle-switch' %}
+        {% assign is_switch_added = true %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+
+
+    <div class="upsell_wrapper hide--desktop hide--tablet">
+      <div class="upsell_title">
+        {{ section.settings.upsell_title }}
+      </div>
+      <div class="upsell-products-wrapper d-flex {% if is_switch_added %}switch-upsell{% endif %}">
+      
+        {% for i in (1..4) %}
+          {% assign product_handle = 'u_product' | append: i %}
+          {% assign title_handle = 'u_title' | append: i %}
+          {% assign desc_handle = 'u_desc' | append: i %}
+  
+          {% assign product_idx = forloop.index %}
+  
+          {% if section.settings[product_handle] != blank %}
+          
+            {% assign product = all_products[section.settings[product_handle]] %}
+            {% assign title = section.settings[title_handle] | default: product.title %}
+            {% assign desc = section.settings[desc_handle] | default: product.description %}
+  
+            {% assign class="hidden" %}
+  
+            {% if is_switch_added %}
+              {% if i == 3 or i == 4 %}
+                {% assign class="d-flex" %}
+              {% endif %}
+            {% else %}
+              {% if i == 1 or i == 2 %}
+                {% assign class="d-flex" %}
+              {% endif %}
+            {% endif %}
+  
+            {% render 'cart-upsell-item', product: product, class: class, title: title, desc: desc, is_switch_added: is_switch_added, product_idx: product_idx %}
+  
+          {% endif %}
+  
+        {% endfor %}
+  
+      </div>
+    </div>
+
+  {% else %}
+
+    <div class="container supports-cookies cart-empty">
+      <div class="empty-cart-title">
+        {{ section.settings.empty_title }}
+      </div>
+      {% assign menu_blocks = section.blocks | where: 'type', 'menu' %}
+      {% if menu_blocks.size > 0 %}
+        <div class="cart-menu">
+          {% for block in menu_blocks %}
+            <div class="menu_item">
+              <a class="btn m-black-new" href="{{ block.settings.link }}">{{ block.settings.title }}</a>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  
+    <a href="{{ section.settings.continueurl }}" class="link no-hover-link" data--hidden data-menu-link data-device="{% if is_device_added %}true{% endif %}">{{ section.settings.continuetitle }}</a>
+    
+  {% endif %}
+</div>  
+
+
+
+{% schema %}
+  {
+  "name": "Cart",
+  "class": "section section-cart",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "ptop",
+      "label": "Top spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom",
+      "label": "Bottom spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "ptop_mob",
+      "label": "Top spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom_mob",
+      "label": "Bottom spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "sectionbg",
+      "label": "Section background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "id": "title",
+      "type": "text",
+      "label": "Title",
+      "default": "Shopping Bag"
+    },
+    {
+      "type": "text",
+      "id": "continuetitle",
+      "label": "Continue text",
+      "default": "Continue Shopping"
+    },
+    {
+      "type": "url",
+      "id": "continueurl",
+      "label": "Continue Url",
+      "default": "/"
+    },
+    {
+      "type": "header",
+      "content": "Cart summary"
+    },
+    {
+      "type": "text",
+      "id": "monthly_subtitle",
+      "label": "Monthly subtitle"
+    },
+    {
+      "type": "header",
+      "content": "Whistle Explore"
+    },
+    {
+      "type": "text",
+      "id": "feature_explore",
+      "label": "Feature"
+    },
+    {
+      "type": "richtext",
+      "id": "include_explore",
+      "label": "What's included"
+    },
+    {
+      "type": "header",
+      "content": "Whistle Fit"
+    },
+    {
+      "type": "text",
+      "id": "feature_fit",
+      "label": "Feature"
+    },
+    {
+      "type": "richtext",
+      "id": "include_fit",
+      "label": "What's included"
+    },
+    {
+      "type": "header",
+      "content": "Plan Item (Explore)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Popup"
+    },
+    {
+      "type": "text",
+      "id": "popup_plan_title",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "popup_plan",
+      "label": "Whistle Plan"
+    },
+    {
+      "type": "text",
+      "id": "include_text",
+      "label": "Include text"
+    },
+    {
+      "type": "text",
+      "id": "popup_reason_title",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "popup_reason",
+      "label": "Why do I need a plan?"
+    },
+    {
+      "type": "header",
+      "content": "Plan Item (Fit)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Popup"
+    },
+    {
+      "type": "text",
+      "id": "popup_plan_title_fit",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "popup_plan_fit",
+      "label": "Whistle Plan"
+    },
+    {
+      "type": "text",
+      "id": "include_text_fit",
+      "label": "Include text"
+    },
+    {
+      "type": "text",
+      "id": "popup_reason_title_fit",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "popup_reason_fit",
+      "label": "Why do I need a plan?"
+    },
+    {
+      "type": "header",
+      "content": "Plan Item (Switch)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Popup"
+    },
+    {
+      "type": "text",
+      "id": "popup_plan_title_switch",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "popup_plan_switch",
+      "label": "Whistle Plan"
+    },
+    {
+      "type": "text",
+      "id": "include_text_switch",
+      "label": "Include text"
+    },
+    {
+      "type": "text",
+      "id": "popup_reason_title_switch",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "popup_reason_switch",
+      "label": "Why do I need a plan?"
+    },
+    {
+      "type": "header",
+      "content": "Cart summary"
+    },
+    {
+      "type": "richtext",
+      "id": "summary_text",
+      "label": "Summary Text"
+    },
+    {
+      "type": "header",
+      "content": "Empty Cart"
+    },
+    {
+      "type": "richtext",
+      "id": "empty_title",
+      "label": "Empty Title"
+    },
+    {
+      "type": "header",
+      "content": "Upsell Product"      
+    },
+    {
+      "type": "text",
+      "id": "upsell_title",
+      "label": "Title"
+    },
+    {
+      "type": "paragraph",
+      "content": "Switch"
+    },
+    {
+      "type": "text",
+      "id": "upsell_title_switch",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "upsell_subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "header",
+      "content": "Upsell (Regular)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Upsell 1"
+    },
+    {
+      "type": "product",
+      "id": "u_product1",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "u_title1",
+      "label": "Title 1"
+    },
+    {
+      "type": "richtext",
+      "id": "u_desc1",
+      "label": "Description 1"
+    },
+    {
+      "type": "paragraph",
+      "content": "Upsell 2"
+    },
+    {
+      "type": "product",
+      "id": "u_product2",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "u_title2",
+      "label": "Product"
+    },
+    {
+      "type": "richtext",
+      "id": "u_desc2",
+      "label": "Description 2"
+    },
+    {
+      "type": "header",
+      "content": "Upsell (Whistle Switch)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Switch Upsell 1"
+    },
+    {
+      "type": "product",
+      "id": "u_product3",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "u_title3",
+      "label": "Title 1"
+    },
+    {
+      "type": "richtext",
+      "id": "u_desc3",
+      "label": "Description 1"
+    },
+    {
+      "type": "paragraph",
+      "content": "Switch Upsell 2"
+    },
+    {
+      "type": "product",
+      "id": "u_product4",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "u_title4",
+      "label": "Product"
+    },
+    {
+      "type": "richtext",
+      "id": "u_desc4",
+      "label": "Description 2"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Empty Cart Menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "upsell",
+      "name": "Upsell Product (Collar)",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "desc",
+          "label": "Description"
+        }
+      ]
+    },
+    {
+      "type": "upsell_leash",
+      "name": "Upsell Product (Leash)",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "desc",
+          "label": "Description"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

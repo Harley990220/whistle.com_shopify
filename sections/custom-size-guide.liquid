@@ -1,0 +1,191 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-size-guide.liquid and it is overriding automatically. You should use theme development tool and sources\sections\custom-size-guide.liquid file to code and save your changes. {% endcomment %}<div data-size-guide style="display: none;">
+  <div class="size_guide-wrapper is-hidden">
+    <div class="size_guide_title">{{ section.settings.title }}</div>
+    <div class="size_guide_wrapper d-flex">
+      {% for block in section.blocks %}
+        <div class="size_guide_item">
+          <div class="image_wrapper">{% render 'rimage', image: block.settings.image, size: '120x' %}</div>
+          <div class="content_wrapper">
+            <div class="item_title">{{ block.settings.title }}</div>
+            <div class="item_content">{{ block.settings.content }}</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% comment %}
+<div class="popup is-hidden" data-popup="size-guide">
+  <div class="popup-window">
+    <button class="close" data-popup-close>{% render 'icon' with 'icon-close' %}</button>
+    <div class="popup-content">
+      <div class="size_guide-wrapper">
+        <div class="size_guide_title">{{ section.settings.title }}</div>
+        <div class="size_guide_wrapper d-flex">
+          {% for block in section.blocks %}
+            <div class="size_guide_item">
+              <div class="image_wrapper">{% render 'rimage', image: block.settings.image, size: '120x' %}</div>
+              <div class="content_wrapper">
+                <div class="item_title">{{ block.settings.title }}</div>
+                <div class="item_content">{{ block.settings.content }}</div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popup-bg" data-popup-close></div>
+</div>
+{% endcomment %}
+
+<div class="size-guide" data-size-guide>
+  <div class="size-guide-wrapper">
+    <div class="size-guide-header d-flex">
+      <div class="size-guide-close" data-size-guide-toggle>
+        {% render 'icon' with 'icon-close' %}
+        <div>CLOSE</div>
+      </div>
+      {% if section.settings.title != blank %}
+        <div class="size-guide-title">{{ section.settings.title }}</div>
+      {% endif %}
+      <a href="/cart" class="btn m-black-new btn-rounded">
+        {% render 'icon' with 'icon-cart' %}
+        <span data-cart-count>{{ cart.item_count }}</span>
+      </a>
+      {% comment %}
+      <div class="cart-count" data-minicart-toggle>
+        {% render 'icon' with 'icon-cart' %}
+        <span data-cart-count>{{ cart.item_count }}</span>
+      </div>
+      {% endcomment %}
+    </div>
+    <div class="size-guide-video">
+      {% if section.settings.v_title != blank %}
+        <div class="size-guide-vtitle">{{ section.settings.v_title }}</div>
+      {% endif %}
+      {% if section.settings.v_subtitle != blank %}
+        <div class="size-guide-vsubtitle">{{ section.settings.v_subtitle }}</div>
+      {% endif %}
+      {% if section.settings.video_url != blank and section.settings.btn_label != blank %}
+        <div class="btn_wrapper">
+          <a href="javascript:;" data-popup-open="size-guide-video" data-size-guide-toggle>{{ section.settings.btn_label }} {% render 'icon' with 'icon-video-play' %}</a>
+        </div>
+      {% endif %}
+    </div>
+    <div class="size_guide_item-wrapper">
+      {% for block in section.blocks %}
+        <div class="size_guide_item d-flex">
+          <div class="image_wrapper">{% render 'rimage', image: block.settings.image, size: '150x' %}</div>
+          <div class="content_wrapper">
+            <div class="item_title">{{ block.settings.title }}</div>
+            <div class="item_content">{{ block.settings.content }}</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="body-bg"></div>
+</div>
+
+
+<div class="popup is-hidden" data-popup="size-guide-video">
+  <div class="popup-window">
+    <button class="close" data-popup-close><span>CLOSE</span>{% render 'icon' with 'icon-close' %}</button>
+    <div class="popup-content">
+      <div class="video-label">{{ section.settings.video_label }}</div>
+
+      {% assign video_url = section.settings.video_url %}
+      {% assign type = 'video' %}
+      {% if video_url contains 'youtube' or video_url contains 'vimeo' %}
+        {% assign type = 'external_video' %}
+      {% endif %}
+      <div class="video_wrapper" data-video-wrapper data-type="{{ type }}" {% if autoplay %}data-scroll-play{% endif %}>
+        {% if type == 'video' %}
+          <video class="section-video_video" muted playsinline><source src="{{ video_url }}" type="video/mp4"></video>
+        {% elsif type == 'external_video' %}
+          <div class='embed-container'>
+            {% assign video_url = video_url | replace: 'vimeo.com', 'player.vimeo.com/video' | replace: 'watch?v=', 'embed/' %}
+            <iframe title="{{ title | strip_html }}" class="lazyload" src='{{ video_url }}' frameborder='0' allow="autoplay" allowautoplay allowfullscreen></iframe>
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+  <div class="popup-bg" data-popup-close></div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Size Guide",
+  "tag": "section",
+  "class": "size-guide",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "header",
+      "content": "Video"
+    },
+    {
+      "type": "text",
+      "id": "v_title",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "v_subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "id": "video_url",
+      "type": "video_url",
+      "label": "Video URL",
+      "accept": ["youtube", "vimeo"],
+      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+    },
+    {
+      "type": "text",
+      "id": "video_label",
+      "label": "Video title",
+      "default": "How To Measure"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Button Label",
+      "default": "How To Measure"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Block",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

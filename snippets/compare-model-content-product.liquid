@@ -1,0 +1,359 @@
+{% comment %} ATTENTION!!! This is compiled version of compare-model-content-product.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\compare-model-content-product.liquid file to code and save your changes. {% endcomment %}<div class="popup compare-model-popup popup-section">
+  <div class="popup-window">
+    <div class="popup-content hide--mobile">
+      {% assign len = 0 %}
+      {% for i in (1..3) %}
+        {% assign handle = 'product' | append: i %}
+        {% if section.settings[handle] != blank %}
+          {% assign len = len | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+      <div class="popup-header">
+        <div class="title">{{ section.settings.text }}</div>
+        <div class="icon hide--mobile">{% render 'icon' with 'icon-compare-model' %}</div>
+        <div class="subtitle hide--mobile not-animated">
+          {{ section.settings.subtitle }}
+          <a href="javascript:openChat()">
+            <strong>{{ section.settings.chat_text }}</strong>
+          </a>
+        </div>
+      </div>
+      <div class="compare-model-wrapper" data-animate-block>
+        <div class="mob-model-header hide--desktop hide--tablet">
+          <div class="wrapper d-flex">
+            {% for i in (1..3) %}
+              {% assign p_handle = 'product' | append: i %}
+              {% assign img_handle = 'image' | append: i %}
+              {% if section.settings[p_handle] != blank %}
+                <div class="mob-header-item {% if forloop.first %}active{% endif %}" data-idx="{{ i }}">
+                  {% assign _product = all_products[section.settings[p_handle]] %}
+                  {% assign image = section.settings[img_handle] | default: _product.featured_image %}
+                  <div class="image_wrapper">{% render 'rimage', image: image, size: '250x' %}</div>
+                  {% if forloop.last %}
+                    <span class="badge hide--desktop">NEW 🔥</span>
+                  {% endif %}
+                  {% assign icon_handle = 'icon' | append: i %}
+                  {% assign price_handle = 'price' | append: i %}
+                  {% if section.settings[icon_handle] != blank %}
+                    <div class="row_item_info">
+                      <div class="icon_wrapper">
+                        {{ section.settings[icon_handle] }}
+                      </div>
+                      <div class="price_info">
+                        {% assign price = all_products[section.settings[p_handle]].price | money %}
+                        {{ section.settings[price_handle] | default: price }}
+                      </div>
+                    </div>
+                  {% endif %}
+                  <span class="active-icon">
+                    {% render 'icon' with 'icon-direc-down' %}
+                  </span>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class="mob-model-headings">
+            {% for i in (1..3) %}
+              {% assign p_handle = 'product' | append: i %}
+              {% assign _product = all_products[section.settings[p_handle]] %}
+              <div class="heading-item" data-idx="{{ i }}">{{ _product.title }}</div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="model-header d-flex col-2">
+          <div></div>
+          <div class="rows_header d-flex col-{{ len }}">
+            {% for i in (1..3) %}
+              {% assign p_handle = 'product' | append: i %}
+              {% assign img_handle = 'image' | append: i %}
+              {% if section.settings[p_handle] != blank %}
+                <div class="row_item_header">
+                  {% assign _product = all_products[section.settings[p_handle]] %}
+                  {% assign image = section.settings[img_handle] | default: _product.featured_image %}
+                  <div class="image_wrapper"><a href="{{ _product.url }}">{% render 'rimage', image: image, size: '250x' %}</a></div>
+                  {% if forloop.last %}
+                    <span class="hide--mobile">NEW AND IMPROVED</span>
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        <div class="model-content-main">
+          <div class="model-info d-flex col-2">
+            <div>
+              {% comment %}
+              <div class="hide--desktop hide--tablet swipe">
+                <div class="swipe_icon d-flex">
+                  <span>swipe left to see more</span>
+                  {% render 'icon' with 'icon-swipe-text' %}
+                </div>
+              </div>
+              {% endcomment %}
+            </div>
+            <div class="d-flex rows_info col-{{ len }}">
+              {% for i in (1..3) %}
+                {% assign p_handle = 'product' | append: i %}
+                {% assign icon_handle = 'icon' | append: i %}
+                {% assign price_handle = 'price' | append: i %}
+                {% assign text_handle = 'text' | append: i %}
+                {% assign color_handle = 'bg' | append: i %}
+                {% if section.settings[icon_handle] != blank %}
+                  <div class="row_item_info">
+                    {% comment %}
+                      <div class="icon_wrapper">
+                        {{ section.settings[icon_handle] }}
+                      </div>
+                    {% endcomment %}
+                    <div class="title_wrapper title_wrapper-{{ i }}">
+                      {{ section.settings[text_handle] }}
+                    </div> 
+                    <div class="price_info">
+                      {% assign price = all_products[section.settings[p_handle]].price | money %}
+                      {{ section.settings[price_handle] | default: price }}
+                    </div>
+                    <style>
+                      .title_wrapper-{{ i }} strong {
+                        background: {{ section.settings[color_handle] }};
+                      }
+                    </style>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+          <div class="model-content">
+            {% assign item_len = 0 %}
+            {% comment %}
+            <div class="hide--desktop hide--tablet len-{{ len }}" data-scroll-wrapper data-len="{{ len }}">
+              <div data-scroll-trigger></div>
+            </div>
+            {% endcomment %}
+            {% assign temp_handle = '' %}
+            {% for block in section.blocks %}
+              {% if block.settings.title != blank %}
+                {% assign item_len = item_len | plus: 1 %}
+                {% assign temp_handle = block.settings.title | handle %}
+              {% endif %}
+              <div class="compare_item d-flex col-2 {% if item_len > 3 %}desk_hidden11{% endif %} {% if item_len > 3 %}mob_hidden collapsed{% endif %} {% if block.settings.title != blank %}heading_item{% endif %}" data-handle="{{ temp_handle }}">
+                <div class="compare_header d-flex {% if block.settings.title != blank %}main_title{% endif %}">
+                  <div class="compare_title">
+                    {% if block.settings.title != blank %}
+                      <span>{{ block.settings.title }}</span>
+                    {% endif %}
+                    {% render 'icon' with 'icon-direc-down' %}
+                  </div>
+                  <div class="compare_desc">
+                    {% if block.settings.text != blank %}
+                      <span>{{ block.settings.text }}</span>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="compare_list d-flex col-{{len}} {% if block.settings.title != blank %}mob-align-end{% endif %}">
+                  {% for i in (1..len) %}
+                    <div class="compare-list-item">
+                      {% assign type_handle = 'type' | append: i %}
+                      {% assign content_handle = 'content' | append: i %}
+                      {% assign type = block.settings[type_handle] %}
+                      <span class="icon-{{ type }}">
+                        {% if type == 'true' %}
+                          {% render 'icon' with 'icon-true' %}
+                        {% elsif type == 'false' %}
+                          {% render 'icon' with 'icon-false' %}
+                        {% else %}
+                          {{ block.settings[content_handle] }}
+                        {% endif %}
+                      </span>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% comment %}
+        <div class="see_more">
+          <div data-read-more>
+            <span>See more details</span> {% render 'icon' with 'icon-arrow-down' %}
+          </div>
+        </div>
+        {% endcomment %}
+        <div class="model-footer col-2">
+          <div class="hide--mobile"></div>
+          <div class="footer-wrapper d-flex col-{{ len }}">
+            {% for i in (1..len) %}
+              {% assign p_handle = 'product' | append: i %}
+              {% assign _product = all_products[section.settings[p_handle]] %}
+              {% assign btn_handle = 'btn_label' | append: i %}
+              {% assign cur_product = false %}
+              {% if _product.handle == product.handle %}
+                {% assign cur_product = true %}
+              {% endif %}
+              <div class="btn_wrapper" data-idx="{{ i }}">
+                <a class="btn m-black-new btn-small btn-rounded" href="{% if cur_product == true %}javascript:;{% else %}{{ _product.url }}{% endif %}" {% if cur_product %}data-scroll-top{% endif %}>
+                  {% comment %}{% if section.settings[btn_handle] != blank %}{{ section.settings[btn_handle] }}{% else %}Shop Now{% endif %}{% endcomment %}
+                  Shop now
+                  {% comment %}
+                  {% if cur_product %}
+                      Buy now
+                  {% else %}
+                    Shop now
+                  {% endif %}
+                  {% endcomment %}
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="popup-header">
+        <div class="icon hide--desktop hide--tablet">{% render 'icon' with 'icon-compare-model' %}</div>
+        <div class="subtitle hide--desktop hide--tablet not-animated">
+          {{ section.settings.subtitle }}
+          <a href="javascript:openChat()">
+            <strong>{{ section.settings.chat_text }}</strong>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="popup-content hide--desktop hide--tablet">
+
+      <div class="popup-header">
+        <div class="title">{{ section.settings.text }}</div>
+        <div class="swipe-text d-flex">
+          <span>Swipe left To see more</span>
+          {% render 'icon' with 'icon-swipe-text' %}
+        </div>
+      </div>
+
+      <div class="model-row-wrapper d-flex">
+
+        <div class="model-row model-row-header">
+          <div class="row-header"></div>
+
+          {% assign _cls = 'even' %}
+          {% assign len = 0 %}
+          {% for block in section.blocks %}
+
+            {% if block.settings.title == blank and block.settings.text == blank %}
+              {% continue %}
+            {% endif %}
+
+            {% if block.settings.title != blank %}
+              {% assign len = len | plus: 1 %}
+              <div class="row-title {% if len > 3 %}hidden{% endif %}">{{ block.settings.title }}</div>
+            {% endif %}
+            {% if block.settings.text != blank %}
+              {% if _cls == 'even' %}
+                {% assign _cls = 'odd' %}
+              {% elsif _cls == 'odd' %}
+                {% assign _cls = 'even' %}
+              {% endif %}
+              <div class="row-subtitle {{ _cls }} {% if len > 3 %}hidden{% endif %}">{{ block.settings.text }}</div>
+            {% endif %}
+
+          {% endfor %}
+        </div>
+
+        {% capture 'model-row-group' %}
+
+          {% for i in (1..3) %}
+
+            {% assign idx = i %}
+
+            {% assign len = 0 %}
+
+
+            <div class="model-subrow {% if forloop.first %}active{% endif %}" data-idx="{{ forloop.index }}">
+
+              <div class="row-header">
+                {% assign i_key = 'icon' | append: idx %}
+                {% assign p_key = 'product' | append: idx %}
+                {% assign price_key = 'price' | append: idx %}
+                {% comment %}<div class="icon_wrapper">
+                  {{ section.settings[i_key] }}
+                </div>
+                {% endcomment %}
+                {% assign text_handle = 'text' | append: i %}
+                <div class="title_wrapper title_wrapper-{{ i }}">
+                  {{ section.settings[text_handle] }}
+                </div> 
+                {% assign price = all_products[section.settings[p_key]].price | money %}
+                <div class="price_wrapper">{{ section.settings[price_key] | default: price }}</div>
+                <div class="badge">
+                  <span class="active">Selected</span>
+                  <span class="deactive">Select</span>
+                </div>
+                {% if section.settings[p_key] == 'whistle-switch' %}
+                  <span class="new_badge">NEW 🔥</span>
+                {% endif %}
+              </div>
+              
+              {% assign _cls = 'even' %}
+              {% for block in section.blocks %}
+                {% if block.settings.title == blank and block.settings.text == blank %}
+                  {% continue %}
+                {% endif %}
+                
+
+                {% if block.settings.title != blank %}
+                  {% assign len = len | plus: 1 %}
+                  <div class="row-title empty {% if len > 3 %}hidden{% endif %}"></div>
+                {% endif %}
+
+                {% if _cls == 'even' %}
+                  {% assign _cls = 'odd' %}
+                {% elsif _cls == 'odd' %}
+                  {% assign _cls = 'even' %}
+                {% endif %}
+
+                {% assign type_handle = 'type' | append: idx %}
+                {% assign content_handle = 'content' | append: idx %}
+                {% assign type = block.settings[type_handle] %}
+                <div class="{{ _cls }} {% if len > 3 %}hidden{% endif %} icon-{{ type }}">
+                  {% if type == 'true' %}
+                    {% render 'icon' with 'icon-true' %}
+                  {% elsif type == 'false' %}
+                    {% render 'icon' with 'icon-false' %}
+                  {% else %}
+                    {{ block.settings[content_handle] }}
+                  {% endif %}
+                </div>
+
+              {% endfor %}
+
+            </div>
+            
+          {% endfor %}
+
+        {% endcapture %}
+
+        <div class="model-row model-row-group highlight d-flex">
+          {{ model-row-group }}
+        </div>
+
+        <div class="model-row model-row-group compare d-flex">
+          {{ model-row-group }}
+        </div>
+
+      </div>
+      <div class="see-more">
+        <span>SEE MORE DETAILS</span>
+        <span>SEE LESS</span> 
+        {% render 'icon' with 'icon-arrow-down' %}
+      </div>
+
+      <div class="popup-footer t-center">
+        <div class="icon">{% render 'icon' with 'icon-compare-model' %}</div>
+        <div class="subtitle not-animated">
+          {{ section.settings.subtitle }}
+          <a href="javascript:openChat()">
+            <strong>{{ section.settings.chat_text }}</strong>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

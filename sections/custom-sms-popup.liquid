@@ -1,0 +1,121 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-sms-popup.liquid and it is overriding automatically. You should use theme development tool and sources\sections\custom-sms-popup.liquid file to code and save your changes. {% endcomment %}<div class="popup is-hidden" data-popup="sms-popup">
+  <div class="popup-window" style="background: {{ section.settings.bg_color }}">
+    <button class="close" data-popup-close data-sms-close aria-label="Sms popup">
+      {% render 'icon' with 'icon-close' %}
+    </button>
+    <div class="popup-content">
+      {% if section.settings.image != blank %}
+        <div class="image_wrapper">
+          {% render 'rimage', image: section.settings.image, size: '500x' %}
+        </div>
+      {% endif %}
+      {% if section.settings.title != blank %}
+        <div class="popup_title">{{ section.settings.title }}</div>
+      {% endif %}
+      {% if section.settings.subtitle != blank %}
+        <div class="popup_subtitle">{{ section.settings.subtitle }}</div>
+      {% endif %}
+      <div class="popup_form d-flex">
+        {% comment %}
+        <div class="input-fields d-flex">
+          <input type="email" name="" id="" placeholder="{{ section.settings.placeholder_email }}">
+          <input type="text" placeholder="{{ section.settings.placeholder_phone }}">
+        </div>
+        <button>{{ section.settings.btn_label }}</button>
+        {% endcomment %}
+        <div class="form_wrapper">
+          <div style="width: 100%; max-width: 1200px; margin: 0 auto;" class="sms_form">
+            <div>
+              <script  type="text/javascript" src="https://dhv2ziothpgrr.cloudfront.net/146631/form_49564.js?ver=1626202697"></script>
+            </div>
+          </div>
+          <div class="iterable_form">
+            <form name="iterable_optin" action="//links.iterable.com/lists/publicAddSubscriberForm?publicIdString=ab610c70-00f4-442c-a450-5606c0a74536" target="_blank" method="POST" class="email">
+              <input type="text" name="email" size="22" placeholder="{{ section.settings.placeholder_email }}">
+              <div class="error_msg" data--hidden>Please enter email</div>
+              <input type="submit" value="Submit">
+            </form>
+          </div>
+        </div>
+        <div class="btn_wrapper">
+          <button data-submit class="btn btn-rounded">{{ section.settings.btn_label }}</button>
+        </div>
+      </div>
+      {% if section.settings.footer != blank %}
+        <div class="footer_text">{{ section.settings.footer }}</div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="popup-bg" data-popup-close></div>
+</div>
+
+<style>
+  [data-popup="sms-popup"] * {
+    color: {{ section.settings.text_color }};
+  }
+</style>
+
+
+
+{% schema %}
+{
+  "name": "SMS popup",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_email",
+      "label": "Email placeholder",
+      "default": "Your eamil"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_phone",
+      "label": "Phone placeholder",
+      "default": "Mobile number"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Button Label",
+      "default": "Sign up"
+    },
+    {
+      "type": "richtext",
+      "id": "footer",
+      "label": "Footer text"
+    }
+  ]
+}
+{% endschema %}

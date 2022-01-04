@@ -1,0 +1,67 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-collection-content-device.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-collection-content-device.liquid file to code and save your changes. {% endcomment %}<div class="section_container">
+  <div class="main_content">
+    <div class="main_wrapper">
+
+      <div class="collection_tab_header hide--mobile">
+        {% for block in section.blocks %}
+          {% assign _collection = collections[block.settings.collection] %}
+          {% if _collection != blank %}
+            {% assign heading = block.settings.tab_heading | default: _collection.title %}
+            <div class="collection_header {% if collection.handle == _collection.handle %}active{% endif %} {% if block.settings.is_sale %}highlight{% endif %}" data-target="{{ heading | handle }}" data-handle="{{ _collection.handle }}">
+              {{ heading }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="collection_dropdown_menu hide--desktop" data-accordions-container data-accordions-mobile-only="1">
+        <div data-dropdown-bg></div>
+        <div data-accordion-button>
+          <a class="d-flex" href="javascript:;">Collections {% render 'icon' with 'icon-arrow-down' %}</a>
+        </div>
+        <div  data-accordion-content style="display: none;">
+          <ul>
+            {% for block in section.blocks %}
+              {% assign _collection = collections[block.settings.collection] %}
+              {% if _collection != blank %}
+                {% assign heading = block.settings.tab_heading | default: _collection.title %}
+                <li>
+                  <a href="javascript:;" class="collection_header {% if collection.handle == _collection.handle %}active{% endif %} {% if block.settings.is_sale %}highlight{% endif %}" data-target="{{ heading | handle }}" data-handle="{{ _collection.handle }}">
+                    {{ heading }}
+                  </a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+        
+      </div>
+
+      <div class="collection_tab_content container">
+        {% for block in section.blocks %}
+          {% assign _collection = collections[block.settings.collection] %}
+          {% if _collection != blank %}
+            {% assign heading = block.settings.tab_heading | default: _collection.title %}
+            <div class="collection_tab_content_item {% if collection.handle == _collection.handle or collection.handle == 'all' %}active{% endif %}" data-handle="{{ heading | handle }}">
+              <div class="collection_banner">
+                {% render 'custom-collection-banner', set: block.settings %}
+              </div>
+              <div class="collection_products d-flex" data-row-{{ block.settings.num_per_row }} data-product-row>
+                {% for product in _collection.products %}
+                  <div class="collection-product-item" data-product-item>
+                    {% assign feature = block.settings.feature %}
+                    {% if block.settings.enable_desc %}
+                      {% assign feature = product.description %}
+                    {% endif %}
+                    {% render 'collection-product-item', product: product, feature: feature %}
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+</div>

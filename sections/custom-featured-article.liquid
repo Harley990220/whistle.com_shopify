@@ -1,0 +1,119 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-featured-article.liquid and it is overriding automatically. You should use theme development tool and sources\sections\custom-featured-article.liquid file to code and save your changes. {% endcomment %}{% if section.settings.visible %}
+
+  {% render 'ea-section-styles', section: section %}
+
+  <div class="section_container">
+    <div class="main_content container">
+
+      <div class="main_wrapper">
+
+        <div class="title not-animated">{{ section.settings.title }}</div>
+
+        <div class="article_wrapper" data-hor-slider data-mobile-only="1" data-arrows="false" data-dots="true" data-dots-default>
+
+          {% for block in section.blocks %}
+
+            {% assign article = articles[block.settings.article] %}
+            {% render 'custom-featured-post-cell', article: article %}
+
+          {% endfor %}
+
+        </div>
+        {% render 'swipe-text' %}
+      </div>
+
+    </div>
+  </div>
+
+
+{% endif %}
+
+
+{% schema %}
+{
+  "name": "Featured Article",
+  "class": "featured-article",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "visible",
+      "label": "Show block",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "ptop",
+      "label": "Top spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom",
+      "label": "Bottom spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "ptop_mob",
+      "label": "Top spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom_mob",
+      "label": "Bottom spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "sectionbg",
+      "label": "Background",
+      "default": "#fff"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Block",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "article",
+          "id": "article",
+          "label": "Article"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

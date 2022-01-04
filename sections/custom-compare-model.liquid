@@ -1,0 +1,243 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-compare-model.liquid and it is overriding automatically. You should use theme development tool and sources\sections\custom-compare-model.liquid file to code and save your changes. {% endcomment %}
+{% render 'compare-model-content', section: section %}
+
+{% schema %}
+  {
+  "name": "Compare Model Popup",
+  "tag": "section",
+  "class": "compare-model-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "chat_text",
+      "label": "Button Label"
+    },
+    {
+      "type": "header",
+      "content": "Row 1"
+    },
+    {
+      "type": "product",
+      "id": "product1",
+      "label": "Product"
+    },
+    {
+      "type": "image_picker",
+      "id": "image1",
+      "label": "Image"
+    },
+    {
+      "type": "html",
+      "id": "icon1",
+      "label": "Icon"
+    },
+    {
+      "type": "richtext",
+      "id": "text1",
+      "label": "Title"
+    },
+    {
+      "type": "color",
+      "id": "bg1",
+      "label": "Highlight"
+    },
+    {
+      "type": "text",
+      "id": "price1",
+      "label": "Price"
+    },
+    {
+      "type": "header",
+      "content": "Row 2"
+    },
+    {
+      "type": "product",
+      "id": "product2",
+      "label": "Product"
+    },
+    {
+      "type": "image_picker",
+      "id": "image2",
+      "label": "Image"
+    },
+    {
+      "type": "html",
+      "id": "icon2",
+      "label": "Icon"
+    },
+    {
+      "type": "richtext",
+      "id": "text2",
+      "label": "Title"
+    },
+    {
+      "type": "color",
+      "id": "bg2",
+      "label": "Highlight"
+    },
+    {
+      "type": "text",
+      "id": "price2",
+      "label": "Price"
+    },
+    {
+      "type": "header",
+      "content": "Row 3"
+    },
+    {
+      "type": "product",
+      "id": "product3",
+      "label": "Product"
+    },
+    {
+      "type": "image_picker",
+      "id": "image3",
+      "label": "Image"
+    },
+    {
+      "type": "html",
+      "id": "icon3",
+      "label": "Icon"
+    },
+    {
+      "type": "richtext",
+      "id": "text3",
+      "label": "Title"
+    },
+    {
+      "type": "color",
+      "id": "bg3",
+      "label": "Highlight"
+    },
+    {
+      "type": "text",
+      "id": "price3",
+      "label": "Price"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Block",
+      "type": "block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "header",
+          "content": "Row 1"
+        },
+        {
+          "type": "radio",
+          "id": "type1",
+          "label": "Content",
+          "options": [
+            {
+              "value": "true",
+              "label": "True"
+            },
+            {
+              "value": "false",
+              "label": "False"
+            },
+            {
+              "value": "text",
+              "label": "Text"
+            }
+          ],
+          "default": "text",
+          "info": "Type of the content"
+        },
+        {
+          "type": "richtext",
+          "id": "content1",
+          "label": "Content"
+        },
+        {
+          "type": "header",
+          "content": "Row 2"
+        },
+        {
+          "type": "radio",
+          "id": "type2",
+          "label": "Content",
+          "options": [
+            {
+              "value": "true",
+              "label": "True"
+            },
+            {
+              "value": "false",
+              "label": "False"
+            },
+            {
+              "value": "text",
+              "label": "Text"
+            }
+          ],
+          "default": "text",
+          "info": "Type of the content"
+        },
+        {
+          "type": "richtext",
+          "id": "content2",
+          "label": "Content"
+        },
+        {
+          "type": "header",
+          "content": "Row 3"
+        },
+        {
+          "type": "radio",
+          "id": "type3",
+          "label": "Content",
+          "options": [
+            {
+              "value": "true",
+              "label": "True"
+            },
+            {
+              "value": "false",
+              "label": "False"
+            },
+            {
+              "value": "text",
+              "label": "Text"
+            }
+          ],
+          "default": "text",
+          "info": "Type of the content"
+        },
+        {
+          "type": "richtext",
+          "id": "content3",
+          "label": "Content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Compare Model Popup",
+      "category": "custom"
+    }
+  ]
+}
+{% endschema %}

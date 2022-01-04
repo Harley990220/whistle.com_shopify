@@ -1,0 +1,32 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-collection-banner.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-collection-banner.liquid file to code and save your changes. {% endcomment %}{% if set.image != blank %}
+  <div class="hero__banner" id="hero-banner-{{ section.id }}">
+    <div class="banner_wrapper">
+      {% assign image = set.image %}
+      {% assign mob_image = set.mob_image | default: image %}
+      <div class="banner_img_wrapper hide--mobile">
+        {% render 'rimage', image: image, size: '1400x'  %}
+      </div>
+      <div class="banner_img_wrapper hide--desktop hide--tablet">
+        {% render 'rimage', image: mob_image, size: '1400x'  %}
+      </div>
+      <div class="banner_info-wrapper">
+        {% assign mob_pos = set.content_pos_mob | split: ' ' %}
+        <div class="banner_info pos-control {{ set.content_pos }} mob-{{ mob_pos[0] }} mob-{{ mob_pos[1] }} text-{{ set.text_align }} mob-text-{{ set.text_align_mob }}">
+          {% if set.title != blank %}
+            <div class="title not-animated" style="color: {{ set.text_color }}">{{ set.title }}</div>
+          {% endif %}
+          {% if set.subtitle != blank %}
+            <div class="subtitle not-animated" style="color: {{ set.text_color }}">{{ set.subtitle }}</div>
+          {% endif %}
+
+          {% if set.btn_label != blank %}
+            <div class="btn_wrapper">
+              {% assign label = set.btn_label | handle %}
+              <a href="javascript:;" {% if label contains 'size-guide' %}data-size-guide-toggle{% endif %} data-popup-open="{% if set.btn_label contains 'COMPARE MODEL' %}compare-model{% elsif set.btn_label contains 'SIZE GUIDE' %}size-guide{% endif %}">{{ set.btn_label }} {% render 'icon' with 'menu-icon' %}</a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

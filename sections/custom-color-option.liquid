@@ -1,0 +1,37 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-color-option.liquid and it is overriding automatically. You should use theme development tool and sources\sections\custom-color-option.liquid file to code and save your changes. {% endcomment %}<style>
+  {% for block in section.blocks %}
+    {% if block.settings.title != blank %}
+    [data-color-name='{{ block.settings.title | handle }}'] {
+      background: {{ block.settings.color }} !important;
+    }
+    {% endif %}
+  {% endfor %}
+</style>
+
+
+{% schema %}
+{
+  "name": "Color Option",
+  "tag": "section",
+  "class": "color-swatch-option",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Color",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

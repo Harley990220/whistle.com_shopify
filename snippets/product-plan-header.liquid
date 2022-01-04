@@ -1,0 +1,16 @@
+{% comment %} ATTENTION!!! This is compiled version of product-plan-header.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\product-plan-header.liquid file to code and save your changes. {% endcomment %}{% if template.name == 'product' and request.path contains '/v2' %}
+  <div class="custom-product-menu-v2">
+    <div class="container">
+      <div class="menu-wrapper d-flex">
+        <a href="javascript:;" class="choose-plan-back">
+          {% render 'icon' with 'icon-arrow-left' %}
+          <span class="hide--mobile">Back to {{ product_name }}</span>
+          <span class="hide--desktop hide--tablet">Back</span>
+        </a>
+        <div class="sticky_logo">
+          <a href="/">{% render 'icon' with 'site-logo' %}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

@@ -1,0 +1,16 @@
+{% comment %} ATTENTION!!! This is compiled version of video.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\video.liquid file to code and save your changes. {% endcomment %}{% assign video_url = url %}
+
+{% assign type = 'video' %}
+{% if video_url contains 'youtube' or video_url contains 'vimeo' %}
+  {% assign type = 'external_video' %}
+{% endif %}
+<div class="video_wrapper" data-video-wrapper data-type="{{ type }}" {% if autoplay %}data-scroll-play{% endif %}>
+  {% if type == 'video' %}
+    <video class="section-video_video" muted playsinline><source src="{{ video_url }}" type="video/mp4"></video>
+  {% elsif type == 'external_video' %}
+    <div class='embed-container'>
+      {% assign video_url = video_url | replace: 'vimeo.com', 'player.vimeo.com/video' | replace: 'watch?v=', 'embed/' %}
+      <iframe title="{{ title | strip_html }}" class="lazyload" src='{{ video_url }}' frameborder='0' allow="autoplay" allowautoplay allowfullscreen></iframe>
+    </div>
+  {% endif %}
+</div>

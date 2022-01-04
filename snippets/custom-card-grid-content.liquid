@@ -1,0 +1,41 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-card-grid-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-card-grid-content.liquid file to code and save your changes. {% endcomment %}<div class="section_container">
+  <div class="main_content container" data-animate-block>
+    {% if section.settings.title != blank %}
+      <div class="title">{{ section.settings.title }}</div>
+    {% endif %}
+    {% if section.settings.subtitle != blank %}
+      <div class="subtitle">{{ section.settings.subtitle }}</div>
+    {% endif %}
+
+    <div class="main_wrapper">
+      <div class="card-grid-wrapper" data-hor-slider data-mobile-only="1" data-slides-to-show-mob="1" data-arrows="false" data-dots="true" data-dots-default>
+        {% for block in section.blocks %}
+          <div class="card-grid-item">
+            <div class="item_top">
+              <svg width="100%" viewBox="0 0 380 275" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M380 0L380 215L190 275L9.6987e-05 215L6.10352e-05 3.9078e-05L380 0Z" fill="{{ block.settings.bg_color }}"></path>
+              </svg>
+              <div class="wrapper">
+                <div class="item_pretitle">{{ block.settings.pretitle }}</div>
+                <div class="item_title">{{ block.settings.title }}</div>
+              </div>
+            </div>
+            <div class="item_content">
+              <div class="icon">{% render 'icon' with 'icon-logo' %}</div>
+              <div class="feature">{{ block.settings.feature }}</div>
+              <div class="bottom_title">{{ block.settings.bottom_title }}</div>
+              <div class="item_subtitle">{{ block.settings.subtitle }}</div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% if section.settings.btn_label != blank and section.settings.btn_link != blank %}
+      <div class="btn_wrapper">
+        <a onclick="dataLayer.push({'CTA': '{{ block.settings.btn_link }}'});" class="btn m-black-new btn-small btn-rounded" href="{{ section.settings.btn_link }}">{{ section.settings.btn_label }}</a>
+      </div>
+    {% endif %}
+
+  </div>
+</div>

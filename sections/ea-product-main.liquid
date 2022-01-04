@@ -1,0 +1,122 @@
+{% comment %} ATTENTION!!! This is compiled version of ea-product-main.
+liquid and it is overriding automatically. You should use theme development
+tool and sources\sections\ea-product-main.liquid file to code and save
+your changes. {% endcomment %}
+{% render 'ea-product-main-content', section: section %}
+
+{% schema %}
+{
+"name": "Product Main",
+"tag": "section",
+"class": "product-main-section",
+"settings": [
+{
+"type": "header",
+"content": "Spacing"
+},
+{
+"type": "range",
+"id": "ptop",
+"label": "Top spacing desktop",
+"min": 0,
+"unit": "px",
+"max": 500,
+"step": 5,
+"default": 45
+},
+{
+"type": "range",
+"id": "pbottom",
+"label": "Bottom spacing desktop",
+"min": 0,
+"unit": "px",
+"max": 500,
+"step": 5,
+"default": 45
+},
+{
+"type": "range",
+"id": "ptop_mob",
+"label": "Top spacing mobile",
+"min": 0,
+"unit": "px",
+"max": 500,
+"step": 5,
+"default": 45
+},
+{
+"type": "range",
+"id": "pbottom_mob",
+"label": "Bottom spacing mobile",
+"min": 0,
+"unit": "px",
+"max": 500,
+"step": 5,
+"default": 45
+},
+{
+"type": "header",
+"content": "Background"
+},
+{
+"type": "color",
+"id": "sectionbg",
+"label": "Section background color",
+"default": "#ffffff"
+},
+{
+"type": "header",
+"content": "Badge"
+},
+{
+"type": "checkbox",
+"id": "show_icon",
+"label": "Show Badge",
+"default": true
+},
+{
+"type": "html",
+"id": "icon",
+"label": "Badge"
+},
+{
+"type": "header",
+"content": "Upsell"
+},
+{
+"type": "checkbox",
+"id": "enable_upsell",
+"label": "Show Upsell",
+"default": true
+},
+{
+"type": "text",
+"id": "upsell_title",
+"label": "Title",
+"default": "Upsell"
+},
+{
+"type": "richtext",
+"id": "upsell_subtitle",
+"label": "Sub title",
+"default": "<p>Sub title</p>"
+},
+{
+"type": "select",
+"id": "upsell_pos",
+"options": [
+{
+"value": "top",
+"label": "Above add to cart button"
+},
+{
+"value": "bottom",
+"label": "Below add to cart button"
+}
+],
+"default": "bottom",
+"label": "Position"
+}
+]
+}
+{% endschema %}

@@ -1,0 +1,17 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-video-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-video-content.liquid file to code and save your changes. {% endcomment %}<div class="section_container">
+  <div class="main_content container">
+    <div class="main_wrapper" data-animate-block>
+      {% if section.settings.title != blank %}
+        <div class="title">{{ section.settings.title }}</div>
+      {% endif %}
+      {% if section.settings.text != blank %}
+        <div class="subtitle hide--mobile">{{ section.settings.text }}</div>
+      {% endif %}
+      {% if section.settings.video_url != blank %}
+        <div data-animate-section>
+          {% render 'video', url: section.settings.video_url, autoplay: true, title: section.settings.title %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

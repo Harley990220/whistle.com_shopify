@@ -1,0 +1,348 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-hero-banner-page-affiliate.liquid and it is overriding automatically. You should use theme development tool and sources\sections\custom-hero-banner-page-affiliate.liquid file to code and save your changes. {% endcomment %}{% if section.settings.visible %}
+
+  {% render 'ea-section-styles', section: section %}
+
+  {% render 'custom-hero-banner-content', section: section %}
+
+{% endif %}
+
+{% schema %}
+  {
+  "name": "Hero Banner",
+  "tag": "section",
+  "class": "hero-banner",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "visible",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "ptop",
+      "label": "Top spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom",
+      "label": "Bottom spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "ptop_mob",
+      "label": "Top spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom_mob",
+      "label": "Bottom spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "sectionbg",
+      "label": "Section background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "2000 x 1000 px recommended"
+    },
+    {
+      "type": "image_picker",
+      "id": "mob_image",
+      "label": "Image (Mobile)",
+      "info": "600 x 800 px recommended"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Sub title"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Content position"
+    },
+    {
+      "type": "select",
+      "id": "content_pos",
+      "options": [
+        {
+          "label": "Top Left",
+          "value": "top left"
+        },
+        {
+          "label": "Top Center",
+          "value": "top center"
+        },
+        {
+          "label": "Top Right",
+          "value": "top right"
+        },
+        {
+          "label": "Middle Left",
+          "value": "middle left"
+        },
+        {
+          "label": "Middle Center",
+          "value": "middle center"
+        },
+        {
+          "label": "Middle Right",
+          "value": "middle right"
+        },
+        {
+          "label": "Bottom Left",
+          "value": "bottom left"
+        },
+        {
+          "label": "Bottom Center",
+          "value": "bottom center"
+        },
+        {
+          "label": "Bottom Right",
+          "value": "bottom right"
+        }
+      ],
+      "default": "middle center",
+      "label": "Desktop"
+    },
+    {
+      "type": "select",
+      "id": "content_pos_mob",
+      "options": [
+        {
+          "label": "Top Left",
+          "value": "top left"
+        },
+        {
+          "label": "Top Center",
+          "value": "top center"
+        },
+        {
+          "label": "Top Right",
+          "value": "top right"
+        },
+        {
+          "label": "Middle Left",
+          "value": "middle left"
+        },
+        {
+          "label": "Middle Center",
+          "value": "middle center"
+        },
+        {
+          "label": "Middle Right",
+          "value": "middle right"
+        },
+        {
+          "label": "Bottom Left",
+          "value": "bottom left"
+        },
+        {
+          "label": "Bottom Center",
+          "value": "bottom center"
+        },
+        {
+          "label": "Bottom Right",
+          "value": "bottom right"
+        }
+      ],
+      "default": "middle center",
+      "label": "Mobile"
+    },
+    {
+      "type": "header",
+      "content": "Text alignment"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ],
+      "default": "center",
+      "label": "Desktop"
+    },
+    {
+      "type": "select",
+      "id": "text_align_mob",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ],
+      "default": "center",
+      "label": "Mobile"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Button Label"
+    },
+    {
+      "type": "header",
+      "content": "Font size (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "fs_title",
+      "min": 30,
+      "max": 70,
+      "default": 65,
+      "step": 1,
+      "unit": "px",
+      "label": "Title"
+    },
+    {
+      "type": "range",
+      "id": "fs_subtitle",
+      "min": 15,
+      "max": 40,
+      "default": 19,
+      "step": 1,
+      "unit": "px",
+      "label": "Sub title"
+    },
+    {
+      "type": "range",
+      "id": "fs_text",
+      "min": 15,
+      "max": 40,
+      "default": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Font size (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "mob_fs_title",
+      "min": 20,
+      "max": 50,
+      "default": 34,
+      "step": 1,
+      "unit": "px",
+      "label": "Title"
+    },
+    {
+      "type": "range",
+      "id": "mob_fs_subtitle",
+      "min": 14,
+      "max": 40,
+      "default": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Sub title"
+    },
+    {
+      "type": "range",
+      "id": "mob_fs_text",
+      "min": 14,
+      "max": 40,
+      "default": 19,
+      "step": 1,
+      "unit": "px",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color",
+      "id": "fc_title",
+      "label": "Title",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "fc_subtitle",
+      "label": "Sub title",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "fc_text",
+      "label": "Text",
+      "default": "#000"
+    }
+  ]
+}
+{% endschema %}

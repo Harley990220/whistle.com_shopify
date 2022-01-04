@@ -1,0 +1,138 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-image-withtext-second-page-our-story.liquid and it is overriding automatically. You should use theme development tool and sources\sections\custom-image-withtext-second-page-our-story.liquid file to code and save your changes. {% endcomment %}{% if section.settings.visible %}
+
+  {% render 'ea-section-styles', section: section %}
+
+  <div class="section_container">
+    <div class="main_content container">
+
+      <div class="block_wrapper">
+
+        {% for block in section.blocks %}
+
+          <div class="block d-flex {% if block.settings.img_pos == 'right' %}reverse{% endif %}">
+            <div class="image_wrapper">{% render 'rimage', image: block.settings.image, size: '800x' %}</div>
+            <div class="text_wrapper">
+              <div class="block_title">{{ block.settings.title }}</div>
+              <div class="block_text">{{ block.settings.text }}</div>
+            </div>
+          </div>
+
+        {% endfor %}
+
+      </div>
+
+    </div>
+  </div>
+
+
+{% endif %}
+
+
+{% schema %}
+{
+  "name": "Image with text block",
+  "class": "image-with-text-block-second",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "visible",
+      "label": "Show block",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "ptop",
+      "label": "Top spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom",
+      "label": "Bottom spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "ptop_mob",
+      "label": "Top spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom_mob",
+      "label": "Bottom spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "sectionbg",
+      "label": "Background",
+      "default": "#fff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "select",
+          "id": "img_pos",
+          "options": [
+            {
+              "label": "Left",
+              "value": "left"
+            },
+            {
+              "label": "Right",
+              "value": "right"
+            }
+          ],
+          "default": "left",
+          "label": "Image Position"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

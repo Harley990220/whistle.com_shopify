@@ -1,0 +1,51 @@
+{% comment %} ATTENTION!!! This is compiled version of product-grid-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\product-grid-content.liquid file to code and save your changes. {% endcomment %}<div class="section_container">
+  <div class="main_content container">
+    <div class="main_wrapper d-flex product-grid-wrapper grid-column-{{ section.blocks.size }}">
+      {% for block in section.blocks %}
+        {% if block.settings.product != blank %}
+          {% assign product = all_products[block.settings.product] %}
+          {% assign title = block.settings.title | default: product.title %}
+          {% assign feature = block.settings.feature %}
+          {% assign desc = block.settings.description | default: product.description %}
+          <div class="product-grid-item" data-link-trigger data-target="{{ product.url }}" id="block--{{ block.id }}">
+            <div class="title not-animated">{{ title | replace: '<strong>Switch</strong>', '<strong>Switch<sup>TM</sup></strong>' }}</div>
+            <div class="product_image">
+              {% assign image = block.settings.image | default: product.selected_or_first_available_variant.image | default: product.featured_image %}
+              {% render 'rimage', image: image %}
+            </div>
+
+            <div class="info_wrapper">
+              <div class="feature">{{ feature }}</div>
+              <div class="description">{{ desc }}</div>
+            </div>
+            <div class="form_wrapper" data-link-disable>
+              {% if template.suffix == 'landing' %}
+                {% render 'ajax-form-page-landing', product: product, btn: 'atc', setting: block.settings, index: forloop.index %}
+              {% else %}
+                {% render 'ajax-form', product: product, btn: 'link', setting: block.settings, index: forloop.index %}
+              {% endif %}
+            </div>
+          </div>
+          <style>
+            .shopify-section.product-grid .product-grid-item#block--{{ block.id }} {
+              background: {{ block.settings.bg_color }};
+            }
+            .shopify-section.product-grid .product-grid-item#block--{{ block.id }} .title strong {
+              background: {{ block.settings.highlight }};
+              transition: all .3s ease;
+            }
+            .shopify-section.product-grid .product-grid-item#block--{{ block.id }}:hover {
+              /* background: {{ block.settings.bg_color | color_darken: 3 }}; */
+            }
+
+          </style>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% if section.settings.btn_label != blank %}
+      <div class="btn_wrapper btn-footer">
+        <a href="javascript:;" class="m-blue" data-popup-open="compare-model">{{ section.settings.btn_label }}{% comment %} {% render 'icon' with 'compare-model' %}{% endcomment %}</a>
+      </div>
+    {% endif %}
+  </div>
+</div>

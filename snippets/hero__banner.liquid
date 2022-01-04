@@ -1,0 +1,67 @@
+{% comment %} ATTENTION!!! This is compiled version of hero__banner.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\hero__banner.liquid file to code and save your changes. {% endcomment %}{% if set.image != blank %}
+  <div class="hero__banner" id="hero-banner-{{ section.id }}">
+    {% assign mob_pos = set.content_pos_mob | split: ' ' %}
+    <div class="banner_wrapper  mob-{{ mob_pos[0] }} mob-{{ mob_pos[1] }}" {% if set.entire_link == true and set.btn_link != blank %}data-link-trigger data-target="{{ set.btn_link }}"{% endif %}>
+      {% assign image = set.image %}
+      {% assign mob_image = set.mob_image | default: image %}
+      <div class="banner_img_wrapper hide--mobile">
+        <img loading="lazy" src="{{ image | img_url: '2000x' }}" alt="Hero banner">
+        {% comment %}{% render 'rimage', image: image, size: '1400x'  %}{% endcomment %}
+      </div>
+      <div class="banner_img_wrapper hide--desktop hide--tablet">
+        <img loading="lazy" src="{{ mob_image | img_url: '500x' }}" alt="Hero banner">
+        {% comment %}{% render 'rimage', image: mob_image, size: '1400x'  %}{% endcomment %}
+      </div>
+      <div class="banner_info-wrapper">
+        {% assign mob_pos = set.content_pos_mob | split: ' ' %}
+        <div class="banner_info pos-control {{ set.content_pos }} mob-{{ mob_pos[0] }} mob-{{ mob_pos[1] }} text-{{ set.text_align }} mob-text-{{ set.text_align_mob }}" style="background: {{ set.content_bg }}">
+          {% if set.pretitle != blank %}
+            <div class="pretitle not-animated" style="color: {{ set.fc_pretitle }}">{{ set.pretitle }}</div>
+          {% endif %}
+          {% if set.title != blank %}
+            <div class="title not-animated" style="color: {{ set.fc_title }}">{{ set.title }}</div>
+          {% endif %}
+          {% if set.subtitle != blank %}
+            <div class="subtitle not-animated" style="color: {{ set.fc_subtitle }}">{{ set.subtitle }}</div>
+          {% endif %}
+          {% if set.text != blank %}
+            <div class="text" style="color: {{ set.fc_text }}">{{ set.text }}</div>
+          {% endif %}
+          {% if set.btn_link != blank and set.btn_label != blank and set.entire_link == false %}
+            <div class="btn_wrapper">
+              <a onclick="dataLayer.push({'CTA': '{{ set.btn_link }}'});" class="btn m-black-new btn-small btn-rounded" href="{{ set.btn_link }}">{{ set.btn_label }}</a>
+            </div>
+          {% endif %}
+          {% if set.show_icon and set.icon != blank %}
+            <div class="badge_wrapper">{{ set.icon }}</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <style>
+      @media (min-width: 1201px) {
+        #hero-banner-{{ section.id }} .banner_info .title {
+          font-size: {{ set.fs_title }}px;
+        }
+        #hero-banner-{{ section.id }} .banner_info .subtitle, #hero-banner-{{ section.id }} .banner_info .subtitle p {
+          font-size: {{ set.fs_subtitle }}px;
+        }
+        #hero-banner-{{ section.id }} .banner_info .text {
+          font-size: {{ set.fs_text }}px;
+        }
+      }
+
+      @media (max-width: 1200px) {
+        #hero-banner-{{ section.id }} .banner_info .title {
+          font-size: {{ set.mob_fs_title }}px;
+        }
+        #hero-banner-{{ section.id }} .banner_info .subtitle, #hero-banner-{{ section.id }} .banner_info .subtitle p {
+          font-size: {{ set.mob_fs_subtitle }}px;
+        }
+        #hero-banner-{{ section.id }} .banner_info .text {
+          font-size: {{ set.mob_fs_text }}px;
+        }
+      }
+    </style>
+  </div>
+{% endif %}

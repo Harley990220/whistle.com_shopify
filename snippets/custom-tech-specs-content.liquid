@@ -1,0 +1,59 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-tech-specs-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-tech-specs-content.liquid file to code and save your changes. {% endcomment %}<div class="return_tech top">
+  <button>Go back {% render 'icon' with 'icon-back' %}</button>
+</div>
+<div class="section-container container">
+  <div class="main_content" data-specs-wrapper>
+    <div class="section-header">
+      <div class="title not-animated" tech-spec-title><span>WHISTLE GO EXPLORE </span>{{ section.settings.title }}</div>
+      <div class="hide--tablet hide--mobile">
+        <div class="icons d-flex">
+          {% if section.settings.svg1 != blank %}
+            <div class="icon">
+              <div class="icon_wrapper">{{ section.settings.svg1 }}</div>
+              <div class="icon_title">{{ section.settings.text1 }}</div>
+            </div>
+          {% endif %}
+          {% if section.settings.svg2 != blank %}
+            <div class="icon">
+              <div class="icon_wrapper">{{ section.settings.svg2 }}</div>
+              <div class="icon_title">{{ section.settings.text2 }}</div>
+            </div>
+          {% endif %}
+          {% if section.settings.svg3 != blank %}
+            <div class="icon">
+              <div class="icon_wrapper">{{ section.settings.svg3 }}</div>
+              <div class="icon_title">{{ section.settings.text3 }}</div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="content_wrapper">
+      <table data-specs-table>
+        {% for block in section.blocks %}
+          <tr>
+            <td>
+              {{ block.settings.title }}
+              <span>{{ block.settings.subtitle }}</span>
+            </td>
+            <td>
+              {% if block.settings.is_color %}
+                <div class="spec_color d-flex">
+                  {% assign colors = block.settings.text | split: ',' %}
+                  {% for color in colors %}
+                    <span style="background:{{ color | replace: '<p>', '' | replace: '</p>', '' }}"></span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ block.settings.text }}
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+<div class="return_tech bottom">
+  <button>Go back {% render 'icon' with 'icon-back' %}</button>
+</div>

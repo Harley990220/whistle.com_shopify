@@ -1,0 +1,29 @@
+{% comment %} ATTENTION!!! This is compiled version of swell-post-checkout.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\swell-post-checkout.liquid file to code and save your changes. {% endcomment %}<div class="swell-whistle-rewards">
+  <div class="swell-post-checkout">
+    <div class="swell-post-checkout-holder">
+      <span class="swell-referral-back-link swell-post-checkout-close"></span> 
+      <div class="swell-referral">
+        <div class="yotpo-widget-instance" data-yotpo-instance-id="13565"
+          share-copy-link-text="Copy Link"
+          share-link-copied-text="Copied"
+          share-facebook-button-text="Share"
+          share-facebook-messenger-button-text="Message"
+          share-twitter-button-text="Tweet"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type = "text/javascript">
+  (function () {
+    
+        $(document).ready(function () {
+          $(document).on("swell:setup", function () {
+            $(".swell-post-checkout").css("display", "flex");
+          });
+          $("body").on("click", ".swell-post-checkout-close", function () {
+            $(".swell-post-checkout").css("display", "none");
+          });
+        });
+        
+  }).call(this); 
+</script>

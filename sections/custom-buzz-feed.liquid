@@ -1,0 +1,120 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-buzz-feed.liquid and it is overriding automatically. You should use theme development tool and sources\sections\custom-buzz-feed.liquid file to code and save your changes. {% endcomment %}{% if section.settings.visible %}
+
+
+{% render 'ea-section-styles', section: section %}
+
+<div class="section_container">
+  
+  <div class="main_content container">
+    
+    <div class="content_wrapper" data-hor-slider data-mobile-only="1" data-dots="true" data-arrows="false">
+
+      {% for block in section.blocks %}
+
+        <div class="buzz-item">
+          <div class="buzz_title d-flex">
+            <div class="image_wrapper">{% render 'rimage', image: block.settings.image, size: '90x' %}</div>
+            {% render 'icon' with 'icon-quote' %}
+          </div>
+          <div class="buzz_content">
+            {{ block.settings.content }}
+          </div>
+        </div>
+
+      {% endfor %}
+
+    </div>
+
+  </div>
+
+</div>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "BuzzFeed",
+  "class": "buzz-feed",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "visible",
+      "label": "Show block",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "ptop",
+      "label": "Top spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom",
+      "label": "Bottom spacing desktop",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "ptop_mob",
+      "label": "Top spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "pbottom_mob",
+      "label": "Bottom spacing mobile",
+      "min": 0,
+      "unit": "px",
+      "max": 500,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "sectionbg",
+      "label": "Background",
+      "default": "#fff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

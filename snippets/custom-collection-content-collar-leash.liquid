@@ -1,0 +1,102 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-collection-content-collar-leash.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-collection-content-collar-leash.liquid file to code and save your changes. {% endcomment %}<div class="section_container">
+  <div class="main_content">
+    <div class="main_wrapper">
+
+      {% comment %}
+      <div class="collection_tab_header hide--mobile">
+        <div class="collection_header {% if collection.handle == 'all' %}active{% endif %}" data-target="all" data-handle="all">ALL</div>
+        {% for block in section.blocks %}
+          {% assign _collection = collections[block.settings.collection] %}
+          {% if _collection != blank %}
+            {% assign heading = block.settings.tab_heading | default: _collection.title %}
+            <div class="collection_header {% if collection.handle == _collection.handle %}active{% endif %} {% if block.settings.is_sale %}highlight{% endif %}" data-target="{{ heading | handle }}" data-handle="{{ _collection.handle }}">
+              <a href="{{ _collection.url }}">{{ heading }}</a>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      {% endcomment %}
+
+      <div class="collection_dropdown_menu hide--desktop hide--tablet" data-accordions-container data-accordions-mobile-only="1">
+        <div data-dropdown-bg></div>
+        <div data-accordion-button>
+          <a class="d-flex" href="javascript:;">Collections {% render 'icon' with 'icon-arrow-down' %}</a>
+        </div>
+        <div  data-accordion-content style="display: none;">
+          <ul>
+            {% comment %}<li><a href="javascript:;" class="collection_header {% if collection.handle == 'all' %}active{% endif %}" data-target="all" data-handle="all">ALL</a></li>{% endcomment %}
+            {% for block in section.blocks %}
+              {% assign _collection = collections[block.settings.collection] %}
+              {% if _collection != blank %}
+                {% assign heading = block.settings.tab_heading | default: _collection.title %}
+                <li>
+                  <a href="{{ _collection.url }}" class="collection_header active {% if collection.handle == _collection.handle %}active{% endif %} {% if block.settings.is_sale %}highlight{% endif %}" data-target="{{ heading | handle }}" data-handle="{{ _collection.handle }}">
+                    {{ heading }}
+                  </a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <div class="collection_tab_content container">
+        {% for block in section.blocks %}
+          {% assign _collection = collections[block.settings.collection] %}
+          {% if _collection != blank %}
+            {% assign heading = block.settings.tab_heading | default: _collection.title %}
+            <div class="collection_tab_content_item active {% if collection.handle == _collection.handle or collection.handle == 'all' %}active{% endif %}" data-handle="{{ heading | handle }}">
+              <div class="collection_banner">
+                {% render 'custom-collection-banner', set: block.settings %}
+              </div>
+              {% if _collection.handle == 'whistle-360-pet-monitoring' %}
+                <div data-product-grid-wrapper>
+                  <section id="shopify-section-custom-product-grid" class="shopify-section product-grid"></section>
+                </div>
+              {% else %}
+                <div class="collection_products d-flex {% if block.settings.dis_link %}disable_link{% endif %}" data-row-{{ block.settings.num_per_row }} data-product-row>
+                  {% for product in _collection.products %}
+                    <div class="collection-product-item" data-product-item>
+                      {% assign feature = block.settings.feature %}
+                      {% if block.settings.enable_desc %}
+                        {% assign feature = product.description %}
+                      {% endif %}
+
+                      {% if product.tags contains 'variant-sep' %}
+
+                        {% assign idx = null %}
+                        {% assign option_color = null %}
+
+                        {% assign option_name = null %}
+                        
+                        {% for option in product.options %}
+                          {% if option == 'color' or option == 'Color' %}
+                            {% assign option_name = option %}
+                            {% assign option_color = 'option' | append: forloop.index %}
+                            {% break %}
+                          {% endif %}
+                        {% endfor %}
+                         
+                        {% assign options = product.options_by_name[option_name].values %}
+                        
+                        {% for color in options %}
+                          {% render 'collection-product-variant-item', product: product, color: color, option_color: option_color, feature: feature, hover: block.settings.enable_hover %}
+                          {% unless forloop.last %}
+                            </div>
+                            <div class="collection-product-item" data-product-item>
+                          {% endunless %}
+                        {% endfor %}
+
+                      {% else %}
+                        {% render 'collection-product-item', product: product, feature: feature, hover: block.settings.enable_hover %}
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>

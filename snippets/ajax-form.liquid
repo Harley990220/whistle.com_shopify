@@ -1,0 +1,44 @@
+{% comment %} ATTENTION!!! This is compiled version of ajax-form.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\ajax-form.liquid file to code and save your changes. {% endcomment %}{% assign current_variant = product.selected_or_first_available_variant %}
+
+<div class="product_ajax_form" data-ajax-form>
+  
+  {% assign opt_idx = 0 %}
+  {% for option in product.options %}
+    {% if option == 'Color' or option == 'Colour' %}
+      {% assign opt_idx = forloop.index %}
+    {% endif %}
+  {% endfor %}
+
+  <div class="product_variants product_variants_color" data-product-variants>
+    {% if product.options contains 'Color' or product.options contains 'Colour' %}
+      {% assign list = '' %}
+      {% assign idx = 0 %}
+      {% for variant in product.variants %}
+        {% assign handle = 'option' | append: opt_idx %}
+        {% assign option = variant[handle] %}
+        {% unless list contains option %}
+          {% assign idx = idx | plus: 1 %}
+          {% assign handle = 'img' | append: idx %}
+          {% assign img = setting[handle] %}
+          {% assign vImg = img | default: variant.image %}
+          <div class="product_option" data-product-variant-option data-variant-img="{{ vImg | img_url: '800x' }}" data-variant-url="{{ variant.url }}" >
+            <input type="radio" id="product-option-color-{{ option | handle }}" name="product-option-color-{{ index }}" {% if list == '' %}checked{% endif %}>
+            <label for="product-option-color-{{ option | handle }}" data-color-name="{{ option | handle }}"></label>
+          </div>
+          {% assign list = list | append: '&&' | append: option %}
+        {% endunless %}
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <div class="btn_wrapper">
+    {% if btn == 'link' %}
+      <a onclick="dataLayer.push({'CTA': '{{ product.url }}'});" class="btn btn-link m-black-new btn-small btn-rounded" data-id="{{ product.selected_or_first_available_variant.id }}" href="{{ product.selected_or_first_available_variant.url }}">
+        {{ setting.btn_label }}
+      </a>
+    {% elsif btn == 'atc' %}
+      <button onclick="dataLayer.push({'ATC': '{{ product.handle }}'});" class="ajax-atc-btn btn m-black-new btn-small btn-rounded" data-ajax-atc data-id="{{ product.selected_or_first_available_variant.id }}">Shop Now</button>
+    {% endif %}
+  </div>
+
+</div>

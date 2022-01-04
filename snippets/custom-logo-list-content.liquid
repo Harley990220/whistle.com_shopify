@@ -1,0 +1,22 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-logo-list-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-logo-list-content.liquid file to code and save your changes. {% endcomment %}<div class="section_container">
+  <div class="main_content container">
+
+    <div class="main_wrapper" data-animate-block data-hor-slider data-mobile-only="1" data-slides-to-show-mob="2" data-arrows="false" data-dots-slim>
+      {% for block in section.blocks %}
+        {% if block.settings.icon != blank %}
+          <div class="logo_list_item" data-animate-index="{{ forloop.index }}">
+            
+            <div class="text_wrapper hide--mobile1">
+              {{ block.settings.title }}
+            </div>
+            <div class="icon_wrapper">
+              {{ block.settings.icon }}
+            </div>
+           
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,95 @@
+{% comment %} ATTENTION!!! This is compiled version of product-options-custom.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\product-options-custom.liquid file to code and save your changes. {% endcomment %}{% assign optionName = product.options[0] %}
+{% assign isColor = false %}
+{% if optionName == 'Color' or optionName == 'Colour' %}
+  {% assign isColor = true %}
+{% endif %}
+{% if optionName != blank %}
+  <div class="product-options m-{{ optionName| handle }}" {% unless product.options_by_name[optionName].values.size > 1 %}data--hidden{% endunless %}>
+    <div class="product-options__title"><label>{{ optionName }}: </label></div>
+    <div class="product-options__list" data-options-list>
+      {% for option in product.options_by_name[optionName].values %}
+        <div class="product-option">
+          <input id="option-{{ optionName }}-{{ option }}{% if idx != '' %}-{{ idx }}{% endif %}" type="radio" name="product-option-{{ optionName | handle }}{% if idx != '' %}-{{ idx }}{% endif %}"
+            value='{{ option }}'
+            data-product-option="1"
+            data-option-type="{{ optionName | handle }}"
+            class="{% if current_variant.option1 == option %}is_active{% endif %} {% if forloop.first %}{% unless product.options_by_name[optionName].values.size > 1 %}selected{% endunless %}{% endif %}"
+            data-original-handle="option-{{ optionName }}-{{ option }}"
+            {% if current_variant.option1 == option %}checked{% endif %}>
+          <label class="product-option__label" for="option-{{ optionName }}-{{ option }}{% if idx != '' %}-{{ idx }}{% endif %}" class="product-option__label" {% if isColor %}data-color-name="{{ option | handle }}"{% endif %}>
+            <div class="product-option__text">{% unless isColor %}{{ option }}{% endunless %}</div>
+          </label>
+        </div>
+      {% endfor %}
+    </div>
+  </div> <!-- /.product-options -->
+{% endif %} {% comment %} / option1 {% endcomment %}
+
+{% assign optionName = product.options[1] %}
+{% if optionName != blank %}
+  <div class="product-options m-{{ optionName| handle }}">
+    <div class="product-options__title"><label>Select a size: </label><span data-selected-size></span> <a href="javascript:;" data-size-guide-toggle>Size Chart</a></div>
+    <div class="product-options__list" data-options-list>
+
+      {% for variant in product.variants %}
+        {% assign option1 = variant.options[1] | default: '_BLANK_' %}
+        {% assign option2 = variant.options[2] | default: '_BLANK_' %}
+        {% assign option = option1 | append: '||' | append: option2 %}
+
+        {% assign v_option1 = current_variant.options[1] | default: '_BLANK_' %}
+        {% assign v_option2 = current_variant.options[2] | default: '_BLANK_' %}
+        {% assign v_option = v_option1 | append: '||' | append: v_option2 %}
+
+        <div class="product-option">
+          <input id='option-{{ optionName }}-{{ option }}' type="radio" name='product-option-{{ optionName | handle }}'
+            value='{{ option }}'
+            data-product-option="2"
+            data-option-type="{{ optionName | handle }}"
+            {% if v_option == option %}checked1{% endif %}>
+          <label class="product-option__label" for='option-{{ optionName }}-{{ option }}' class="product-option__label">
+            <div class="product-option__text">{{ option | replace: '||', ' - ' }}</div>
+          </label>
+        </div>
+      {% endfor %}
+
+        {% comment %}
+        {% for option in product.options_by_name[optionName].values %}
+          <div class="product-option">
+            <input id="option-{{ optionName }}-{{ option }}" type="radio" name="product-option-{{ optionName | handle }}"
+              value="{{ option }}"
+              data-product-option="2"
+              {% if current_variant.option2 == option %}checked{% endif %}>
+            <label class="product-option__label" for="option-{{ optionName }}-{{ option }}" class="product-option__label">
+              <div class="product-option__text">{{ option }}</div>
+            </label>
+          </div>
+        {% endfor %}
+        {% endcomment %}
+    </div>
+  </div> <!-- /.product-options -->
+{% endif %} {% comment %} / option2 {% endcomment %}
+
+
+{% comment %}
+
+{% assign optionName = product.options[2] %}
+{% if optionName != blank %}
+  <div class="product-options m-{{ optionName| handle }}">
+    <div class="product-options__title">{{ optionName }}:</div>
+    <div class="product-options__list" data-options-list>
+      {% for option in product.options_by_name[optionName].values %}
+        <div class="product-option">
+          <input id="option-{{ optionName }}-{{ option }}" type="radio" name="product-option-{{ optionName | handle }}"
+            value="{{ option }}"
+            data-product-option="3"
+            {% if current_variant.option3 == option %}checked{% endif %}>
+          <label class="product-option__label" for="option-{{ optionName }}-{{ option }}" class="product-option__label">
+            <div class="product-option__text">{{ option }}</div>
+          </label>
+        </div>
+      {% endfor %}
+    </div>
+  </div> <!-- /.product-options -->
+{% endif %} {% comment %} / option3 {% endcomment %}
+
+{% endcomment %}

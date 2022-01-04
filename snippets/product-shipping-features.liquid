@@ -1,0 +1,15 @@
+{% comment %} ATTENTION!!! This is compiled version of product-shipping-features.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\product-shipping-features.liquid file to code and save your changes. {% endcomment %}
+<div class="shipping-features">
+  <div class="feature-wrapper d-flex">
+    {% for i in (1..4) %}
+      {% assign icon_key = 'shipping_icon' | append: i %}
+      {% assign title_key = 'shipping_title' | append: i %}
+      {% if settings[icon_key] != blank and settings[title_key] != blank %}
+        <div class="shipping-feature">
+          <div class="icon_wrapper">{{ settings[icon_key] }}</div>
+          <div class="feature_title">{{ settings[title_key] }}</div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>

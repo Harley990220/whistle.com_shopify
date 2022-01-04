@@ -1,0 +1,233 @@
+{% comment %} ATTENTION!!! This is compiled version of ea-header.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\ea-header.liquid file to code and save your changes. {% endcomment %}{% comment %} ATTENTION!!! This is compiled version of ea-header.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\ea-header.liquid file to code and save your changes. {% endcomment %}
+
+<header class="site-header-container {{ class }} {% if template.name == 'cart' %}hide--desktop hide--tablet{% endif %}" data-site-header {% if template.suffix contains 'choose-plan' %}data--hidden{% endif %}>
+
+  {% section 'ea-topbar' %}
+
+  
+  {% capture megamenu %}
+    {% section 'ea-megamenu' %}
+  {% endcapture %}
+
+
+  <section class="site-header {{ class }}" id="site-header">
+    <div class="container">
+      <div class="site-header__logo">
+        {% if template.name == 'cart' %}
+        <div class="custom-sticky-menu">
+          <div class="menu_back">
+            <a href="collections/all" class="d-flex">
+              <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 443.52 443.52" style="enable-background:new 0 0 443.52 443.52;" xml:space="preserve">
+                <g>
+                  <g>
+                    <path d="M143.492,221.863L336.226,29.129c6.663-6.664,6.663-17.468,0-24.132c-6.665-6.662-17.468-6.662-24.132,0l-204.8,204.8
+                      c-6.662,6.664-6.662,17.468,0,24.132l204.8,204.8c6.78,6.548,17.584,6.36,24.132-0.42c6.387-6.614,6.387-17.099,0-23.712
+                      L143.492,221.863z"></path>
+                  </g>
+                </g>
+              </svg>
+              <span class="hide--mobile">Back To Whistle Go Explore</span>
+              <span class="hide--desktop">{% if cart.item_count > 0 %}Back{% else %}Continue Shopping{% endif %}</span>
+            </a>
+          </div>
+        </div>
+        {% comment %}
+          <a href="/collections/all" class="cart-continue-shopping">
+            {% render 'icon' with 'icon-arrow-left' %}
+            <span>Continue Shopping</span>
+          </a>
+        {% endcomment %}
+        {% else %}
+          <a aria-label="Logo" href="/">
+            {% if settings.logosvg != blank %}
+              {{ settings.logosvg }}
+            {% elsif settings.logo != blank %}
+              <img src="{{ settings.logo | img_url: '200x' }}" alt="{{ settings.logo.alt }}">
+            {% else %}
+              {{ shop.name }}
+            {% endif %}
+          </a>
+        {% endif %}
+      </div>
+      <div class="hide--desktop hide--tablet mob--toolbar">
+        <div class="toolbar-wrapper d-flex">
+          <div class="site-header__call">
+            <a href="tel:1-855-999-0471">
+              <span class="icon-wrapper">
+                {% render 'icon' with 'icon-mob-call' %}
+              </span>
+            </a>
+          </div>
+          {% unless template.name == 'cart' %}
+            <div class="site-header__cart">
+              <a class="" href="/cart">
+                <span class="icon-wrapper">
+                  {% render 'icon' with 'icon-mob-cart' %}
+                  <span data-cart-count {% if cart.item_count == 0 %}data--hidden{% endif %}>{{ cart.item_count }}</span>
+                </span>
+              </a>
+            </div>
+          {% endunless %}
+          <div class="mobile_menu_toggle">
+            <button aria-label="Toggle menu" class="btn site-header__toggle" data-open-menu>
+              <!-- <span></span>
+              <span></span>
+              <span></span> -->
+              {% render 'icon' with 'icon-mob-menu' %}
+            </button>
+          </div>
+        </div>
+        <div class="hide--desktop hide--tablet">
+          <div class="cart-popup" data-cart-popup>
+            <div class="cart-popup-wrapper d-flex">
+              <div class="item_image"></div>
+              <div class="item_title"></div>
+              <div class="item_view">View</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="site-header__nav hide--mobile">{{ megamenu }}</div>
+      
+      <nav class="nav site-header__tools hide--mobile">
+        <ul class="nav__items">
+          {% comment %}
+          <li class="nav__item"><span class="search" data-show-search-trigger data-popup-open="search-popup" data-search-style="{{ settings.search_display_style }}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g id="search"><path d="M92.83,90.18,71.47,68.83a38.58,38.58,0,1,0-6.29,5l22,22ZM14,41.46A30.47,30.47,0,1,1,44.47,71.93,30.51,30.51,0,0,1,14,41.46Z"/></g></svg></span></li>
+          <li class="nav__item hide--mobile">
+            {% if customer.id %}
+              <a class="nav__link m-level-1 m-login" href="/account">My Account</a>
+            {% else %}
+              <a class="nav__link m-level-1 m-login" href="/account">Sign In</a>
+            {% endif %}
+          </li>
+          <li class="nav__item hide--mobile">
+            <a class="nav__link m-level-1 m-icon m-search" href="/search" data-trigger><i class="icon-search"></i></a>
+            <nav class="nav-dropdown m-wide" data-dropdown-parent>
+              <div class="container">
+                <form action="/search" class="search-form" method="get" role="search">
+                  <label for="search-input"></label>
+                  <input type="search" id="search-input" class="input" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}">
+                  <input type="hidden" name="type" value="product">
+                </form>
+              </div>
+            </nav>
+          </li>
+          {% endcomment %}
+          <li class="nav__item">
+
+            {% assign shop_btn = false %}
+            {% if settings.shop_btn_title != blank and settings.shop_btn_link != blank %}
+              <a class="nav__link shop_btn btn m-black-new m-rounded" href="{{ settings.shop_btn_link }}" {% if template.name == 'product' or template.name == 'collection' or cart.item_count > 0 %}data--hidden{% endif %}>{{ settings.shop_btn_title }}</a>
+              {% assign shop_btn = true %}
+            {% endif %}
+            <div class="nav-cart-wrapper">
+              <a class="nav__link m-level-1 m-icon m-cart " href="/cart"  {% if shop_btn == true and cart.item_count == 0 and template.name != 'product' and template.name != 'collection'  %}data--hidden{% endif %}>
+                {% render 'icon' with 'icon-cart' %}
+                <span class="cart-count" data-cart-count>{{ cart.item_count }}</span>
+              </a>
+              <div class="hide--mobile">
+                <div class="cart-popup" data-cart-popup>
+                  <div class="cart-popup-wrapper d-flex">
+                    <div class="item_image"></div>
+                    <div class="item_title"></div>
+                    <div class="item_view">View</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </nav> <!-- /.site-header__tools -->
+    </div> <!-- /.container -->
+    {% comment %}
+    <div class="search-container" data-overlay-search data-popup="search-popup" style="display: none;">
+      {% render 'search-overlay' %}
+    </div>
+    {% endcomment %}
+    {% if template.name == 'index' and settings.enable_s_n %}
+      <div class="sticky-newsletter hide--mobile">
+        <div class="container">
+          <div class="sticky-newsletter-wrapper d-flex">
+            <div class="heading">{{ settings.s_n_title }}</div>
+            {% render 'ea-newsletter-form' %}
+            <div class="sticky-newsletter-close d-flex">No thanks {% render 'icon' with 'icon-newsletter-close' %}</div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+  </section> <!-- /.site-header -->
+</header> <!-- /.site-header-container -->
+{% if template.suffix contains 'choose-plan' or template.name == 'cart' %}
+
+  <div class="custom-sticky-menu {% if template.name == 'cart' %}hide--mobile{% endif %}">
+    <div class="container">
+      <div class="sticky-menu-wrapper d-flex">
+        <div class="menu_back">
+          <a href="javascript:;">
+            {% render 'icon' with 'icon-direc-left' %}
+            <span class="hide--mobile"></span>
+            <span class="hide--desktop">Back</span>
+          </a>
+        </div>
+        <div class="sticky_logo">
+          <a href="/">{% render 'icon' with 'site-logo-black' %}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endif %}
+
+<div class="sidenav hide--desktop">
+  <!-- <div class="sidenav__topbar"><p>Free Shipping — 90 Days to Try, Risk Free</p></div> -->
+  <div class="sidenav__header d-flex">
+
+    <button class="sidenav__close" aria-label="sidenav close" data-open-menu>
+      <span class="icon-wrapper">
+        {% render 'icon' with 'icon-mob-menu-close' %}
+      </span>
+    </button>
+    <div class="sidenav__toolbar d-flex">
+      <div class="sidenav__phone">
+        <a href="tel:1-855-999-0471">
+          <span class="icon-wrapper">
+            {% render 'icon' with 'icon-mob-call' %}
+          </span>
+        </a>
+      </div>
+      <div class="sidenav__cart">
+        <a href="/cart">
+          <span class="icon-wrapper">
+            {% render 'icon' with 'icon-mob-cart' %}
+            <span data-cart-count {% if cart.item_count == 0 %}data--hidden{% endif %}>{{ cart.item_count }}</span>
+          </span>
+        </a>
+      </div>
+      {% comment %}
+      <div class="sidenav__logo">
+        {% render 'icon' with 'site-logo' %}
+      </div>
+      {% endcomment %}
+    </div>
+  </div>
+  {% comment %}
+  <form action="/search" class="search-form" method="get" role="search">
+    <label for="search-input-mobile"></label>
+    <input type="search" id="search-input-mobile" class="input" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}">
+    <input type="hidden" name="type" value="product">
+  </form>
+  {% endcomment %}
+  {{ megamenu }}
+</div>
+<div class="sidenav-bg" data-open-menu></div>
+{% render 'minicart' %}
+
+<div class="popup is-hidden" data-popup="search-popup">
+  <div class="popup-window">
+    <div class="rte ingr-popup">
+      {% render 'search-overlay' %}
+    </div>
+  </div>
+  <div class="popup-bg" data-popup-close></div>
+</div>

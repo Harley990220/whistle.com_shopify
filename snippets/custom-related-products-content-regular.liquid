@@ -1,0 +1,18 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-related-products-content-regular.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-related-products-content-regular.liquid file to code and save your changes. {% endcomment %}<div class="section_container">
+  <div class="main_content container" data-animate-block>
+    <div class="main-wrapper">
+      <div class="title">{{ section.settings.title }}</div>
+      {% assign collection = collections[section.settings.collection] %}
+      {% if collection != blank %}
+        <div class="related-items-slider slider-dots-default" data-hor-slider data-arrows="false" data-dots="true" data-slides-to-show="3" data-slides-to-show-mob="2">
+          {% for product in collection.products %}
+            <div class="related-product-item" data-product-item>
+              {% render 'product-item-regular', product: product, feature: section.settings.feature %}
+            </div>
+          {% endfor %}
+        </div>
+        {% render 'swipe-text' %}
+      {% endif %}
+    </div>
+  </div>
+</div>

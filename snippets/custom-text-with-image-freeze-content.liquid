@@ -1,0 +1,55 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-text-with-image-freeze-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-text-with-image-freeze-content.liquid file to code and save your changes. {% endcomment %}<div class="section_container">
+  <div class="main_container">
+    <div class="has-sticky" data-vertical-slider-section>
+      <div class="vertical-slider slider m-vertical-dots m-left-dots" data-vertical-slider data-animate-block>
+        <div class="container">
+          <div class="title section-title">{{ section.settings.title }}</div>
+          {% for block in section.blocks %}
+            {% assign i = forloop.index0 %}
+            <div class="vertical-slide {% if i == 0 %}visible first{% else %}next{% endif %}" data-vertical-slide data-custom-block data-delay="true">
+              <div class="slider-item-wrapper ">
+                <div class="text_wrapper">
+                  <div class="text_content d-flex">
+                    <div class="item_title">{{ block.settings.title }}</div>
+                    <div class="item_subtitle">{{ block.settings.subtitle }}</div>
+                    <div class="content_list">
+                      {% for i in (1..5) %}
+                      {% assign icon_handle = 'icon' | append: i %}
+                      {% assign text_handle = 'text' | append: i %}
+                      {% if block.settings[icon_handle] != blank %}
+                        <div class="content_list_item d-flex">
+                          <div>{{ block.settings[icon_handle] }}</div>
+                          <div>{{ block.settings[text_handle] }}</div>
+                        </div>
+                      {% endif %}
+                      {% endfor %}
+                    </div>
+                    {% if block.settings.btn_link != blank and block.settings.btn_label != blank %}
+                      <div class="btn_wrapper">
+                        <a onclick="dataLayer.push({'CTA': '{{ block.settings.btn_link }}'});" class="btn m-black-new btn-rounded btn-small" href="{{ block.settings.btn_link }}">{{ block.settings.btn_label }}</a>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="image_wrapper">
+                  {% render 'rimage', image: block.settings.image, size: '800x' %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+          {% comment %}
+          <div class="slider-controls hide--mobile" data-vertical-slider-controls>
+            <div data-scroll-count><span>1</span> / {{ section.blocks.size }}</div>
+            <ul class="slider-dots">
+              {% for block in section.blocks %}
+              <li><button data-button="{{ forloop.index0 }}" {% if forloop.index0 == 0 %}class="is-active"{% endif %}>&nbsp;</button></li>
+              {% endfor %}
+            </ul>
+            <button class="slider-arrow2" data-vertical-slider-arrow>{% render 'icon' with 'icon-arrow-down' %}</button>
+          </div>
+          {% endcomment %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

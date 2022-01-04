@@ -1,0 +1,73 @@
+{% comment %} ATTENTION!!! This is compiled version of ajax-form-page-landing.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\ajax-form-page-landing.liquid file to code and save your changes. {% endcomment %}{% assign current_variant = product.selected_or_first_available_variant %}
+
+<div class="product_ajax_form ajax-atc" data-ajax-form>
+  
+  {% assign opt_idx = 0 %}
+  {% for option in product.options %}
+    {% if option == 'Color' or option == 'Colour' %}
+      {% assign opt_idx = forloop.index %}
+    {% endif %}
+  {% endfor %}
+
+  <div class="product_variants multiple-variants" data-product-variants>
+    <select data-all-variants data--hidden>
+      {% for variant in product.variants %}
+        <option value="{{ variant.id }}" data-option1="{{ variant.option1 | default: '_BLANK' }}" data-option2="{{ variant.option2 | default: '_BLANK' }}"></option>
+      {% endfor %}
+    </select>
+    {% if product.options contains 'Color' or product.options contains 'Colour' %}
+      <div class="product_variants_color">
+        {% assign list = '' %}
+        {% assign idx = 0 %}
+        {% for variant in product.variants %}
+          {% assign handle = 'option' | append: opt_idx %}
+          {% assign option = variant[handle] %}
+          {% unless list contains option %}
+            {% assign idx = idx | plus: 1 %}
+            {% assign handle = 'img' | append: idx %}
+            {% assign img = setting[handle] %}
+            {% assign vImg = img | default: variant.image %}
+            <div class="product_option" data-product-variant-option data-variant-img="{{ vImg | img_url: '800x' }}" data-variant-url="{{ variant.url }}">
+              <input type="radio" data-variant-option="1" id="product-option-color-{{ option | handle }}" name="product-option-color-{{ index }}" {% if list == '' %}checked{% endif %} value="{{ option }}">
+              <label for="product-option-color-{{ option | handle }}" data-color-name="{{ option | handle }}"></label>
+            </div>
+            {% assign list = list | append: '&&' | append: option %}
+          {% endunless %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if product.options contains 'Size' or product.options contains 'size' %}
+      <div class="product_variants_size">
+        <select data-variant-option="2">
+          {% assign opt_idx = 0 %}
+          {% for option in product.options %}
+            {% if option == 'Size' or option == 'size' %}
+              {% assign opt_idx = forloop.index %}
+            {% endif %}
+          {% endfor %}
+          {% assign handle = 'option' | append: opt_idx %}
+          {% assign list = '' %}
+          {% for variant in product.variants %}
+            {% assign option = variant[handle] %}
+            {% unless list contains option %}
+              <option value="{{ option }}">{{ option }}</option>
+              {% assign list = list | append: '&&' | append: option %}
+            {% endunless %}
+          {% endfor %}
+        </select>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="btn_wrapper">
+    {% if btn == 'link' %}
+      <a onclick="dataLayer.push({'CTA': '{{ product.url }}'});" class="btn btn-link m-green btn-small btn-rounded" data-id="{{ product.selected_or_first_available_variant.id }}" href="{{ product.selected_or_first_available_variant.url }}">
+        {{ setting.btn_label }}
+      </a>
+    {% elsif btn == 'atc' %}
+      <button onclick="dataLayer.push({'ATC': '{{ product.handle }}'});" class="ajax-atc-btn btn m-green btn-small btn-rounded" data-ajax-atc data-id="{{ product.selected_or_first_available_variant.id }}">Quick Add</button>
+    {% endif %}
+  </div>
+
+</div>

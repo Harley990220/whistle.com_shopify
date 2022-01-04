@@ -1,0 +1,97 @@
+{% comment %} ATTENTION!!! This is compiled version of product.explore.liquid and it is overriding automatically. You should use theme development tool and sources\templates\product.explore.liquid file to code and save your changes. {% endcomment %}{% render 'product-plan-header', product_name: 'Whistle Explore' %}
+
+<div class="section__top">
+  <div class="product-main-plan-wrapper">
+    {% section 'ea-product-main-explore' %}
+    
+    <div class="plan-wrapper store-front">
+
+      <div class="hide--mobile">
+        <div data-plan-version="1">
+          {% section 'custom-choose-plan-explore-new' %}
+        </div>
+      </div>
+
+      <div class="hide--desktop">
+        <div data-plan-version="0">
+          {% section 'custom-choose-plan-explore' %}
+        </div>
+      </div>
+
+    </div>
+    
+  </div>
+
+  {% section 'custom-icon-list-product-explore' %}
+  
+  {% if request.design_mode %}
+
+    {% if settings.layout == 'v1' %}
+      <!-- {% section 'custom-faq-page-plan' %} -->
+      {% section 'custom-faq-page-plan-new' %}
+    {% elsif settings.layout == 'v2' %}
+      {% section 'custom-faq-page-plan-new' %}
+    {% endif %}
+
+  {% else %}
+    <div class="product-plan-faq" data--hidden>
+      {% if request.path contains '/v2' %}
+        {% section 'custom-faq-page-plan-new' %}
+      {% else %}
+        <!-- {% section 'custom-faq-page-plan' %} -->
+        {% section 'custom-faq-page-plan-new' %}
+
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% section 'custom-video' %}
+  {% section 'ea-image-text-scroll' %}
+  {% section 'custom-banner-tab' %}
+</div>
+<div class="section__tech">
+  {% section 'custom-tech-spec' %}
+</div>
+<div class="section__bottom">
+  {% section 'custom-image-text-grid' %}
+  {% section 'custom-image-video-slider' %}
+  {% section 'custom-product-faq' %}
+  {% section 'custom-testimonial' %}
+  {% section 'custom-compare-model-product' %}
+  {% section 'custom-related-products-explore' %}
+  {% section 'custom-product-reviews' %}
+</div>
+
+
+<div id="product-stickybar">
+</div>
+
+<script>
+  window.productTemplateLoaded = true;
+  window.localStorage.setItem('product_url', '{{ product.url }}');
+  window.localStorage.setItem('product', 'Whistle Go Explore');
+
+  window.page = window.localStorage.getItem('product');
+  window.pageUrl = window.localStorage.getItem('product_url');
+  
+</script>
+
+{% if product.metafields.loox.num_reviews %}
+<script id="looxSchemaJson" type="application/ld+json">
+{
+	"@context": "http://schema.org",
+	"@type": "Product",
+	"@id": {{ canonical_url | json }},
+	"aggregateRating": {
+		"@type": "AggregateRating",
+		"ratingValue": "{{ product.metafields.loox.avg_rating }}",
+		"reviewCount": "{{ product.metafields.loox.num_reviews }}"
+	},
+	"name": {{ product.title | json }}
+}
+</script>
+{% endif %}
+
+<script>
+  var productTitle = '{{ product.title }}';
+</script>

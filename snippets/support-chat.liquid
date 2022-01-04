@@ -1,0 +1,35 @@
+{% comment %} ATTENTION!!! This is compiled version of support-chat.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\support-chat.liquid file to code and save your changes. {% endcomment %}{% comment %} ATTENTION!!! This is compiled version of support-chat.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\support-chat.liquid file to code and save your changes. {% endcomment %}<!-- initializing Kustomer -->
+<script>!function(a,b,c,d){a.Kustomer=c,c._q=[],c._i=[],c.init=function(a){function b(a,b){a[b]=function(){a._q.push([b].concat(Array.prototype.slice.call(arguments,0)))}}for(var d="init clear identify track start describe on".split(" "),e=0;e<d.length;e++)b(c,d[e]);c._i.push(a)};var e=b.createElement("script");e.type="text/javascript",e.async=!0,e.src="https://cdn.kustomerapp.com/cw/sdk.v1.1.min.js";var f=b.getElementsByTagName("script")[0];f.parentNode.insertBefore(e,f)}(this,document,window.Kustomer||{});
+  // Add your API key here
+  Kustomer.init('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYTM0ZjU0ZWNkOTMxMDA4ZjA4NDg3OCIsInVzZXIiOiI1ZWEzNGY1MzM3ZmMwNjAwMTM3YzFjNmEiLCJvcmciOiI1ZTg1MDNhYWNjZmZkODAwMTNjNzIxMjMiLCJvcmdOYW1lIjoia2luc2hpcCIsInVzZXJUeXBlIjoibWFjaGluZSIsInBvZCI6InByb2QxIiwicm9sZXMiOlsib3JnLmFkbWluIiwib3JnLnVzZXIiXSwiYXVkIjoidXJuOmNvbnN1bWVyIiwiaXNzIjoidXJuOmFwaSIsInN1YiI6IjVlYTM0ZjUzMzdmYzA2MDAxMzdjMWM2YSJ9.5hNiv6z_rbaWfqu-shG96yamek2TuPuojB-UUk2anqA');
+  </script>
+  <!-- adding Adabot -->
+  <script
+    async
+    id="__ada"
+    data-handle="whistle"
+    data-src="https://static.ada.support/embed.js"
+  ></script>
+  <!-- Adabot handoff to Kustomer Live Chat-->
+  <script>
+    window.adaSettings = {
+    eventCallbacks: {
+      "custom_handoff": function(event) {
+        console.log('called handoff');
+        setTimeout(function(){
+          console.log('working on timeout');
+          adaEmbed.stop()
+          console.log('stopped adabot');
+          Kustomer.start({lang: 'en_us'}, function(data) {
+            Kustomer.open({ icon:true, form: "5eb5ae938adb2600964840b8" })
+          });
+        }, 4000);
+      }
+    }
+  }
+  
+  function openChat() {
+    window.adaEmbed.toggle();
+  }
+  
+  </script>

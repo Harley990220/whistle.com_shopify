@@ -1,0 +1,35 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-contact-info-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-contact-info-content.liquid file to code and save your changes. {% endcomment %}<div class="section-container">
+  <div class="main_content container" data-animate-block>
+    <div class="section-header">
+      <div class="title">{{ section.settings.title }}</div>
+      <div class="subtitle">{{ section.settings.subtitle }}</div>
+    </div>
+    <div class="content">
+      <div class="d-flex contact-infos">
+        {% for block in section.blocks %}
+          <div class="contact__info d-flex">
+            <div class="icon_wrapper">{{ block.settings.icon }}</div>
+            <div class="text_wrapper">
+              <div class="info__title">{{ block.settings.title }}</div>
+              <div class="info__text" data-open-chat>
+                {% if block.type == 'block' %}
+                  {% if block.settings.link != blank %}
+                    <a href="{{ block.settings.link }}">
+                  {% endif %}
+                  {{ block.settings.text }}
+                  {% if block.settings.link != blank %}
+                    </a>
+                  {% endif %}
+                {% else %}
+                  <a href="javascript:openChat()">
+                    {{ block.settings.text }}
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>

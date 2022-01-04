@@ -1,0 +1,41 @@
+{% comment %} ATTENTION!!! This is compiled version of custom-image-video-slider-content.liquid and it is overriding automatically. You should use theme development tool and sources\snippets\custom-image-video-slider-content.liquid file to code and save your changes. {% endcomment %}<div class="section_container">
+  <div class="main_content container" data-animate-block>
+    <div class="main_wrapper">
+      <div class="section_header">
+        {% if section.settings.icon != blank %}
+          <div class="icon_wrapper">{% render 'rimage', image: section.settings.icon, size: '200x' %}</div>
+        {% endif %}
+        {% if section.settings.title != blank %}
+          <div class="title">{{ section.settings.title }}</div>
+        {% endif %}
+        {% if section.settings.subtitle != blank %}
+          <div class="subtitle">{{ section.settings.subtitle }}</div>
+        {% endif %}
+      </div>
+      <div class="slider_wrapper slider-arrow-default" data-hor-slider data-dots="true" data-dots-default>
+        {% for block in section.blocks %}
+          <div class="slider_item">
+            {% if block.settings.title != blank %}
+              <div class="item_title not-animated">
+                {{ block.settings.title }}
+              </div>
+            {% endif %}
+            {% if block.settings.image != blank %}
+              <div class="image_wrapper">{% render 'rimage', image: block.settings.image, size: '860x' %}</div>
+            {% else %}
+              {% render 'video', url: block.settings.video_url, title: block.settings.title %}
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+      {% render 'swipe-text' %}
+      {% comment %}
+      <div class="slider-controls">
+        <button data-hor-slider-prev>{% render 'icon' with 'slider-arrow-right-normal' %}</button>
+        <button data-hor-slider-next>{% render 'icon' with 'slider-arrow-left-normal' %}</button>
+        <ul data-hor-slider-dots></ul>
+      </div>
+      {% endcomment %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,373 @@
+{% comment %} ATTENTION!!! This is compiled version of ea-megamenu.liquid and it is overriding automatically. You should use theme development tool and sources\sections\ea-megamenu.liquid file to code and save your changes. {% endcomment %}<nav class="nav" data-accordions-container data-accordions-mobile-only="1">
+  <ul class="nav__items">
+
+    {% for block in section.blocks %}
+
+      {% if block.type contains 'dropdown' %}
+        <li class="nav__item m-level-1 m-dropdown" data-trigger-hover {{ block.shopify_attributes }}>
+          <a href="{{ block.settings.url }}" class="nav__link m-level-1" data-accordion-button data-active-history="true" data-handle="{{ block.settings.title | downcase | replace: '&', 'and' | handle }}">
+            {{ block.settings.title }}
+            {% comment %}
+              <i class="icon-closed">{% render 'icon' with 'icon-plus' %}</i>
+              <i class="icon-opened">{% render 'icon' with 'icon-minus' %}</i>
+            {% endcomment %}
+          </a>
+          {% render 'nav-dropdown', block: block %}
+        </li>
+
+      {% elsif block.type == 'link' %}
+        <li class="nav__item m-level-1" data-megamenu="{{ block.settings.title | downcase | replace: ' ', '-' | replace: '&', '-' }}" {{ block.shopify_attributes }}>
+          <a class="nav__link m-level-1" href="{{ block.settings.url | default: 'javascript:;' }}" {% if block.settings.open_new %}target="blank"{% endif %} {% unless block.settings.title == 'COMPARE MODEL' %}data-active-history="{% if block.settings.open_new %}false{% else %}true{% endif %}"{% endunless %} data-handle="{{ block.settings.title | downcase | replace: '&', 'and' | handle }}" {% if block.settings.title == 'COMPARE MODEL' %}data-popup-open="compare-model"{% endif %}>
+            {{ block.settings.title }}
+            {% comment %}
+              <i class="icon-closed">{% render 'icon' with 'icon-plus' %}</i>
+              <i class="icon-opened">{% render 'icon' with 'icon-minus' %}</i>
+            {% endcomment %}
+          </a>
+        </li>              
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  <ul class="mob-link-wrapper hide--desktop hide--tablet">
+    {% for block in section.blocks %}
+      {% if block.type == 'mob_link' %}
+        <li class="mob_link">
+          <a href="{{ block.settings.url }}">{{ block.settings.title }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+    <li class="mob_link" data-open-chat>
+      <a href="javascript:openChat()">
+        {% render 'icon' with 'icon-mob-chat' %} Chat with us
+      </a>
+    </li>
+  </ul>
+
+  {% assign blocks = section.blocks | where: "type", "slider" %}
+  {% if blocks.size > 0 %}
+    <div class="our-customers hide--desktop hide--tablet">
+      {% if section.settings.title != blank %}
+        {% render 'icon' with 'icon-review-star' %}
+        <div class="title not-animated">{{ section.settings.title }}</div>
+      {% endif %}
+      <div class="slider-wrapper d-flex">
+        {% for block in blocks %}
+          <div class="slider-item">
+            <div class="item_wrapper">
+              <div class="image_wrapper">{% render 'rimage', image: block.settings.image, size: '300x' %}</div>
+              <div class="info_wrapper d-flex">
+                <div class="icon_wrapper">
+                  {% render 'rimage', image: block.settings.icon, size: '50x' %}
+                </div>
+                <div class="item_title">{{ block.settings.title }}</div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+</nav> <!-- /.site-header__nav -->
+
+{% comment %}
+<div class="social_link hide--desktop hide--tablet">
+  <div class="wrapper d-flex">
+    {% for i in (1..4) %}
+      {% assign icon_key = 'icon' | append: i %}
+      {% assign link_key = 'link' | append: i %}
+      <div class="social_item">
+        <a aria-label="Social Link" href="{{ section.settings[link_key] }}">{{ section.settings[icon_key] }}</a>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endcomment %}
+
+{% schema %}
+  {
+  "name": "Menu",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Our customers"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "header",
+      "content": "Social Link (Mobile only)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Icon 1"
+    },
+    {
+      "type": "html",
+      "id": "icon1",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "link1",
+      "label": "Link"
+    },
+    {
+      "type": "paragraph",
+      "content": "Icon 2"
+    },
+    {
+      "type": "html",
+      "id": "icon2",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "link2",
+      "label": "Link"
+    },
+    {
+      "type": "paragraph",
+      "content": "Icon 3"
+    },
+    {
+      "type": "html",
+      "id": "icon3",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "link3",
+      "label": "Link"
+    },
+    {
+      "type": "paragraph",
+      "content": "Icon 4"
+    },
+    {
+      "type": "html",
+      "id": "icon4",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "link4",
+      "label": "Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "dropdown_submenus",
+      "name": "Dropdown",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Main Link Text"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Main Link Url"
+        },
+        {
+          "type": "header",
+          "content": "Dropdown links"
+        },
+
+
+        {
+          "type": "header",
+          "content": "Link 1"
+        },
+        {
+          "type": "text",
+          "id": "link_1_title",
+          "label": "Link 1 Text"
+        },
+        {
+          "type": "url",
+          "id": "link_1_url",
+          "label": "Link 1 Url"
+        },
+        {
+          "type": "image_picker",
+          "id": "link_1_image",
+          "label": "Link 1 Image"
+        },
+        {
+          "type": "link_list",
+          "id": "link_1_submenu",
+          "label": "Link 1 Submenu"
+        },
+
+
+        {
+          "type": "header",
+          "content": "Link 2"
+        },
+        {
+          "type": "text",
+          "id": "link_2_title",
+          "label": "Link 2 Text"
+        },
+        {
+          "type": "url",
+          "id": "link_2_url",
+          "label": "Link 2 Url"
+        },
+        {
+          "type": "image_picker",
+          "id": "link_2_image",
+          "label": "Link 2 Image"
+        },
+        {
+          "type": "link_list",
+          "id": "link_2_submenu",
+          "label": "Link 2 Submenu"
+        },
+
+
+        {
+          "type": "header",
+          "content": "Link 3"
+        },
+        {
+          "type": "text",
+          "id": "link_3_title",
+          "label": "Link 3 Text"
+        },
+        {
+          "type": "url",
+          "id": "link_3_url",
+          "label": "Link 3 Url"
+        },
+        {
+          "type": "image_picker",
+          "id": "link_3_image",
+          "label": "Link 3 Image"
+        },
+        {
+          "type": "link_list",
+          "id": "link_3_submenu",
+          "label": "Link 3 Submenu"
+        },
+
+
+        {
+          "type": "header",
+          "content": "Link 4"
+        },
+        {
+          "type": "text",
+          "id": "link_4_title",
+          "label": "Link 4 Text"
+        },
+        {
+          "type": "url",
+          "id": "link_4_url",
+          "label": "Link 4 Url"
+        },
+        {
+          "type": "image_picker",
+          "id": "link_4_image",
+          "label": "Link 4 Image"
+        },
+        {
+          "type": "link_list",
+          "id": "link_4_submenu",
+          "label": "Link 4 Submenu"
+        },
+
+
+        {
+          "type": "header",
+          "content": "Link 5"
+        },
+        {
+          "type": "text",
+          "id": "link_5_title",
+          "label": "Link 5 Text"
+        },
+        {
+          "type": "url",
+          "id": "link_5_url",
+          "label": "Link 5 Url"
+        },
+        {
+          "type": "image_picker",
+          "id": "link_5_image",
+          "label": "Link 5 Image"
+        },
+        {
+          "type": "link_list",
+          "id": "link_5_submenu",
+          "label": "Link 5 Submenu"
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "name": "Regular Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Link Text"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new",
+          "label": "Open link in new tab"
+        }
+      ]
+    },
+    {
+      "type": "mob_link",
+      "name": "Mobile Menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Link Text"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link URL"
+        }
+      ]
+    },
+    {
+      "type": "slider",
+      "name": "Our Customer",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Label"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
